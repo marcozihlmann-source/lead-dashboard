@@ -367,7 +367,7 @@ main{padding:22px 32px 52px;}
     <button class="tab-btn" data-tab="kanal">LEADS &amp; KANAL</button>
     <button class="tab-btn" data-tab="equipment">EQUIPMENT</button>
     <button class="tab-btn" data-tab="kampagne">META-KAMPAGNE DETAIL</button>
-    <button class="tab-btn" data-tab="learnings">LEARNINGS</button>
+    <button class="tab-btn" data-tab="learnings">LEARNINGS & NEXT STEPS</button>
     <button class="tab-btn" data-tab="kantone">KANTONE</button>
     
   </div>
@@ -738,50 +738,55 @@ function renderLearnings() {
 
   const learnings = [
     {
-      icon: '📸', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
-      title: 'Image Ad 2 ist der klare Gewinner — mit Abstand',
-      text: `Image Ad 2 generierte ${fmt(ad2)} Leads (${pct(ad2,T)}% aller Leads) — ${Math.round(ad2/Math.max(ad1,1))}× mehr als Image Ad 1 (${fmt(ad1)}). Das Creative-Format und wahrscheinlich die Bildsprache hat einen massiven Einfluss. Für zukünftige Kampagnen sollte Image Ad 2 als Basisformat weiterentwickelt werden.`
+      icon: '⏱️', color: 'purple', badge: 'badge-purple', tag: 'Kampagnendauer',
+      title: 'Kurze Spiellaufzeit als Lead-Limitierung — bei längerer Dauer deutlich mehr Potenzial',
+      text: `Die Kampagne war an die Laufzeit des Engadin-Games gebunden, was das erreichbare Lead-Volumen von vornherein begrenzte. Bei einem längeren Kampagnenfenster (z.B. 4–6 Wochen) wären mit denselben Creatives und demselben Budget signifikant mehr Leads zu erwarten. Für Folgekampagnen empfehlen wir, die Lead-Kampagne zeitlich von einem einzelnen Game-Mechanic zu entkoppeln oder das Spielfenster bewusst zu verlängern.`
     },
     {
-      icon: '📱', color: 'blue', badge: 'badge-blue', tag: 'Kanal-Dominanz',
-      title: 'Instagram liefert 3,5× mehr Leads als Facebook',
-      text: `Instagram (${fmt(ig)} Leads, ${pct(ig,paidTotal)}% des Paid-Traffics) übertrifft Facebook (${fmt(fb)}) deutlich. Bei der Zielgruppe der Skimarathon-Interessierten ist Instagram der stärkere Kanal. Budget-Allokation sollte stärker auf Instagram gewichtet werden — bei gleichem CPL würde ein 80/20-Split IG/FB mehr Output liefern.`
+      icon: '📸', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
+      title: 'Image Ad 2 als Basis-Creative für Folgekampagnen nutzen und weiterentwickeln',
+      text: `Image Ad 2 generierte ${fmt(ad2)} Leads (${pct(ad2,T)}% aller Leads) — ${Math.round(ad2/Math.max(ad1,1))}× mehr als Image Ad 1 (${fmt(ad1)}). Bildsprache und Format haben einen massiven Einfluss. Adaption für weitere Kampagnen: Image Ad 2 als Vorlage nehmen, mit saisonalen oder event-spezifischen Motiven weiterentwickeln und von Beginn weg als Haupt-Creative einsetzen.`
+    },
+    {
+      icon: '📱', color: 'blue', badge: 'badge-blue', tag: 'Kanal-Allokation',
+      title: 'Budget-Shift zu Instagram — 80/20-Split als Standard für Folgekampagnen',
+      text: `Instagram (${fmt(ig)} Leads, ${pct(ig,paidTotal)}% des Paid-Traffics) übertrifft Facebook (${fmt(fb)}) deutlich. Die Skimarathon-Zielgruppe ist klar Instagram-affin. Adaption: In zukünftigen Lead-Kampagnen Budget-Split 80% Instagram / 20% Facebook setzen — bei gleichem CPL ergibt das messbar mehr Output ohne zusätzliches Budget.`
     },
     {
       icon: '🌍', color: 'teal', badge: 'badge-teal', tag: 'Sprachregionen',
-      title: 'FR übertrifft Erwartungen — starke frankophone Performance',
-      text: `Mit ${fmt(frBroad + frRet)} Leads aus FR-Kampagnen (${pct(frBroad+frRet,T)}% aller META-Leads) zeigt sich ein starkes Potenzial in der Romandie. DE Broad liefert absolut mehr Volumen (${fmt(deBroad)}), doch die FR-Performance relativ zur Zielgruppengrösse ist bemerkenswert gut. FR-spezifische Creatives lohnen sich.`
+      title: 'FR-Markt stärker bespielen — eigene Creatives und erhöhtes Budget einplanen',
+      text: `Mit ${fmt(frBroad + frRet)} Leads aus FR-Kampagnen (${pct(frBroad+frRet,T)}% aller META-Leads) zeigt die Romandie starkes Potenzial, das relativ zur Zielgruppengrösse die DE-Performance übertrifft. Adaption: FR-spezifische Creatives und Landingpages von Anfang an mitproduzieren sowie das FR-Budget im Vergleich zu dieser Kampagne erhöhen.`
     },
     {
       icon: '🔄', color: 'purple', badge: 'badge-purple', tag: 'Retargeting',
-      title: 'Retargeting effizient, aber deutlich kleiner im Volumen',
-      text: `DE Retarget (${fmt(deRet)}) und FR Retarget (${fmt(frRet)}) zusammen liefern ${fmt(deRet+frRet)} Leads — das sind ${pct(deRet+frRet,metaTotal)}% der META-Leads. Das Broad-to-Retarget-Verhältnis von ${Math.round((deBroad+frBroad)/(deRet+frRet))} : 1 zeigt, dass Retargeting gezielt für kaufnahe Segmente genutzt wird. Ausbau-Potenzial vorhanden.`
+      title: 'Retargeting-Pool früher aufbauen — für Folgekampagnen als eigene Phase planen',
+      text: `DE Retarget (${fmt(deRet)}) und FR Retarget (${fmt(frRet)}) zusammen liefern ${fmt(deRet+frRet)} Leads (${pct(deRet+frRet,metaTotal)}% der META-Leads). Das Broad-to-Retarget-Verhältnis von ${Math.round((deBroad+frBroad)/(deRet+frRet))} : 1 zeigt, dass Retargeting skalieren kann, wenn der Pool grösser ist. Adaption: Retargeting-Audiences in Phase 1 aufbauen, in Phase 2 mit dediziertem Budget konsequent aktivieren.`
     },
     {
       icon: '📞', color: 'green', badge: 'badge-green', tag: 'Datenqualität',
-      title: 'Telefonnummer-Rate von 60% ist ein starkes Signal',
-      text: `${fmt(S.withPhone)} von ${fmt(T)} Leads (${pct(S.withPhone,T)}%) haben eine Telefonnummer hinterlegt. Das ist ungewöhnlich hoch für Lead-Ads und zeigt hohe Qualität und echtes Interesse der Zielgruppe. Diese Leads eignen sich für direkte Aktivierungen, z.B. SMS-Kampagnen oder telefonische Ansprache für Premium-Angebote.`
+      title: 'Telefonnummer-Leads für direkte Aktivierung systematisch nutzen',
+      text: `${fmt(S.withPhone)} von ${fmt(T)} Leads (${pct(S.withPhone,T)}%) haben eine Telefonnummer hinterlegt — ungewöhnlich hoch und ein Zeichen für echtes Interesse. Adaption: Diesen Lead-Typ für zukünftige Kampagnen als Premium-Segment behandeln und für SMS-Kampagnen, telefonische Ansprache oder exklusive Angebote gezielt einsetzen.`
     },
     {
-      icon: '🎿', color: 'yellow', badge: 'badge-yellow', tag: 'Equipment-Insights',
-      title: 'Fischer, Leki und Toko dominieren — perfekte Partner-Targets',
-      text: `Fischer (${fmt(fischer)} Nennungen), Leki (${fmt(leki)}) und Toko (${fmt(toko)}) sind die meistgenutzten Marken. FZero als Wax-Partner liegt mit ${fmt(fzero)} Nennungen stark im Feld. Diese Daten ermöglichen präzises Partner-Targeting: Equipment-Brands können direkt mit matching Leads angesprochen werden.`
+      icon: '🎿', color: 'yellow', badge: 'badge-yellow', tag: 'Partner-Aktivierung',
+      title: 'Equipment-Daten für Partner-Pitches und Co-Kampagnen einsetzen',
+      text: `Fischer (${fmt(fischer)} Nennungen), Leki (${fmt(leki)}) und Toko (${fmt(toko)}) dominieren die Equipment-Präferenzen. Adaption: Diese Daten als Argument für Partner-Gespräche nutzen — Equipment-Brands können mit co-finanzierten Lead-Kampagnen direkt ihre Kernzielgruppe erreichen. FZero und weitere Wax-Brands als Erst-Kandidaten angehen.`
     },
     {
-      icon: '🏙️', color: 'orange', badge: 'badge-orange', tag: 'Geografie',
-      title: 'Zürich und Bern dominieren — Graubünden stark unterrepräsentiert',
-      text: `Zürich (131) und Bern (102) liefern zusammen fast ein Drittel der geografisch identifizierbaren Leads. Interessant: Chur (66) als Kantonshauptstadt Graubündens liegt auf Platz 3 — trotz Nähe zum Engadin. Für zukünftige Kampagnen könnten Geo-Targeting-Erweiterungen auf Zürich-Umland und Bern-Umland das Volumen weiter steigern.`
+      icon: '🏙️', color: 'orange', badge: 'badge-orange', tag: 'Geo-Targeting',
+      title: 'Zürich- und Bern-Umland als Primärziele ausweiten',
+      text: `Zürich (131) und Bern (102) liefern zusammen fast ein Drittel der geografisch identifizierbaren Leads. Adaption: Geo-Targeting in Folgekampagnen gezielt auf Zürich-Umland (Winterthur, Zug, Luzern) und Bern-Umland (Biel, Thun, Solothurn) ausweiten — hier liegt unausgeschöpftes Volumen mit ähnlichem Zielgruppenprofil.`
     },
     {
-      icon: '⚡', color: 'red', badge: 'badge-red', tag: 'Skalierung',
-      title: 'Organic/Direkt-Anteil zeigt organische Marken-Stärke',
-      text: `${fmt(S.organic)} Leads (${pct(S.organic,T)}% aller Leads) kamen ohne UTM-Tracking — d.h. direkt oder organisch. Das bedeutet: Swiss-Ski und der Engadin Skimarathon haben eine aktive Stammzielgruppe, die ohne Paid-Anreize konvertiert. Diese Basis ist wertvoll für Owned-Channel-Aktivierung (Newsletter, App-Push) in zukünftigen Kampagnen.`
+      icon: '⚡', color: 'red', badge: 'badge-red', tag: 'Owned Channels',
+      title: 'Organische Basis als Owned-Channel stärken und als Lead-Quelle ausbauen',
+      text: `${fmt(S.organic)} Leads (${pct(S.organic,T)}% aller Leads) kamen ohne Paid-Touchpoint — direkt oder organisch. Das zeigt eine aktive Stammzielgruppe. Adaption: Newsletter, App-Push und Social-Organic als eigenständige Lead-Kanäle ausbauen, um den Paid-Anteil zu entlasten und den Cost-per-Lead insgesamt zu senken.`
     },
   ];
 
   const panel = document.getElementById('tab-learnings');
   panel.innerHTML = `
-    <div class="learnings-header">${learnings.length} datenbasierte Erkenntnisse aus ${fmt(T)} Leads · Engadin Skimarathon 2026</div>
+    <div class="learnings-header">${learnings.length} Adaptionen & Next Steps für zukünftige Lead-Kampagnen · Engadin Skimarathon 2026</div>
     <div class="learning-grid">
       ${learnings.map(l => `
         <div class="learning-card">
