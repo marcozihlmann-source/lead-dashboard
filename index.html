@@ -176,6 +176,22 @@ main{padding:22px 32px 52px;}
 .badge-teal{background:#f0fafa;color:#0d9488;}
 .badge-orange{background:#fff5f0;color:#ea580c;}
 .learnings-header{font-size:11px;letter-spacing:0.1em;font-weight:800;text-transform:uppercase;color:var(--grey);margin-bottom:16px;}
+.section-divider{margin:36px 0 28px;border:none;border-top:2px solid var(--border);}
+.section-title{font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;}
+.section-subtitle{font-size:12px;color:var(--grey);margin-bottom:20px;}
+/* TIMELINE */
+.timeline-outer{overflow-x:auto;padding:8px 0 16px;}
+.timeline-track{display:flex;align-items:flex-start;position:relative;min-width:700px;padding:48px 16px 8px;}
+.timeline-track::before{content:'';position:absolute;top:20px;left:16px;right:16px;height:3px;background:linear-gradient(90deg,var(--red) 0%,#ccc 100%);border-radius:2px;}
+.tl-item{flex:1;position:relative;padding:0 8px;}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:var(--red);border:3px solid #fff;box-shadow:0 0 0 2px var(--red);position:absolute;top:-27px;left:50%;transform:translateX(-50%);z-index:1;}
+.tl-dot.grey{background:#aaa;box-shadow:0 0 0 2px #aaa;}
+.tl-date{font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:6px;text-align:center;}
+.tl-date.grey{color:#999;}
+.tl-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 14px 12px;text-align:left;}
+.tl-icon{font-size:20px;margin-bottom:8px;}
+.tl-title{font-size:12px;font-weight:700;color:var(--black);line-height:1.3;margin-bottom:5px;}
+.tl-desc{font-size:11px;color:#666;line-height:1.5;}
 /* SPEND TABLE */
 .spend-table{width:100%;border-collapse:collapse;font-size:12px;}
 .spend-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);border-bottom:2px solid var(--border);}
@@ -739,54 +755,107 @@ function renderLearnings() {
   const learnings = [
     {
       icon: '⏱️', color: 'purple', badge: 'badge-purple', tag: 'Kampagnendauer',
-      title: 'Kurze Spiellaufzeit als Lead-Limitierung — bei längerer Dauer deutlich mehr Potenzial',
-      text: `Die Kampagne war an die Laufzeit des Engadin-Games gebunden, was das erreichbare Lead-Volumen von vornherein begrenzte. Bei einem längeren Kampagnenfenster (z.B. 4–6 Wochen) wären mit denselben Creatives und demselben Budget signifikant mehr Leads zu erwarten. Für Folgekampagnen empfehlen wir, die Lead-Kampagne zeitlich von einem einzelnen Game-Mechanic zu entkoppeln oder das Spielfenster bewusst zu verlängern.`
+      title: 'Kampagnenfenster war durch die Game-Laufzeit begrenzt',
+      text: `Die Kampagne war direkt an die Laufzeit des Engadin-Games gebunden. Das erreichbare Lead-Volumen war dadurch von vornherein gedeckelt — mit identischem Budget und denselben Creatives hätte ein Fenster von 4–6 Wochen signifikant mehr Leads generiert.`
     },
     {
       icon: '📸', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
-      title: 'Image Ad 2 als Basis-Creative für Folgekampagnen nutzen und weiterentwickeln',
-      text: `Image Ad 2 generierte ${fmt(ad2)} Leads (${pct(ad2,T)}% aller Leads) — ${Math.round(ad2/Math.max(ad1,1))}× mehr als Image Ad 1 (${fmt(ad1)}). Bildsprache und Format haben einen massiven Einfluss. Adaption für weitere Kampagnen: Image Ad 2 als Vorlage nehmen, mit saisonalen oder event-spezifischen Motiven weiterentwickeln und von Beginn weg als Haupt-Creative einsetzen.`
+      title: 'Image Ad 2 war dominierend — Bildsprache entscheidet massgeblich',
+      text: `Image Ad 2 generierte ${fmt(ad2)} Leads (${pct(ad2,T)}% aller Leads) — ${Math.round(ad2/Math.max(ad1,1))}× mehr als Image Ad 1 (${fmt(ad1)}). Format und Bildsprache haben einen überproportionalen Einfluss auf die Lead-Rate, weit mehr als Budget oder Targeting.`
     },
     {
       icon: '📱', color: 'blue', badge: 'badge-blue', tag: 'Kanal-Allokation',
-      title: 'Budget-Shift zu Instagram — 80/20-Split als Standard für Folgekampagnen',
-      text: `Instagram (${fmt(ig)} Leads, ${pct(ig,paidTotal)}% des Paid-Traffics) übertrifft Facebook (${fmt(fb)}) deutlich. Die Skimarathon-Zielgruppe ist klar Instagram-affin. Adaption: In zukünftigen Lead-Kampagnen Budget-Split 80% Instagram / 20% Facebook setzen — bei gleichem CPL ergibt das messbar mehr Output ohne zusätzliches Budget.`
+      title: 'Instagram klar stärker als Facebook bei dieser Zielgruppe',
+      text: `Instagram lieferte ${fmt(ig)} Leads (${pct(ig,paidTotal)}% des Paid-Traffics) vs. ${fmt(fb)} auf Facebook. Die Skimarathon-Zielgruppe ist eindeutig Instagram-affin — Facebook spielte eine untergeordnete Rolle.`
     },
     {
       icon: '🌍', color: 'teal', badge: 'badge-teal', tag: 'Sprachregionen',
-      title: 'FR-Markt stärker bespielen — eigene Creatives und erhöhtes Budget einplanen',
-      text: `Mit ${fmt(frBroad + frRet)} Leads aus FR-Kampagnen (${pct(frBroad+frRet,T)}% aller META-Leads) zeigt die Romandie starkes Potenzial, das relativ zur Zielgruppengrösse die DE-Performance übertrifft. Adaption: FR-spezifische Creatives und Landingpages von Anfang an mitproduzieren sowie das FR-Budget im Vergleich zu dieser Kampagne erhöhen.`
+      title: 'Romandie überperformt relativ zur Zielgruppengrösse',
+      text: `${fmt(frBroad + frRet)} Leads aus FR-Kampagnen (${pct(frBroad+frRet,T)}% aller META-Leads). Gemessen an der Grösse der französischsprachigen Zielgruppe ist die Performance stärker als in der DE-Region — der FR-Markt ist unterinvestiert.`
     },
     {
       icon: '🔄', color: 'purple', badge: 'badge-purple', tag: 'Retargeting',
-      title: 'Retargeting-Pool früher aufbauen — für Folgekampagnen als eigene Phase planen',
-      text: `DE Retarget (${fmt(deRet)}) und FR Retarget (${fmt(frRet)}) zusammen liefern ${fmt(deRet+frRet)} Leads (${pct(deRet+frRet,metaTotal)}% der META-Leads). Das Broad-to-Retarget-Verhältnis von ${Math.round((deBroad+frBroad)/(deRet+frRet))} : 1 zeigt, dass Retargeting skalieren kann, wenn der Pool grösser ist. Adaption: Retargeting-Audiences in Phase 1 aufbauen, in Phase 2 mit dediziertem Budget konsequent aktivieren.`
+      title: 'Retargeting-Pool war zu klein für optimale Aktivierung',
+      text: `DE + FR Retarget lieferten ${fmt(deRet+frRet)} Leads (${pct(deRet+frRet,metaTotal)}% der META-Leads). Das Broad-to-Retarget-Verhältnis von ${Math.round((deBroad+frBroad)/Math.max(deRet+frRet,1))} : 1 zeigt, dass der Pool für Retargeting nicht gross genug war — Potenzial wurde verschenkt.`
     },
     {
       icon: '📞', color: 'green', badge: 'badge-green', tag: 'Datenqualität',
-      title: 'Telefonnummer-Leads für direkte Aktivierung systematisch nutzen',
-      text: `${fmt(S.withPhone)} von ${fmt(T)} Leads (${pct(S.withPhone,T)}%) haben eine Telefonnummer hinterlegt — ungewöhnlich hoch und ein Zeichen für echtes Interesse. Adaption: Diesen Lead-Typ für zukünftige Kampagnen als Premium-Segment behandeln und für SMS-Kampagnen, telefonische Ansprache oder exklusive Angebote gezielt einsetzen.`
+      title: 'Ungewöhnlich hohe Telefonnummer-Rate signalisiert echtes Interesse',
+      text: `${fmt(S.withPhone)} von ${fmt(T)} Leads (${pct(S.withPhone,T)}%) hinterliessen ihre Nummer — ein für Lead-Kampagnen überdurchschnittlich hoher Wert, der auf hohe Motivation und Kaufbereitschaft hindeutet.`
     },
     {
-      icon: '🎿', color: 'yellow', badge: 'badge-yellow', tag: 'Partner-Aktivierung',
-      title: 'Equipment-Daten für Partner-Pitches und Co-Kampagnen einsetzen',
-      text: `Fischer (${fmt(fischer)} Nennungen), Leki (${fmt(leki)}) und Toko (${fmt(toko)}) dominieren die Equipment-Präferenzen. Adaption: Diese Daten als Argument für Partner-Gespräche nutzen — Equipment-Brands können mit co-finanzierten Lead-Kampagnen direkt ihre Kernzielgruppe erreichen. FZero und weitere Wax-Brands als Erst-Kandidaten angehen.`
+      icon: '🎿', color: 'yellow', badge: 'badge-yellow', tag: 'Partner-Potenzial',
+      title: 'Equipment-Daten zeigen klare Markenpräferenzen in der Community',
+      text: `Fischer (${fmt(fischer)} Nennungen), Leki (${fmt(leki)}) und Toko (${fmt(toko)}) dominieren. Die Lead-Daten belegen eine direkt messbare Affinität zur Kernzielgruppe dieser Brands — ein starkes Argument für Partner-Kooperationen.`
     },
     {
       icon: '🏙️', color: 'orange', badge: 'badge-orange', tag: 'Geo-Targeting',
-      title: 'Zürich- und Bern-Umland als Primärziele ausweiten',
-      text: `Zürich (131) und Bern (102) liefern zusammen fast ein Drittel der geografisch identifizierbaren Leads. Adaption: Geo-Targeting in Folgekampagnen gezielt auf Zürich-Umland (Winterthur, Zug, Luzern) und Bern-Umland (Biel, Thun, Solothurn) ausweiten — hier liegt unausgeschöpftes Volumen mit ähnlichem Zielgruppenprofil.`
+      title: 'Zürich und Bern liefern fast ein Drittel der geografisch zuordenbaren Leads',
+      text: `Zürich (131) und Bern (102) zusammen decken fast 30% der identifizierbaren Geo-Leads ab. Das Umland dieser Städte war nicht explizit getargetet — das Potenzial dort ist noch weitgehend ungenutzt.`
     },
     {
       icon: '⚡', color: 'red', badge: 'badge-red', tag: 'Owned Channels',
-      title: 'Organische Basis als Owned-Channel stärken und als Lead-Quelle ausbauen',
-      text: `${fmt(S.organic)} Leads (${pct(S.organic,T)}% aller Leads) kamen ohne Paid-Touchpoint — direkt oder organisch. Das zeigt eine aktive Stammzielgruppe. Adaption: Newsletter, App-Push und Social-Organic als eigenständige Lead-Kanäle ausbauen, um den Paid-Anteil zu entlasten und den Cost-per-Lead insgesamt zu senken.`
+      title: '20% der Leads kamen organisch — ohne Paid-Aufwand',
+      text: `${fmt(S.organic)} Leads (${pct(S.organic,T)}% aller Leads) entstanden ohne Paid-Touchpoint — direkt oder über eigene Kanäle. Das belegt eine aktive, bereits überzeugte Stammzielgruppe, die als kostenloser Lead-Kanal unterschätzt wird.`
+    },
+  ];
+
+  const nextSteps = [
+    {
+      date: 'Sofort',
+      icon: '🤝',
+      title: 'Partner-Pitches lancieren',
+      desc: 'Fischer, Leki, Toko & FZero mit Equipment-Daten aus dieser Kampagne ansprechen — co-finanzierte Lead-Kampagne 2027 anbieten.',
+      red: true
+    },
+    {
+      date: 'Q3 2026',
+      icon: '⚡',
+      title: 'Owned Channels ausbauen',
+      desc: 'Newsletter-Frequenz erhöhen, App-Push aktivieren, Social-Organic stärken — Ziel: Owned-Lead-Anteil von 20% auf 30%+ steigern.',
+      red: true
+    },
+    {
+      date: 'Q4 2026',
+      icon: '📸',
+      title: 'Creatives produzieren',
+      desc: 'Image Ad 2 als Basis-Template verwenden. FR-spezifische Varianten & DE-Adaptionen von Beginn weg mitproduzieren.',
+      red: true
+    },
+    {
+      date: 'Jan 2027',
+      icon: '🚀',
+      title: 'Phase 1: Broad-Kampagne starten',
+      desc: '6 Wochen Laufzeit (entkoppelt vom Game). Budget-Split 80% Instagram / 20% Facebook. Geo-Targeting auf Zürich- & Bern-Umland ausweiten. Retargeting-Pool aktiv aufbauen.',
+      red: false
+    },
+    {
+      date: 'Feb 2027',
+      icon: '🔄',
+      title: 'Phase 2: Retargeting aktivieren',
+      desc: 'Dediziertes Retargeting-Budget einsetzen. FR-Budget gegenüber Phase 1 erhöhen. Separate FR-Landingpages schalten.',
+      red: false
+    },
+    {
+      date: 'Mär 2027',
+      icon: '📞',
+      title: 'Telefonnummer-Leads aktivieren',
+      desc: 'Premium-Segment mit Telefonnummer gezielt kontaktieren: SMS-Kampagne, exklusive Angebote oder persönliche Ansprache kurz vor dem Event.',
+      red: false
+    },
+    {
+      date: 'Post-Event',
+      icon: '📊',
+      title: 'Auswertung & Iteration',
+      desc: 'CPL, Lead-Qualität und Conversion-Rate nach Kanal, Geo und Creative auswerten. Learnings direkt in Planung 2028 einfliessen lassen.',
+      red: false
     },
   ];
 
   const panel = document.getElementById('tab-learnings');
   panel.innerHTML = `
-    <div class="learnings-header">${learnings.length} Adaptionen & Next Steps für zukünftige Lead-Kampagnen · Engadin Skimarathon 2026</div>
+    <div class="section-title">Learnings</div>
+    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne · Engadin Skimarathon 2026</div>
     <div class="learning-grid">
       ${learnings.map(l => `
         <div class="learning-card">
@@ -797,6 +866,25 @@ function renderLearnings() {
             <span class="learning-badge ${l.badge}">${l.tag}</span>
           </div>
         </div>`).join('')}
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="section-title">Next Steps</div>
+    <div class="section-subtitle">Roadmap für die Lead-Kampagne · Engadin Skimarathon 2027</div>
+    <div class="timeline-outer">
+      <div class="timeline-track">
+        ${nextSteps.map(s => `
+        <div class="tl-item">
+          <div class="tl-dot${s.red ? '' : ' grey'}"></div>
+          <div class="tl-date${s.red ? '' : ' grey'}">${s.date}</div>
+          <div class="tl-card">
+            <div class="tl-icon">${s.icon}</div>
+            <div class="tl-title">${s.title}</div>
+            <div class="tl-desc">${s.desc}</div>
+          </div>
+        </div>`).join('')}
+      </div>
     </div>`;
 }
 
