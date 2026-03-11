@@ -181,14 +181,10 @@ main{padding:22px 32px 52px;}
 .section-subtitle{font-size:12px;color:var(--grey);margin-bottom:20px;}
 /* TIMELINE */
 .timeline-outer{overflow-x:auto;padding:8px 0 16px;}
-.timeline-track{display:flex;align-items:flex-start;position:relative;min-width:700px;padding:48px 16px 8px;}
-.timeline-track::before{content:'';position:absolute;top:20px;left:16px;right:16px;height:3px;background:linear-gradient(90deg,var(--red) 0%,#ccc 100%);border-radius:2px;}
-.tl-item{flex:1;position:relative;padding:0 8px;}
-.tl-dot{width:14px;height:14px;border-radius:50%;background:var(--red);border:3px solid #fff;box-shadow:0 0 0 2px var(--red);position:absolute;top:-27px;left:50%;transform:translateX(-50%);z-index:1;}
-.tl-dot.grey{background:#aaa;box-shadow:0 0 0 2px #aaa;}
-.tl-date{font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:6px;text-align:center;}
-.tl-date.grey{color:#999;}
-.tl-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 14px 12px;text-align:left;}
+.timeline-track{display:flex;align-items:center;min-width:600px;gap:0;}
+.tl-item{flex:1;}
+.tl-arrow{flex-shrink:0;font-size:22px;color:var(--red);padding:0 6px;line-height:1;align-self:center;}
+.tl-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 16px 14px;height:100%;box-sizing:border-box;}
 .tl-icon{font-size:20px;margin-bottom:8px;}
 .tl-title{font-size:12px;font-weight:700;color:var(--black);line-height:1.3;margin-bottom:5px;}
 .tl-desc{font-size:11px;color:#666;line-height:1.5;}
@@ -802,53 +798,24 @@ function renderLearnings() {
 
   const nextSteps = [
     {
-      date: 'Sofort',
       icon: '🤝',
-      title: 'Partner-Pitches lancieren',
-      desc: 'Fischer, Leki, Toko & FZero mit Equipment-Daten aus dieser Kampagne ansprechen — co-finanzierte Lead-Kampagne 2027 anbieten.',
-      red: true
+      title: 'Swiss-Ski Partner-Gespräche führen',
+      desc: 'Mit Swiss-Ski Partnern in das Gespräch gehen und co-finanzierte Lead-Kampagnen für den Engadin Skimarathon 2027 entwickeln.'
     },
     {
-      date: 'Q3 2026',
-      icon: '⚡',
-      title: 'Owned Channels ausbauen',
-      desc: 'Newsletter-Frequenz erhöhen, App-Push aktivieren, Social-Organic stärken — Ziel: Owned-Lead-Anteil von 20% auf 30%+ steigern.',
-      red: true
+      icon: '📬',
+      title: 'Owned Channels stärken',
+      desc: 'Email-Marketing und App als primäre Owned-Lead-Kanäle ausbauen — um den Paid-Anteil zu entlasten und den Cost-per-Lead zu senken.'
     },
     {
-      date: 'Q4 2026',
       icon: '📸',
       title: 'Creatives produzieren',
-      desc: 'Image Ad 2 als Basis-Template verwenden. FR-spezifische Varianten & DE-Adaptionen von Beginn weg mitproduzieren.',
-      red: true
+      desc: 'Image Ad 2 als Basis-Template verwenden. FR-spezifische Varianten & DE-Adaptionen von Beginn weg mitproduzieren.'
     },
     {
-      date: 'Jan 2027',
-      icon: '🚀',
-      title: 'Phase 1: Broad-Kampagne starten',
-      desc: '6 Wochen Laufzeit (entkoppelt vom Game). Budget-Split 80% Instagram / 20% Facebook. Geo-Targeting auf Zürich- & Bern-Umland ausweiten. Retargeting-Pool aktiv aufbauen.',
-      red: false
-    },
-    {
-      date: 'Feb 2027',
-      icon: '🔄',
-      title: 'Phase 2: Retargeting aktivieren',
-      desc: 'Dediziertes Retargeting-Budget einsetzen. FR-Budget gegenüber Phase 1 erhöhen. Separate FR-Landingpages schalten.',
-      red: false
-    },
-    {
-      date: 'Mär 2027',
       icon: '📞',
-      title: 'Telefonnummer-Leads aktivieren',
-      desc: 'Premium-Segment mit Telefonnummer gezielt kontaktieren: SMS-Kampagne, exklusive Angebote oder persönliche Ansprache kurz vor dem Event.',
-      red: false
-    },
-    {
-      date: 'Post-Event',
-      icon: '📊',
-      title: 'Auswertung & Iteration',
-      desc: 'CPL, Lead-Qualität und Conversion-Rate nach Kanal, Geo und Creative auswerten. Learnings direkt in Planung 2028 einfliessen lassen.',
-      red: false
+      title: 'Telefonnummer-Leads nutzen',
+      desc: `${fmt(S.withPhone)} Leads haben eine Nummer hinterlassen — für zukünftige Actions wie SMS-Kampagnen oder direkte Ansprache einsetzbar.`
     },
   ];
 
@@ -874,16 +841,14 @@ function renderLearnings() {
     <div class="section-subtitle">Roadmap für die Lead-Kampagne · Engadin Skimarathon 2027</div>
     <div class="timeline-outer">
       <div class="timeline-track">
-        ${nextSteps.map(s => `
+        ${nextSteps.map((s, i) => `
         <div class="tl-item">
-          <div class="tl-dot${s.red ? '' : ' grey'}"></div>
-          <div class="tl-date${s.red ? '' : ' grey'}">${s.date}</div>
           <div class="tl-card">
             <div class="tl-icon">${s.icon}</div>
             <div class="tl-title">${s.title}</div>
             <div class="tl-desc">${s.desc}</div>
           </div>
-        </div>`).join('')}
+        </div>${i < nextSteps.length - 1 ? '<div class="tl-arrow">→</div>' : ''}`).join('')}
       </div>
     </div>`;
 }
