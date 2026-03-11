@@ -480,6 +480,10 @@ main{padding:22px 32px 52px;}
         <div id="spend-table"></div>
       </div>
       <div class="card span-2">
+        <div class="card-title">Anzeigengruppen-Performance — META Ads Manager</div>
+        <div id="adset-table"></div>
+      </div>
+      <div class="card span-2">
         <div class="card-title">DE vs. FR Verteilung</div>
         <div class="defr-wrap" id="defr-wrap"></div>
       </div>
@@ -533,6 +537,14 @@ let S = {
     {l:'FR Retarget', leads:100,  cpl:1.23, spend:122.84},
     {l:'DE Story',    leads:79,   cpl:2.76, spend:218.30},
     {l:'FR Story',    leads:80,   cpl:2.03, spend:162.57},
+  ],
+  adsets: [
+    {l:'fanengagement-d2c-engadinskimarathon-04032026-adset6-fr-broad-story', impressions:30313,  reach:20070,  freq:1.51, cpm:5.36, clicks:339,  von:'04.03.2026', bis:'08.03.2026', days:5},
+    {l:'fanengagement-d2c-engadinskimarathon-04032026-adset5-de-broad-story', impressions:35055,  reach:25037,  freq:1.40, cpm:6.23, clicks:467,  von:'04.03.2026', bis:'08.03.2026', days:5},
+    {l:'fanengagement-d2c-engadinskimarathon-23022026-adset4-fr-retarget',    impressions:26727,  reach:12935,  freq:2.07, cpm:4.60, clicks:373,  von:'23.02.2026', bis:'08.03.2026', days:14},
+    {l:'fanengagement-d2c-engadinskimarathon-23022026-adset3-fr-broad',       impressions:255497, reach:85692,  freq:2.98, cpm:4.57, clicks:3583, von:'23.02.2026', bis:'08.03.2026', days:14},
+    {l:'fanengagement-d2c-engadinskimarathon-23022026-adset2-de-retarget',    impressions:45137,  reach:16561,  freq:2.73, cpm:6.09, clicks:970,  von:'23.02.2026', bis:'08.03.2026', days:14},
+    {l:'fanengagement-d2c-engadinskimarathon-23022026-adset1-de-broad',       impressions:551405, reach:184480, freq:2.99, cpm:5.54, clicks:8786, von:'23.02.2026', bis:'08.03.2026', days:14},
   ],
   cities:  [{l:'Zürich',v:128},{l:'Bern',v:100},{l:'Luzern',v:65},{l:'Chur',v:65},{l:'Lausanne',v:48},{l:'Winterthur',v:41},{l:'Basel',v:39},{l:'Genève',v:31},{l:'St. Gallen',v:31},{l:'Schaffhausen',v:31}],
 };
@@ -694,6 +706,45 @@ function render() {
           <td class="num"><strong>CHF ${avgCPL}</strong></td>
           <td class="num"><strong>CHF ${totalSpend.toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></td>
           <td class="num"><strong>100%</strong></td>
+        </tr>
+      </tbody>
+    </table>`);
+
+  // ── ADSET TABLE ──
+  const adsetTotalImpr   = S.adsets.reduce((s,d)=>s+d.impressions,0);
+  const adsetTotalReach  = S.adsets.reduce((s,d)=>s+d.reach,0);
+  const adsetTotalClicks = S.adsets.reduce((s,d)=>s+d.clicks,0);
+  const adsetAvgFreq     = (adsetTotalImpr/adsetTotalReach).toFixed(2);
+  const adsetAvgCPM      = (S.adsets.reduce((s,d)=>s+d.cpm*d.impressions,0)/adsetTotalImpr).toFixed(2);
+  setHTML('adset-table', `
+    <table class="spend-table">
+      <thead><tr>
+        <th>Anzeigengruppe</th>
+        <th class="num">Impressionen</th>
+        <th class="num">Reichweite</th>
+        <th class="num">Frequenz</th>
+        <th class="num">CPM</th>
+        <th class="num">Link-Klicks</th>
+        <th>Zeitplan</th>
+      </tr></thead>
+      <tbody>
+        ${S.adsets.map(d=>`<tr>
+          <td style="font-size:11px;color:var(--mid)">${d.l}</td>
+          <td class="num">${fmt(d.impressions)}</td>
+          <td class="num">${fmt(d.reach)}</td>
+          <td class="num">${d.freq.toFixed(2).replace('.',',')}</td>
+          <td class="num">${d.cpm.toFixed(2).replace('.',',')} Fr.</td>
+          <td class="num">${fmt(d.clicks)}</td>
+          <td style="font-size:11px">${d.von} – ${d.bis}<br><span style="color:var(--grey)">${d.days} Tage</span></td>
+        </tr>`).join('')}
+        <tr class="spend-total-row">
+          <td><strong>Ergebnisse aus ${S.adsets.length} Anzeigengruppen</strong></td>
+          <td class="num"><strong>${fmt(adsetTotalImpr)}</strong></td>
+          <td class="num"><strong>${fmt(adsetTotalReach)}</strong></td>
+          <td class="num"><strong>${adsetAvgFreq.replace('.',',')}</strong></td>
+          <td class="num"><strong>${adsetAvgCPM.replace('.',',')} Fr.</strong></td>
+          <td class="num"><strong>${fmt(adsetTotalClicks)}</strong></td>
+          <td></td>
         </tr>
       </tbody>
     </table>`);
