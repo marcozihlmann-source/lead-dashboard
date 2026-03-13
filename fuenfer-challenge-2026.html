@@ -470,27 +470,34 @@ main{padding:22px 32px 52px;}
 ============================================= */
 let S = {
   meta: { title: 'Fünfer-Challenge 2026', stand: 'Stand März 2026' },
-  total: 0, fans: 0, participants: 0,
-  withPhone: 0, noPhone: 0, organic: 0,
-  broad: 0, retarget: 0, de_total: 0, fr_total: 0,
+  total: 7509, fans: 7509, participants: 0,
+  withPhone: 4030, noPhone: 3479, organic: 160,
+  broad: 7349, retarget: 0, de_total: 4900, fr_total: 2609,
 
-  source:  [{l:'Instagram',v:0},{l:'Facebook',v:0},{l:'Organisch/Direkt',v:0},{l:'Print',v:0},{l:'Website',v:0},{l:'LinkedIn',v:0},{l:'Andere',v:0}],
-  content: [{l:'Image Ad 1',v:0},{l:'Image Ad 2',v:0},{l:'Video Ad 1',v:0},{l:'Andere',v:0}],
-  camp:    [{l:'DE Broad',v:0},{l:'FR Broad',v:0},{l:'DE Retarget',v:0},{l:'FR Retarget',v:0}],
+  source:  [{l:'Instagram',v:5598},{l:'Facebook',v:1751},{l:'Organisch/Direkt',v:160},{l:'Print',v:0},{l:'Website',v:0},{l:'LinkedIn',v:0},{l:'Andere',v:0}],
+  content: [{l:'Image Ad 2',v:3424},{l:'Image Ad 3',v:904},{l:'Image Ad 1',v:381},{l:'Story (organisch)',v:160},{l:'Odlo',v:29},{l:'Andere',v:2}],
+  camp:    [{l:'DE Broad',v:4740},{l:'FR Broad',v:2609},{l:'DE Retarget',v:0},{l:'FR Retarget',v:0}],
   campSpend: [
-    {l:'DE Broad',    leads:0, cpl:0, spend:0},
-    {l:'FR Broad',    leads:0, cpl:0, spend:0},
+    {l:'DE Broad',    leads:4795, cpl:0.42, spend:2033.62},
+    {l:'FR Broad',    leads:2525, cpl:0.38, spend:966.36},
     {l:'DE Retarget', leads:0, cpl:0, spend:0},
     {l:'FR Retarget', leads:0, cpl:0, spend:0},
   ],
-  adsets: [],
+  adsets: [
+    {l:'adset1-de-broad (02.02.2026)', impressions:249936, reach:74967, freq:3.33, cpm:4.98, clicks:8360, von:'02.02.2026', bis:'28.02.2026', days:26},
+    {l:'adset1-de-broad (20.02.2026)', impressions:102594, reach:57592, freq:1.78, cpm:4.90, clicks:2557, von:'20.02.2026', bis:'28.02.2026', days:8},
+    {l:'adset1-de-broad (30.01.2026)', impressions:44491,  reach:21203, freq:2.10, cpm:6.41, clicks:1380, von:'30.01.2026', bis:'02.02.2026', days:4},
+    {l:'adset2-fr-broad (02.02.2026)', impressions:167529, reach:45660, freq:3.67, cpm:4.14, clicks:4701, von:'02.02.2026', bis:'28.02.2026', days:26},
+    {l:'adset2-fr-broad (20.02.2026)', impressions:59976,  reach:30907, freq:1.94, cpm:3.85, clicks:1357, von:'20.02.2026', bis:'28.02.2026', days:8},
+    {l:'adset2-fr-broad (30.01.2026)', impressions:8526,   reach:4503,  freq:1.89, cpm:4.98, clicks:206,  von:'30.01.2026', bis:'02.02.2026', days:4},
+  ],
   kantone: {
-    fans: [{l:'Romandie',v:0},{l:'ZH / Ostschweiz',v:0},{l:'BE / Mittelland',v:0},{l:'ZG / LU / NW / OW',v:0},{l:'BS / BL / AG / SO',v:0},{l:'GR (Graubünden)',v:0},{l:'SG / AR / AI / TG',v:0}],
+    fans: [{l:'Romandie',v:2430},{l:'BE / Mittelland',v:1281},{l:'ZH / Ostschweiz',v:946},{l:'BS / BL / AG / SO',v:910},{l:'ZG / LU / NW / OW',v:804},{l:'SG / AR / AI / TG',v:630},{l:'GR (Graubünden)',v:348},{l:'TI (Tessin)',v:159}],
     tn:   [{l:'ZH / Ostschweiz',v:0},{l:'BE / Mittelland',v:0},{l:'GR (Graubünden)',v:0},{l:'ZG / LU / NW / OW',v:0},{l:'Romandie',v:0},{l:'BS / BL / AG / SO',v:0},{l:'SG / AR / AI / TG',v:0}],
-    fanCities: [{l:'Zürich',v:0},{l:'Bern',v:0},{l:'Luzern',v:0},{l:'Chur',v:0},{l:'Lausanne',v:0}],
+    fanCities: [{l:'Zürich',v:105},{l:'Bern',v:68},{l:'Chur',v:59},{l:'Lausanne',v:58},{l:'Luzern',v:53}],
     tnCities:  [{l:'Zürich',v:0},{l:'Bern',v:0},{l:'Luzern',v:0},{l:'Chur',v:0},{l:'Lausanne',v:0}],
   },
-  cities:  [{l:'Zürich',v:0},{l:'Bern',v:0},{l:'Luzern',v:0},{l:'Chur',v:0},{l:'Lausanne',v:0}],
+  cities:  [{l:'Zürich',v:105},{l:'Bern',v:68},{l:'Chur',v:59},{l:'Lausanne',v:58},{l:'Luzern',v:53}],
 };
 
 const RED = '#E3001B';
