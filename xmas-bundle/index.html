@@ -16,13 +16,11 @@
 body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--black);min-height:100vh;}
 
 /* HEADER */
-header{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;box-shadow:0 1px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:100;}
+header{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;box-shadow:0 1px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:100;overflow:hidden;}
 .header-top{display:flex;align-items:center;justify-content:space-between;padding:16px 0 0;flex-wrap:wrap;gap:10px;}
 .header-left{display:flex;align-items:center;gap:14px;}
-.swiss-cross{width:36px;height:36px;background:var(--red);border-radius:4px;flex-shrink:0;box-shadow:0 2px 12px rgba(227,0,27,0.28);position:relative;}
-.swiss-cross::before,.swiss-cross::after{content:'';position:absolute;background:#fff;border-radius:1px;left:50%;top:50%;transform:translate(-50%,-50%);}
-.swiss-cross::before{width:5px;height:22px;}
-.swiss-cross::after{width:22px;height:5px;}
+.header-logo{height:30px;width:auto;flex-shrink:0;}
+.header-glow{position:absolute;top:0;right:0;height:100%;width:500px;object-fit:cover;object-position:20% center;opacity:0.22;pointer-events:none;}
 .header-brand{border-right:1px solid var(--rule);padding-right:14px;margin-right:2px;}
 .header-brand h1{font-size:19px;font-weight:900;color:var(--black);letter-spacing:-0.02em;}
 .header-sub{font-size:12px;color:var(--grey);}
@@ -370,13 +368,14 @@ main{padding:22px 32px 52px;}
 <div class="toast" id="toast">Dashboard aktualisiert</div>
 
 <header>
+  <img src="../header/DARK-FULL-GLOW_horizontal_1920x1080px_RGB (1).png" alt="" class="header-glow">
   <div class="header-top">
     <div class="header-left">
       <button class="back-btn visible" id="backBtn" onclick="window.location.href='../'">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Übersicht
       </button>
-      <div class="swiss-cross"></div>
+      <img src="../header/Swiss-Ski_Logo_RGB_Rot.png" alt="Swiss-Ski" class="header-logo">
       <div class="header-brand">
         <h1 id="hdr-title">X-Mas Bundle</h1>
       </div>

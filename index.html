@@ -24,9 +24,11 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
 
 /* HOME HEADER */
-.home-header{background:var(--card);border-bottom:1px solid var(--border);padding:20px 32px;box-shadow:0 1px 6px rgba(0,0,0,0.06);flex-shrink:0;}
-.home-header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.home-header{background:var(--card);border-bottom:1px solid var(--border);padding:20px 32px;box-shadow:0 1px 6px rgba(0,0,0,0.06);flex-shrink:0;position:relative;overflow:hidden;}
+.home-header-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:relative;z-index:1;}
 .home-header-left{display:flex;align-items:center;gap:14px;}
+.home-header-glow{position:absolute;top:0;right:0;height:100%;width:500px;object-fit:cover;object-position:20% center;opacity:0.22;pointer-events:none;}
+.header-logo{height:30px;width:auto;flex-shrink:0;}
 .home-title{font-size:20px;font-weight:900;color:var(--black);letter-spacing:-0.02em;}
 .home-subtitle{font-size:12px;color:var(--grey);margin-top:2px;}
 
@@ -93,9 +95,10 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
 <body>
 
 <div class="home-header">
+  <img src="header/DARK-FULL-GLOW_horizontal_1920x1080px_RGB (1).png" alt="" class="home-header-glow">
   <div class="home-header-inner">
     <div class="home-header-left">
-      <div class="swiss-cross"></div>
+      <img src="header/Swiss-Ski_Logo_RGB_Rot.png" alt="Swiss-Ski" class="header-logo">
       <div>
         <div class="home-title">Lead-Kampagnen Übersicht</div>
         <div class="home-subtitle">Alle Kampagnen auf einen Blick · Stand März 2026</div>
