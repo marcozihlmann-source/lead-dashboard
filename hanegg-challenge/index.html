@@ -276,6 +276,18 @@ main{padding:22px 32px 52px;}
 
 
 /* CREATIVE GRID */
+/* ATHLETE GRID */
+.athlete-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:4px 0;}
+.athlete-card{display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:9px;padding:14px 16px;border:1.5px solid var(--border);transition:transform 0.15s;}
+.athlete-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+.athlete-card.top{border-color:var(--red);background:var(--red-light);}
+.athlete-rank{font-size:13px;font-weight:900;color:var(--grey);min-width:22px;text-align:center;}
+.athlete-card.top .athlete-rank{color:var(--red);}
+.athlete-info{flex:1;min-width:0;}
+.athlete-name{font-size:13px;font-weight:800;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.athlete-stats{font-size:11px;color:var(--grey);margin-top:2px;}
+.athlete-bar-track{height:4px;background:var(--border);border-radius:2px;margin-top:5px;}
+.athlete-bar-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.8s ease-out;}
 .creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px;}
 .creative-card{background:var(--bg);border-radius:9px;overflow:hidden;border:1.5px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;}
 .creative-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.10);}
@@ -429,7 +441,7 @@ main{padding:22px 32px 52px;}
         <div class="best-box" id="best-box"></div>
       </div>
       <div class="card span-2">
-        <div class="card-title">Paid vs. Organisch Überblick</div>
+        <div class="card-title">Paid Social Überblick</div>
         <div class="paid-wrap">
           <div class="paid-bars" id="paid-bars"></div>
           <div class="paid-insights" id="paid-insights"></div>
@@ -471,7 +483,7 @@ main{padding:22px 32px 52px;}
     <div class="grid-2">
       <div class="card span-2">
         <div class="card-title">Athleten-Ranking</div>
-        <div class="hbar-list" id="hbar-athletes"></div>
+        <div id="athlete-grid"></div>
       </div>
       <div class="card">
         <div class="card-title">Athleten-Verteilung</div>
@@ -479,7 +491,7 @@ main{padding:22px 32px 52px;}
       </div>
       <div class="card">
         <div class="card-title">Speed-Statistik</div>
-        <div class="kpi-row" id="kpi-speed" style="flex-direction:column;gap:8px;"></div>
+        <div id="kpi-speed"></div>
       </div>
     </div>
   </div>
@@ -496,7 +508,7 @@ let S = {
   meta: { title: 'HANEGG-Challenge', stand: 'Stand Januar 2026' },
   total: 3854,
   withPhone: 2417, noPhone: 1437, organic: 0,
-  broad: 3854, de_total: 3854, fr_total: 0,
+  broad: 3854, de_total: 3544, fr_total: 310,
 
   source:  [{l:'META Ads',v:3854}],
   content: [{l:'Video Ad',v:2056},{l:'Image Ad',v:1798}],
@@ -544,9 +556,8 @@ function render() {
     kpi(fmt(S.total),      'Total Leads',       'Alle Spielteilnahmen gesamt', true),
     kpi(fmt(S.withPhone),'Mit Telefonnummer', pct(S.withPhone,T)+'% -- qualifiziert für Outreach'),
     kpi(fmt(S.noPhone),'Ohne Telefonnummer', pct(S.noPhone,T)+'% ohne Telefon'),
-    kpi(fmt(S.de_total),   'DE Leads',        pct(S.de_total,T)+'% aller Leads'),
-    kpi(fmt(S.fr_total),   'FR Leads',        pct(S.fr_total,T)+'% aller Leads'),
-    kpi(fmt(S.organic),'Organisch / Direkt', 'Leads ohne UTM-Tracking'),
+    kpi(fmt(S.de_total),   'DE Leads',        pct(S.de_total,T)+'% aller Leads (PLZ-basiert)'),
+    kpi(fmt(S.fr_total),   'FR Leads',        pct(S.fr_total,T)+'% aller Leads (PLZ-basiert)'),
   ].join(''));
 
   // Donuts
@@ -577,12 +588,11 @@ function render() {
   animateFills(document.getElementById('phone-bars'));
 
   // -- KANAL KPIs --
-  const ig = S.source.find(d=>d.l==='Instagram')?.v||0;
-  const fb = S.source.find(d=>d.l==='Facebook')?.v||0;
+  const metaAds = S.source.find(d=>d.l==='META Ads')?.v||S.total;
   setHTML('kpi-kanal', [
-    kpi(fmt(ig), 'Instagram',       pct(ig,T)+'% -- stärkster Kanal', true),
-    kpi(fmt(fb), 'Facebook',        pct(fb,T)+'% aller Leads'),
-    kpi(fmt(S.organic),'Organisch / Direkt','Kein UTM trackbar'),
+    kpi(fmt(metaAds), 'META Ads',  '100% via Paid Social', true),
+    kpi(fmt(14269), 'Link-Klicks', 'Total aus META Ads Manager'),
+    kpi('CHF 0.25', 'CPC',         'Kosten pro Link-Klick'),
   ].join(''));
 
   buildHBars('hbar-source',  S.source,  T);
@@ -595,12 +605,13 @@ function render() {
     <div class="bv">${best.l} -- ${fmt(best.v)} Leads</div>
     <div class="bs">${pct(best.v,T)}% aller Leads via einem einzigen Creative</div>`);
 
-  const paidTotal = ig+fb;
-  const paid = [{l:'Paid Social (IG + FB)',v:paidTotal},{l:'Organisch / Direkt',v:S.organic}];
+  const paidTotal = S.total - S.organic;
+  const paid = [{l:'Paid Social (META Ads)',v:paidTotal}];
+  if(S.organic > 0) paid.push({l:'Organisch / Direkt',v:S.organic});
   buildPaidBars(paid);
   setHTML('paid-insights', [
     ins('Paid Social Anteil',   pct(paidTotal,T)+'%'),
-    ins('IG-Anteil am Paid',    pct(ig,Math.max(paidTotal,1))+'%'),
+    ins('Total Klicks (META)',  fmt(14269)),
     ins('Best Creative Anteil', pct(best.v,T)+'%'),
   ].join(''));
 
@@ -739,16 +750,27 @@ function renderAthleten() {
   setHTML('kpi-athleten', [
     kpi(String(ath.length), 'Athleten', 'zur Auswahl im Game', true),
     kpi(top.l, 'Beliebtester', fmt(top.v)+' Stimmen ('+pct(top.v,T)+'%)'),
-    kpi(S.speedAvg?.toFixed(1)+' km/h', 'Ø Speed', 'Geschätzte Geschwindigkeit'),
-    kpi(S.speedMin?.toFixed(0)+'–'+S.speedMax?.toFixed(0)+' km/h', 'Speed Range', 'Min – Max'),
+    kpi('Ø '+S.speedAvg?.toFixed(1)+' km/h', 'Speed', 'Geschätzte Geschwindigkeit'),
+    kpi(S.speedMin?.toFixed(0)+' – '+S.speedMax?.toFixed(0)+' km/h', 'Speed Range', 'Min – Max'),
   ].join(''));
 
-  // Horizontal bars
+  // Athlete card grid
   const max = Math.max(...ath.map(d=>d.v),1);
-  setHTML('hbar-athletes', ath.map(d => {
+  setHTML('athlete-grid', '<div class="athlete-grid">' + ath.map((d,i) => {
     const w = (d.v/max*100).toFixed(1);
-    return `<div class="hbar"><div class="hbar-label">${d.l}</div><div class="hbar-track"><div class="hbar-fill" style="width:${w}%"></div></div><div class="hbar-val">${fmt(d.v)} <span style="color:var(--grey);font-weight:400">(${pct(d.v,T)}%)</span></div></div>`;
-  }).join(''));
+    const isTop = i === 0;
+    return `<div class="athlete-card${isTop?' top':''}">
+      <div class="athlete-rank">#${i+1}</div>
+      <div class="athlete-info">
+        <div class="athlete-name">${d.l}</div>
+        <div class="athlete-stats">${fmt(d.v)} Stimmen · ${pct(d.v,T)}%</div>
+        <div class="athlete-bar-track"><div class="athlete-bar-fill" data-w="${w}"></div></div>
+      </div>
+    </div>`;
+  }).join('') + '</div>');
+  setTimeout(()=>{
+    document.querySelectorAll('.athlete-bar-fill').forEach(el=>el.style.width=el.dataset.w+'%');
+  }, 80);
 
   // Pie chart
   renderDonutChart('chart-athletes', ath, T);
