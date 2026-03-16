@@ -418,6 +418,19 @@ main{padding:22px 32px 52px;}
   <!-- ÜBERSICHT -->
   <div class="tab-panel active" id="tab-uebersicht">
     <div class="kpi-row" id="kpi-uebersicht"></div>
+    <!-- CPL BENCHMARK INLINE -->
+    <div class="benchmark-bar" style="margin:0 0 18px;padding:18px 20px 14px;">
+      <div class="benchmark-bar-title" style="font-size:12px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        CPL-Bewertung: Erweiterter Lead
+      </div>
+      <div class="benchmark-bar-desc" style="margin-bottom:10px;">Diese Kampagne erfasst erweiterte Leads (Vorname, Nachname, Adresse, PLZ, Ort, Telefonnummer, E-Mail).</div>
+      <div class="benchmark-bar-ampel">
+        <span class="benchmark-bar-pill green">&#9679; bis CHF 4.00</span>
+        <span class="benchmark-bar-pill orange">&#9679; CHF 4.01 – 7.00</span>
+        <span class="benchmark-bar-pill red">&#9679; ab CHF 7.01</span>
+      </div>
+    </div>
     <div class="grid-3">
       <div class="card">
         <div class="card-title">Profil-Kennzahlen</div>
@@ -514,35 +527,6 @@ main{padding:22px 32px 52px;}
   <!-- LEARNINGS -->
   <div class="tab-panel" id="tab-learnings"></div>
 </main>
-
-<!-- CPL BENCHMARK -->
-<div class="benchmark-bar">
-  <div class="benchmark-bar-title">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-    CPL-Bewertung nach Leadtyp
-  </div>
-  <div class="benchmark-bar-desc">Die Ampelbewertung erfolgt differenziert nach Leadtyp. Diese Kampagne erfasst <strong>erweiterte Leads</strong>.</div>
-  <div class="benchmark-bar-grid">
-    <div class="benchmark-bar-box">
-      <div class="benchmark-bar-box-title">Standard Lead</div>
-      <div class="benchmark-bar-box-fields">Vorname, Nachname, E-Mail</div>
-      <div class="benchmark-bar-ampel">
-        <span class="benchmark-bar-pill green">&#9679; bis CHF 1.00</span>
-        <span class="benchmark-bar-pill orange">&#9679; CHF 1.01 – 2.50</span>
-        <span class="benchmark-bar-pill red">&#9679; ab CHF 2.51</span>
-      </div>
-    </div>
-    <div class="benchmark-bar-box active">
-      <div class="benchmark-bar-box-title">Erweiterter Lead</div>
-      <div class="benchmark-bar-box-fields">Vorname, Nachname, Adresse, PLZ, Ort, Telefonnummer, E-Mail</div>
-      <div class="benchmark-bar-ampel">
-        <span class="benchmark-bar-pill green">&#9679; bis CHF 4.00</span>
-        <span class="benchmark-bar-pill orange">&#9679; CHF 4.01 – 7.00</span>
-        <span class="benchmark-bar-pill red">&#9679; ab CHF 7.01</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
 /* =============================================
