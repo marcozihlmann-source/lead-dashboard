@@ -876,9 +876,17 @@ function renderBarChart(id, data, total) {
 
 
 /* -- CREATIVE IMAGES -- */
-const CREATIVE_IMGS = {};
+const CREATIVE_IMGS = {
+  'Image Ad 1': 'images_fuenfer-challenge/imagead1.jpg',
+  'Image Ad 2': 'images_fuenfer-challenge/imagead2.jpg',
+  'Image Ad 3': 'images_fuenfer-challenge/imagead3.jpg',
+  'Odlo': 'images_fuenfer-challenge/odlo.jpg',
+  'Story (organisch)': 'images_fuenfer-challenge/story.jpg',
+};
 
-const CREATIVE_ASPECT = {};
+const CREATIVE_ASPECT = {
+  'Story (organisch)': 'cc-img video',
+};
 
 function buildContentCards() {
   const container = document.getElementById('creative-grid');
