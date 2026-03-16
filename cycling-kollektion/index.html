@@ -369,7 +369,7 @@ main{padding:22px 32px 52px;}
     </div>
     <div class="header-right">
       <div class="header-meta">
-        <span id="hdr-stand">Stand März 2026</span><br>
+        <span id="hdr-stand">Stand Juni 2025</span> · <span style="font-size:11px;color:var(--grey)">28. Mai – 11. Jun 2025</span><br>
         <strong id="hdr-total">0 Leads</strong>
       </div>
       <button class="edit-btn" id="editBtn" onclick="openEdit()">
@@ -396,7 +396,7 @@ main{padding:22px 32px 52px;}
         <div class="donuts-row" id="donuts-row"></div>
       </div>
       <div class="card">
-        <div class="card-title">Gender-Verteilung</div>
+        <div class="card-title">Sprachregionen-Split</div>
         <div style="position:relative;height:205px"><canvas id="chart-roles"></canvas></div>
       </div>
       <div class="card">
@@ -404,7 +404,7 @@ main{padding:22px 32px 52px;}
         <div style="position:relative;height:205px"><canvas id="chart-lang"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Gender-Split</div>
+        <div class="card-title">DE / FR Verteilung</div>
         <div class="phone-bars" id="phone-bars"></div>
       </div>
     </div>
@@ -473,16 +473,44 @@ main{padding:22px 32px 52px;}
    STATE — alle Werte zentral hier
 ============================================= */
 let S = {
-  meta: { title: 'Cycling Kollektion', stand: 'Stand März 2026' },
-  total: 0,
-  male: 0, female: 0, organic: 0,
-  broad: 0, de_total: 0, fr_total: 0,
+  meta: { title: 'Cycling Kollektion', stand: 'Stand Juni 2025' },
+  total: 1745,
+  de_total: 1142, fr_total: 603, organic: 0,
+  broad: 1745,
+  dataType: 'email',
 
-  source:  [],
-  content: [],
-  camp:    [],
-  campSpend: [],
-  adsets: [],
+  source: [{l:'META Ads',v:1745}],
+  content: [
+    {l:'DE Broad Video (28.05)',v:269},
+    {l:'FR Broad Video (28.05)',v:356},
+    {l:'DE Broad Image 2 (28.05)',v:336},
+    {l:'DE Broad Video (06.06)',v:278},
+    {l:'FR Retargeting IG Video (06.06)',v:188},
+    {l:'DE Retargeting IG Video (06.06)',v:145},
+    {l:'DE Broad Image 1 (28.05)',v:80},
+    {l:'DE Retargeting Store Video (06.06)',v:41},
+    {l:'FR Broad Image 2 (28.05)',v:36},
+    {l:'FR Broad Video (06.06)',v:18},
+    {l:'FR Broad Image 1 (28.05)',v:10},
+  ],
+  camp: [{l:'DE Broad + Retargeting',v:1142},{l:'FR Broad + Retargeting',v:603}],
+  campSpend: [
+    {l:'DE (all adsets)', leads:1142, cpl:0.52, spend:588.62},
+    {l:'FR (all adsets)', leads:603, cpl:0.63, spend:379.15},
+  ],
+  adsets: [
+    {l:'adset1-de-broad-videoad (28.05)', impressions:16885, reach:7491, freq:1.84, cpm:6.56, clicks:361, von:'28.05.2025', bis:'11.06.2025', days:14},
+    {l:'adset1-de-broad-imagead1 (28.05)', impressions:5764, reach:4455, freq:1.26, cpm:6.36, clicks:115, von:'28.05.2025', bis:'11.06.2025', days:14},
+    {l:'adset1-de-broad-imagead2 (28.05)', impressions:20207, reach:11358, freq:1.74, cpm:6.13, clicks:508, von:'28.05.2025', bis:'11.06.2025', days:14},
+    {l:'adset2-fr-broad-videoad (28.05)', impressions:19904, reach:7910, freq:2.05, cpm:6.47, clicks:478, von:'28.05.2025', bis:'11.06.2025', days:14},
+    {l:'adset2-fr-broad-imagead1 (28.05)', impressions:1029, reach:890, freq:1.15, cpm:4.12, clicks:16, von:'28.05.2025', bis:'11.06.2025', days:14},
+    {l:'adset2-fr-broad-imagead2 (28.05)', impressions:3120, reach:2061, freq:1.49, cpm:4.44, clicks:51, von:'28.05.2025', bis:'11.06.2025', days:14},
+    {l:'adset1-de-broad-videoad (06.06)', impressions:36183, reach:18673, freq:1.46, cpm:8.42, clicks:495, von:'06.06.2025', bis:'11.06.2025', days:5},
+    {l:'adset4-de-retargeting-IG (06.06)', impressions:27136, reach:11133, freq:1.66, cpm:6.88, clicks:260, von:'06.06.2025', bis:'11.06.2025', days:5},
+    {l:'adset3-de-retargeting-store (06.06)', impressions:6407, reach:3808, freq:1.28, cpm:9.30, clicks:69, von:'06.06.2025', bis:'11.06.2025', days:5},
+    {l:'adset5-fr-retargeting-IG (06.06)', impressions:29098, reach:14583, freq:1.72, cpm:7.41, clicks:327, von:'06.06.2025', bis:'11.06.2025', days:5},
+    {l:'adset2-fr-broad-videoad (06.06)', impressions:1731, reach:1243, freq:1.22, cpm:6.68, clicks:35, von:'06.06.2025', bis:'11.06.2025', days:5},
+  ],
 };
 
 const RED = '#E3001B';
@@ -504,11 +532,11 @@ function render() {
 
   // -- ÜBERSICHT KPIs --
   setHTML('kpi-uebersicht', [
-    kpi(fmt(S.total),      'Total Leads',       'Alle Leads gesamt', true),
-    kpi(fmt(S.female),'Weiblich', pct(S.female,T)+'% aller Leads'),
-    kpi(fmt(S.male),'Männlich', pct(S.male,T)+'% aller Leads'),
-    kpi(fmt(S.de_total),   'DE Leads',        pct(S.de_total,T)+'% aller Leads'),
-    kpi(fmt(S.fr_total),   'FR Leads',        pct(S.fr_total,T)+'% aller Leads'),
+    kpi(fmt(S.total), 'Total Leads', 'Alle Leads gesamt', true),
+    kpi(fmt(S.de_total), 'DE Leads', pct(S.de_total,T)+'% aller Leads'),
+    kpi(fmt(S.fr_total), 'FR Leads', pct(S.fr_total,T)+'% aller Leads'),
+    kpi('CHF 0.55', 'Ø CPL', 'Cost per Lead (META)'),
+    kpi(fmt(2715), 'Link-Klicks', 'CTR 1.99%'),
   ].join(''));
 
   // Donuts
@@ -516,34 +544,36 @@ function render() {
 
   // Charts
   renderDonutChart('chart-roles',
-    [{l:'Weiblich',v:S.female},{l:'Männlich',v:S.male}], T);
+    [{l:'Deutsch (DE)',v:S.de_total},{l:'Français (FR)',v:S.fr_total}], T);
   renderDonutChart('chart-lang',
-    [{l:'Deutsch',v:S.de_total||Math.round(T*0.75)},{l:'Français',v:S.fr_total||Math.round(T*0.25)}], T);
-  // Gender bars
+    [{l:'Deutsch',v:S.de_total},{l:'Français',v:S.fr_total}], T);
+  // DE/FR bars
   setHTML('phone-bars', `
     <div class="phone-bar-row">
-      <div class="phone-bar-head">Weiblich <span>${pct(S.female,T)}%</span></div>
-      <div class="phone-track"><div class="phone-fill" style="background:var(--red)" data-w="${pct(S.female,T)}"></div></div>
-      <div class="phone-sub">${fmt(S.female)} Leads</div>
+      <div class="phone-bar-head">Deutsch (DE) <span>${pct(S.de_total,T)}%</span></div>
+      <div class="phone-track"><div class="phone-fill" style="background:var(--red)" data-w="${pct(S.de_total,T)}"></div></div>
+      <div class="phone-sub">${fmt(S.de_total)} Leads</div>
     </div>
     <div class="phone-bar-row">
-      <div class="phone-bar-head">Männlich <span>${pct(S.male,T)}%</span></div>
-      <div class="phone-track"><div class="phone-fill" style="background:#888" data-w="${pct(S.male,T)}"></div></div>
-      <div class="phone-sub">${fmt(S.male)} Leads</div>
+      <div class="phone-bar-head">Français (FR) <span>${pct(S.fr_total,T)}%</span></div>
+      <div class="phone-track"><div class="phone-fill" style="background:#888" data-w="${pct(S.fr_total,T)}"></div></div>
+      <div class="phone-sub">${fmt(S.fr_total)} Leads</div>
     </div>
     <div class="outreach-box">
-      <div class="ol">Grösste Zielgruppe</div>
-      <div class="ov">${fmt(S.female)}</div>
-      <div class="os">Weibliche Leads</div>
+      <div class="ol">Nur E-Mail Leads</div>
+      <div class="ov">${fmt(S.total)}</div>
+      <div class="os">Kein Telefon / Gender erfasst</div>
     </div>`);
   animateFills(document.getElementById('phone-bars'));
 
   // -- KANAL KPIs --
-  const metaAds = S.source.find(d=>d.l==='META Ads')?.v||S.total;
+  const totalClicks = S.adsets.reduce((s,d)=>s+d.clicks,0);
+  const totalSpendKanal = S.campSpend.reduce((s,d)=>s+d.spend,0);
+  const cpc = totalClicks > 0 ? (totalSpendKanal/totalClicks).toFixed(2) : '0.00';
   setHTML('kpi-kanal', [
-    kpi(fmt(metaAds), 'META Ads',       '100% aller Leads', true),
-    kpi("12'020", 'Link-Klicks',        'Total Klicks auf Anzeigen'),
-    kpi('CHF 0.36', 'CPC',              'CHF 4\'343.52 / 12\'020 Klicks'),
+    kpi(fmt(S.total), 'META Ads', '100% aller Leads', true),
+    kpi(fmt(totalClicks), 'Link-Klicks', 'CTR 1.99%'),
+    kpi('CHF '+cpc, 'CPC', 'Cost per Click'),
   ].join(''));
 
   buildHBars('hbar-source',  S.source,  T);
@@ -556,7 +586,7 @@ function render() {
     <div class="bv">${best.l} -- ${fmt(best.v)} Leads</div>
     <div class="bs">${pct(best.v,T)}% aller Leads via einem einzigen Creative</div>`);
 
-  const paid = [{l:'Paid Social (META Ads)',v:metaAds}];
+  const paid = [{l:'Paid Social (META Ads)',v:S.total}];
   buildPaidBars(paid);
   setHTML('paid-insights', [
     ins('Paid Social Anteil',   '100%'),
@@ -565,8 +595,8 @@ function render() {
   ].join(''));
 
   // -- KAMPAGNE KPIs --
-  const deBroad = S.camp.find(d=>d.l==='DE Broad')?.v||0;
-  const frBroad = S.camp.find(d=>d.l==='FR Broad')?.v||0;
+  const deBroad = S.camp.find(d=>d.l.startsWith('DE'))?.v||0;
+  const frBroad = S.camp.find(d=>d.l.startsWith('FR'))?.v||0;
   const totalMetaSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
   const totalMetaLeads = S.campSpend.reduce((s,d)=>s+d.leads,0);
   const avgCPLAll = totalMetaLeads > 0 ? (totalMetaSpend/totalMetaLeads).toFixed(2) : '0.00';
@@ -671,8 +701,8 @@ function render() {
       <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(frBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:#BBBBBB" data-w="${pct(frBroad,T)}"></div></div></div>
     </div>
     <div class="defr-insights">
-      ${ins('Breiteste Kampagne','DE Broad -- '+fmt(deBroad))}
-      ${ins('FR Broad Anteil',    pct(frBroad,T)+'% aller Leads')}
+      ${ins('Stärkste Region','DE Broad + Retargeting -- '+fmt(deBroad))}
+      ${ins('FR Anteil',          pct(frBroad,T)+'% aller Leads')}
       ${ins('DE-Anteil gesamt',   pct(S.de_total,T)+'%')}
     </div>`);
   animateFills(document.getElementById('defr-wrap'));
@@ -690,27 +720,60 @@ function render() {
 function renderLearnings() {
   const T = S.total || 1;
   const bestContent = [...S.content].sort((a,b)=>b.v-a.v)[0];
-  const deBroad = S.camp.find(d=>d.l==='DE Broad')?.v||0;
-  const frBroad = S.camp.find(d=>d.l==='FR Broad')?.v||0;
 
   const learnings = [
     {
-      icon: '📸', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
-      title: 'Noch keine Daten',
-      text: 'Learnings werden nach Kampagnenstart ergänzt.'
+      icon: '🎬', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
+      title: 'Video Ads outperformen Image Ads deutlich',
+      text: 'FR Broad Video erzielte 356 Leads, während FR Image Ads zusammen nur 46 Leads generierten. Video ist das klar stärkere Format.'
+    },
+    {
+      icon: '💰', color: 'green', badge: 'badge-green', tag: 'Effizienz',
+      title: 'Wave 1 (Broad) effizienter als Wave 2 (Retargeting)',
+      text: 'Die Broad-Kampagnen in Wave 1 erzielten tiefere CPLs als die Retargeting-Kampagnen in Wave 2.'
+    },
+    {
+      icon: '🇫🇷', color: 'red', badge: 'badge-red', tag: 'Markt-Insight',
+      title: 'FR Video überraschend stark -- Best Performer',
+      text: 'FR Broad Video (28.05) erzielte 356 Leads bei einem CPL von CHF 0.29 und ist damit der beste Performer der gesamten Kampagne.'
+    },
+    {
+      icon: '📉', color: 'green', badge: 'badge-green', tag: 'Budget-Effizienz',
+      title: 'Sehr tiefer CPL von CHF 0.55 bei nur CHF 968 Spend',
+      text: 'Mit einem Gesamtbudget von unter CHF 1\'000 wurden 1\'745 Leads generiert -- herausragende Kosteneffizienz.'
+    },
+    {
+      icon: '🎨', color: 'red', badge: 'badge-red', tag: 'Creative Diversity',
+      title: '12 Ad-Varianten über 2 Waves getestet',
+      text: 'Gute Creative-Diversität mit Videos und Images in beiden Sprachregionen über zwei zeitlich gestaffelte Waves.'
+    },
+    {
+      icon: '🌍', color: 'green', badge: 'badge-green', tag: 'Sprachregionen',
+      title: 'DE/FR Split: 65.4% DE, 34.6% FR',
+      text: 'Starke FR-Performance mit 603 Leads (34.6%). Der französische Markt zeigt grosses Potenzial für Skalierung.'
     },
   ];
 
   const nextSteps = [
     {
-      icon: '🎯',
-      title: 'Kampagne aufsetzen',
-      desc: 'Cycling Kollektion Kampagne in META Ads Manager konfigurieren und starten.'
+      icon: '📧',
+      title: 'E-Mail Follow-up starten',
+      desc: 'E-Mail Follow-up an 1\'745 Leads starten.'
     },
     {
-      icon: '📊',
-      title: 'Daten erfassen & Dashboard befüllen',
-      desc: 'Lead-Daten und Kampagnen-KPIs laufend ins Dashboard eintragen.'
+      icon: '🎬',
+      title: 'Video Ads als Primärformat',
+      desc: 'Video Ads als primäres Format für zukünftige Kampagnen einsetzen.'
+    },
+    {
+      icon: '🇫🇷',
+      title: 'FR-Markt skalieren',
+      desc: 'FR-Markt weiter skalieren (starke Performance).'
+    },
+    {
+      icon: '🔄',
+      title: 'Retargeting optimieren',
+      desc: 'Retargeting-Strategie optimieren (höhere CPLs in Wave 2).'
     },
   ];
 
@@ -767,7 +830,7 @@ function renderDonuts() {
   const T = S.total || 1;
   const items = [
     {id:'d-leads', pct:100, label:'Total Leads', val:S.total},
-    {id:'d-tel',   pct:+pct(S.female,T), label:'Weiblich', val:S.female},
+    {id:'d-tel',   pct:+pct(S.de_total,T), label:'DE Leads', val:S.de_total},
   ];
   const CIRC = 2*Math.PI*44;
   setHTML('donuts-row', items.map(it=>`
@@ -824,7 +887,14 @@ function renderBarChart(id, data, total) {
 
 
 /* -- CREATIVE IMAGES -- */
-const CREATIVE_IMGS = {};
+const CREATIVE_IMGS = {
+  'DE Broad Video (28.05)': 'images/28052025-de-broad-videoad.png',
+  'FR Broad Video (28.05)': 'images/28052025-adset2-fr-broad-videoad.png',
+  'DE Broad Image 2 (28.05)': 'images/de-broad-imagead2.png',
+  'DE Broad Image 1 (28.05)': 'images/de-broad-imagead1.png',
+  'FR Broad Image 2 (28.05)': 'images/28052025-adset2-fr-broad-imagead2.png',
+  'FR Broad Image 1 (28.05)': 'images/28052025-adset2-fr-broad-imagead1.png',
+};
 
 const CREATIVE_ASPECT = {};
 
@@ -936,10 +1006,10 @@ function buildEditPanel() {
     <div class="ep-section-title">Übersicht -- Hauptzahlen</div>
     <div class="ep-row">
       <div class="ep-field"><label>Total Leads</label><input type="number" data-key="total" value="${S.total}"></div>
-      <div class="ep-field"><label>Weiblich</label><input type="number" data-key="female" value="${S.female}"></div>
     </div>
     <div class="ep-row">
-      <div class="ep-field"><label>Männlich</label><input type="number" data-key="male" value="${S.male}"></div>
+      <div class="ep-field"><label>DE Leads</label><input type="number" data-key="de_total" value="${S.de_total}"></div>
+      <div class="ep-field"><label>FR Leads</label><input type="number" data-key="fr_total" value="${S.fr_total}"></div>
     </div>
   </div>
 
