@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cycling Kollektion — Lead Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E3001B;--red-light:rgba(227,0,27,0.08);--red-mid:rgba(227,0,27,0.15);
+  --black:#111;--dark:#222;--mid:#555;--grey:#888;--grey-light:#aaa;
+  --rule:#e8e8e8;--bg:#F5F5F5;--card:#fff;--border:#E2E2E2;
+}
+body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--black);min-height:100vh;}
+
+/* HEADER */
+header{background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;box-shadow:0 1px 6px rgba(0,0,0,0.06);position:sticky;top:0;z-index:100;}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:16px 0 0;flex-wrap:wrap;gap:10px;}
+.header-left{display:flex;align-items:center;gap:14px;}
+.swiss-cross{width:36px;height:36px;background:var(--red);border-radius:4px;flex-shrink:0;box-shadow:0 2px 12px rgba(227,0,27,0.28);position:relative;}
+.swiss-cross::before,.swiss-cross::after{content:'';position:absolute;background:#fff;border-radius:1px;left:50%;top:50%;transform:translate(-50%,-50%);}
+.swiss-cross::before{width:5px;height:22px;}
+.swiss-cross::after{width:22px;height:5px;}
+.header-brand{border-right:1px solid var(--rule);padding-right:14px;margin-right:2px;}
+.header-brand h1{font-size:19px;font-weight:900;color:var(--black);letter-spacing:-0.02em;}
+.header-sub{font-size:12px;color:var(--grey);}
+.header-right{display:flex;align-items:center;gap:14px;}
+.header-meta{font-size:11px;color:var(--grey);text-align:right;line-height:1.6;}
+.header-meta strong{color:var(--red);font-size:13px;font-weight:800;}
+
+/* EDIT BUTTON */
+.edit-btn{
+  display:flex;align-items:center;gap:7px;
+  background:none;border:1.5px solid var(--border);
+  border-radius:7px;padding:7px 14px;
+  font-family:inherit;font-size:12px;font-weight:700;
+  color:var(--mid);cursor:pointer;
+  transition:all 0.15s;white-space:nowrap;
+}
+.edit-btn:hover{border-color:var(--red);color:var(--red);}
+.edit-btn.active{background:var(--red);border-color:var(--red);color:#fff;}
+.edit-btn svg{flex-shrink:0;}
+
+/* TABS */
+.tabs{display:flex;margin-top:12px;}
+.tab-btn{background:none;border:none;cursor:pointer;padding:10px 18px;font-size:11px;font-weight:800;letter-spacing:0.1em;font-family:inherit;color:var(--grey);border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s;}
+.tab-btn:hover{color:var(--black);}
+.tab-btn.active{color:var(--black);border-bottom-color:var(--red);}
+
+/* MAIN */
+main{padding:22px 32px 52px;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* EDIT PANEL OVERLAY */
+.edit-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:200;
+  opacity:0;pointer-events:none;transition:opacity 0.25s;
+}
+.edit-overlay.open{opacity:1;pointer-events:all;}
+
+.edit-panel{
+  position:fixed;right:0;top:0;bottom:0;width:420px;max-width:100vw;
+  background:var(--card);z-index:201;
+  transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-4px 0 32px rgba(0,0,0,0.12);
+}
+.edit-panel.open{transform:translateX(0);}
+.edit-panel-header{
+  padding:20px 24px 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.edit-panel-header h2{font-size:15px;font-weight:800;color:var(--black);}
+.edit-panel-header p{font-size:11px;color:var(--grey);margin-top:2px;}
+.ep-close{background:none;border:none;cursor:pointer;color:var(--grey);padding:4px;border-radius:4px;transition:color 0.15s;}
+.ep-close:hover{color:var(--red);}
+.edit-panel-body{overflow-y:auto;flex:1;padding:20px 24px;}
+.edit-panel-footer{
+  padding:16px 24px;border-top:1px solid var(--border);flex-shrink:0;
+  display:flex;gap:10px;
+}
+.ep-save{flex:1;background:var(--red);color:#fff;border:none;border-radius:8px;padding:12px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer;transition:opacity 0.15s;}
+.ep-save:hover{opacity:0.88;}
+.ep-cancel{background:none;border:1.5px solid var(--border);border-radius:8px;padding:12px 18px;font-family:inherit;font-size:13px;font-weight:700;color:var(--mid);cursor:pointer;transition:all 0.15s;}
+.ep-cancel:hover{border-color:var(--mid);}
+
+/* EDIT SECTIONS */
+.ep-section{margin-bottom:24px;}
+.ep-section-title{
+  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  font-weight:700;color:var(--grey);margin-bottom:12px;
+  padding-bottom:8px;border-bottom:1px solid var(--rule);
+}
+.ep-field{margin-bottom:12px;}
+.ep-field label{display:block;font-size:12px;font-weight:600;color:var(--dark);margin-bottom:5px;}
+.ep-field input{
+  width:100%;border:1.5px solid var(--border);border-radius:7px;
+  padding:8px 12px;font-family:inherit;font-size:13px;color:var(--black);
+  background:var(--bg);transition:border-color 0.15s;outline:none;
+}
+.ep-field input:focus{border-color:var(--red);}
+.ep-field input.text-input{font-size:12px;}
+.ep-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ep-tag{display:inline-block;font-size:10px;color:var(--grey);background:var(--bg);border-radius:4px;padding:2px 7px;margin-left:6px;font-weight:500;}
+
+/* SAVED TOAST */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--black);color:#fff;padding:10px 22px;border-radius:8px;
+  font-size:13px;font-weight:600;opacity:0;pointer-events:none;
+  transition:all 0.3s;z-index:300;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* KPI */
+.kpi-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;flex:1;min-width:120px;box-shadow:0 1px 4px rgba(0,0,0,0.06);transition:transform 0.2s,box-shadow 0.2s;}
+.kpi:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.10);}
+.kpi.accent{background:var(--red);border-color:var(--red);box-shadow:0 4px 20px rgba(227,0,27,0.22);}
+.kpi-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;font-weight:600;}
+.kpi.accent .kpi-label{color:rgba(255,255,255,0.7);}
+.kpi-value{font-size:26px;font-weight:900;color:var(--red);line-height:1;}
+.kpi.accent .kpi-value{color:#fff;}
+.kpi-sub{font-size:11px;color:var(--grey);margin-top:6px;}
+.kpi.accent .kpi-sub{color:rgba(255,255,255,0.65);}
+
+/* GRID */
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.span-2{grid-column:span 2;}.span-3{grid-column:span 3;}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 20px 16px;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.card.accent-border{border-color:var(--red);box-shadow:0 4px 20px rgba(227,0,27,0.12);}
+.card-title{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:16px;font-weight:700;}
+.learning-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:4px;}
+.learning-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start;}
+.learning-icon{flex-shrink:0;width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.learning-icon.red{background:#fdf0f1;}
+.learning-icon.blue{background:#f0f4ff;}
+.learning-icon.green{background:#f0faf3;}
+.learning-icon.yellow{background:#fffbf0;}
+.learning-icon.purple{background:#f8f0ff;}
+.learning-icon.teal{background:#f0fafa;}
+.learning-icon.orange{background:#fff5f0;}
+.learning-body{}
+.learning-title{font-size:13px;font-weight:700;color:var(--black);margin-bottom:6px;line-height:1.3;}
+.learning-text{font-size:12px;color:#555;line-height:1.6;}
+.learning-badge{display:inline-block;margin-top:8px;font-size:10px;font-weight:800;letter-spacing:0.08em;padding:3px 9px;border-radius:20px;text-transform:uppercase;}
+.badge-red{background:#fdf0f1;color:var(--red);}
+.badge-blue{background:#f0f4ff;color:#2563eb;}
+.badge-green{background:#f0faf3;color:#15803d;}
+.badge-yellow{background:#fffbf0;color:#d97706;}
+.badge-purple{background:#f8f0ff;color:#7c3aed;}
+.badge-teal{background:#f0fafa;color:#0d9488;}
+.badge-orange{background:#fff5f0;color:#ea580c;}
+.learnings-header{font-size:11px;letter-spacing:0.1em;font-weight:800;text-transform:uppercase;color:var(--grey);margin-bottom:16px;}
+.section-divider{margin:36px 0 28px;border:none;border-top:2px solid var(--border);}
+.section-title{font-size:18px;font-weight:800;color:var(--black);margin-bottom:4px;}
+.section-subtitle{font-size:12px;color:var(--grey);margin-bottom:20px;}
+/* TIMELINE */
+.timeline-outer{overflow-x:auto;padding:8px 0 16px;}
+.timeline-track{display:flex;align-items:center;min-width:600px;gap:0;}
+.tl-item{flex:1;}
+.tl-arrow{flex-shrink:0;font-size:22px;color:var(--red);padding:0 6px;line-height:1;align-self:center;}
+.tl-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 16px 14px;height:100%;box-sizing:border-box;}
+.tl-icon{font-size:20px;margin-bottom:8px;}
+.tl-title{font-size:12px;font-weight:700;color:var(--black);line-height:1.3;margin-bottom:5px;}
+.tl-desc{font-size:11px;color:#666;line-height:1.5;}
+/* SPEND TABLE */
+.spend-table{width:100%;border-collapse:collapse;font-size:12px;}
+.spend-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);border-bottom:2px solid var(--border);}
+.spend-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--black);}
+.spend-table tr:last-child td{border-bottom:none;font-weight:800;background:#fafafa;}
+.spend-table .num{text-align:right;font-variant-numeric:tabular-nums;}
+.spend-table .cpl-good{color:#16a34a;font-weight:700;}
+.spend-table .cpl-mid{color:#d97706;font-weight:700;}
+.spend-table .cpl-bad{color:#dc2626;font-weight:700;}
+.spend-total-row td{background:#fafafa !important;color:var(--black) !important;}
+.spend-total-row .cpl-good,.spend-total-row .cpl-mid,.spend-total-row .cpl-bad{color:inherit;}
+.spend-total-row .cpl-good strong,.spend-total-row .cpl-mid strong,.spend-total-row .cpl-bad strong{color:inherit;}
+.spend-total-row .cpl-good{color:#16a34a !important;}
+.spend-total-row .cpl-mid{color:#d97706 !important;}
+.spend-total-row .cpl-bad{color:#dc2626 !important;}
+.cpl-info-wrap{position:relative;display:inline-flex;align-items:center;}
+.cpl-info-btn{background:none;border:1.5px solid var(--grey-light);border-radius:50%;width:16px;height:16px;font-size:10px;font-weight:800;color:var(--grey);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;margin-left:5px;padding:0;line-height:1;transition:all 0.15s;vertical-align:middle;}
+.cpl-info-btn:hover{border-color:var(--red);color:var(--red);}
+.cpl-tooltip{display:none;position:absolute;top:calc(100% + 8px);right:-10px;background:var(--black);color:#fff;border-radius:8px;padding:12px 14px;font-size:11px;line-height:1.6;width:220px;z-index:50;box-shadow:0 4px 20px rgba(0,0,0,0.25);font-weight:400;text-align:left;}
+.cpl-tooltip.open{display:block;}
+.cpl-tooltip::before{content:'';position:absolute;top:-6px;right:16px;width:12px;height:12px;background:var(--black);transform:rotate(45deg);border-radius:2px;}
+.cpl-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+.cmp-list{display:flex;flex-direction:column;gap:18px;}
+.cmp-row{display:flex;flex-direction:column;gap:6px;}
+.cmp-label{font-size:11px;font-weight:700;color:var(--black);letter-spacing:0.04em;}
+.cmp-bars{display:flex;flex-direction:column;gap:5px;}
+.cmp-bwrap{display:flex;align-items:center;gap:8px;}
+.cmp-blabel{font-size:10px;color:var(--grey);display:flex;align-items:center;gap:5px;min-width:220px;}
+.cmp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.cmp-track{flex:1;height:8px;background:#F0F0F0;border-radius:4px;overflow:hidden;}
+.cmp-fill{height:8px;border-radius:4px;width:0;transition:width 0.8s ease;}
+.cmp-val{font-size:11px;font-weight:700;color:var(--black);min-width:70px;text-align:right;}
+.cmp-pct{font-weight:400;color:var(--grey);}
+/* Affinity note */
+.affin-note{margin-top:12px;font-size:11px;color:#555;background:#FFF8F8;border-left:3px solid var(--red);padding:8px 12px;border-radius:0 6px 6px 0;line-height:1.5;}
+
+/* DONUTS */
+.donuts-row{display:flex;justify-content:space-around;padding-top:4px;}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.donut-svg-wrap{position:relative;width:96px;height:96px;}
+.donut-svg-wrap svg{transform:rotate(-90deg);}
+.donut-bg{fill:none;stroke:#F0F0F0;stroke-width:8;}
+.donut-fg{fill:none;stroke:var(--red);stroke-width:8;stroke-linecap:round;stroke-dasharray:0 276.46;}
+.donut-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:var(--red);}
+.donut-label{font-size:11px;color:var(--grey);text-align:center;line-height:1.5;}
+.donut-label strong{color:var(--black);font-weight:700;display:block;}
+
+/* HBARS */
+.hbar-list{display:flex;flex-direction:column;gap:9px;}
+.hbar-meta{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}
+.hbar-meta span:first-child{color:var(--dark);font-weight:600;}
+.hbar-meta span:last-child{color:var(--grey);}
+.hbar-meta em{color:var(--red);font-style:normal;font-weight:700;}
+.hbar-track{background:var(--bg);border-radius:2px;height:5px;overflow:hidden;}
+.hbar-fill{height:100%;border-radius:2px;width:0;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+
+/* GENDER / DEFR */
+.phone-bars{display:flex;flex-direction:column;gap:14px;}
+.phone-bar-head{display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;font-weight:600;color:var(--dark);}
+.phone-bar-head span{color:var(--red);font-weight:700;}
+.phone-track{background:var(--bg);border-radius:2px;height:7px;overflow:hidden;}
+.phone-fill{height:100%;border-radius:2px;width:0;transition:width 1.1s cubic-bezier(0.4,0,0.2,1);}
+.phone-sub{font-size:11px;color:var(--grey);margin-top:4px;}
+.outreach-box{background:var(--red-light);border-radius:8px;padding:12px 14px;border-left:3px solid var(--red);margin-top:6px;}
+.outreach-box .ol{font-size:10px;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;}
+.outreach-box .ov{font-size:22px;font-weight:900;color:var(--black);margin-top:3px;}
+.outreach-box .os{font-size:11px;color:var(--grey);}
+
+/* INSIGHT / BEST BOX */
+.insight{background:var(--bg);border-radius:8px;padding:11px 13px;border-left:3px solid var(--red);}
+.insight-label{font-size:10px;color:var(--grey);text-transform:uppercase;letter-spacing:0.1em;}
+.insight-value{font-size:15px;font-weight:800;color:var(--black);margin-top:4px;}
+.best-box{margin-top:12px;background:var(--red-light);border-radius:8px;padding:11px 13px;border-left:3px solid var(--red);}
+.best-box .bl{font-size:10px;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;}
+.best-box .bv{font-size:14px;font-weight:700;color:var(--black);margin-top:3px;}
+.best-box .bs{font-size:11px;color:var(--grey);margin-top:2px;}
+
+/* PAID / DEFR */
+.paid-wrap{display:flex;gap:22px;flex-wrap:wrap;}
+.paid-bars{flex:2;min-width:200px;}
+.paid-insights{flex:1;display:flex;flex-direction:column;gap:9px;min-width:160px;}
+.paid-bar-row{margin-bottom:12px;}
+.paid-bar-head{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}
+.paid-bar-head span:first-child{color:var(--dark);font-weight:600;}
+.paid-bar-head span:last-child{color:var(--grey);}
+.paid-track{background:var(--bg);border-radius:2px;height:5px;overflow:hidden;}
+.paid-fill{height:100%;border-radius:2px;width:0;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+.defr-wrap{display:flex;gap:22px;flex-wrap:wrap;}
+.defr-col{flex:1;min-width:180px;}
+.defr-lang{font-size:13px;font-weight:800;margin-bottom:12px;}
+.defr-bar{margin-bottom:12px;}
+.defr-head{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}
+.defr-head span:first-child{color:var(--dark);}
+.defr-head span:last-child{color:var(--grey);}
+.defr-track{background:var(--bg);border-radius:2px;height:5px;overflow:hidden;}
+.defr-fill{height:100%;border-radius:2px;width:0;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+.defr-insights{flex:1;min-width:160px;display:flex;flex-direction:column;gap:9px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.kpi{animation:fadeUp 0.45s ease both;}
+.kpi:nth-child(1){animation-delay:0.04s}.kpi:nth-child(2){animation-delay:0.08s}.kpi:nth-child(3){animation-delay:0.12s}
+.kpi:nth-child(4){animation-delay:0.16s}.kpi:nth-child(5){animation-delay:0.20s}.kpi:nth-child(6){animation-delay:0.24s}
+
+
+/* CREATIVE GRID */
+.creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px;}
+.creative-card{background:var(--bg);border-radius:9px;overflow:hidden;border:1.5px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;}
+.creative-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.10);}
+.creative-card.top{border-color:var(--red);box-shadow:0 2px 12px rgba(227,0,27,0.12);}
+.cc-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.cc-img.video{aspect-ratio:9/16;max-height:140px;object-fit:cover;}
+.cc-img.portrait{aspect-ratio:3/4;object-fit:cover;}
+.cc-body{padding:10px 12px 12px;}
+.cc-label{font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--dark);margin-bottom:6px;}
+.cc-count{font-size:18px;font-weight:900;color:var(--red);line-height:1;}
+.cc-pct{font-size:11px;color:var(--grey);margin-top:2px;}
+.cc-bar-track{background:var(--rule);border-radius:2px;height:4px;margin-top:8px;overflow:hidden;}
+.cc-bar-fill{height:100%;border-radius:2px;background:var(--red);width:0;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+.cc-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;background:var(--red);color:#fff;border-radius:4px;padding:2px 7px;margin-bottom:5px;}
+.cc-no-img{display:flex;align-items:center;justify-content:center;background:var(--bg);aspect-ratio:1/1;font-size:28px;}
+.cc-img-wrap{position:relative;cursor:zoom-in;overflow:hidden;}
+.cc-img-wrap::after{content:'';position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.45);color:#fff;font-size:13px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.cc-img-wrap:hover::after{opacity:1;}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;padding:24px;}
+.lightbox.open{opacity:1;pointer-events:all;}
+.lightbox-inner{position:relative;max-width:90vw;max-height:90vh;animation:lbIn 0.28s cubic-bezier(0.4,0,0.2,1);}
+@keyframes lbIn{from{transform:scale(0.88);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lightbox img{display:block;max-width:90vw;max-height:82vh;object-fit:contain;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.lightbox-caption{text-align:center;color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;margin-top:12px;letter-spacing:0.04em;}
+.lightbox-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;background:#fff;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.25);transition:background 0.15s;}
+.lightbox-close:hover{background:var(--red);}
+.lightbox-close:hover svg path{stroke:#fff;}
+
+@media(max-width:900px){.grid-3{grid-template-columns:1fr 1fr;}.span-3{grid-column:span 2;}header,main{padding-left:16px;padding-right:16px;}}
+@media(max-width:600px){.grid-3,.grid-2{grid-template-columns:1fr;}.span-2,.span-3{grid-column:span 1;}.kpi-row{flex-direction:column;}.edit-panel{width:100%;}}
+
+/* ── BACK BUTTON ── */
+.back-btn{display:none;align-items:center;gap:6px;background:none;border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.back-btn:hover{border-color:var(--red);color:var(--red);}
+.back-btn.visible{display:flex;}
+</style>
+</head>
+<body>
+
+<!-- EDIT OVERLAY -->
+<div class="edit-overlay" id="editOverlay" onclick="closeEdit()"></div>
+
+<!-- EDIT PANEL -->
+<div class="edit-panel" id="editPanel">
+  <div class="edit-panel-header">
+    <div>
+      <h2>Dashboard bearbeiten</h2>
+      <p>Werte anpassen -- Aenderungen werden sofort uebernommen</p>
+    </div>
+    <button class="ep-close" onclick="closeEdit()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="edit-panel-body" id="editPanelBody">
+    <!-- dynamisch befuellt -->
+  </div>
+  <div class="edit-panel-footer">
+    <button class="ep-cancel" onclick="closeEdit()">Abbrechen</button>
+    <button class="ep-save" onclick="applyEdit()">Speichern & Aktualisieren</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="#333" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">Dashboard aktualisiert</div>
+
+<header>
+  <div class="header-top">
+    <div class="header-left">
+      <button class="back-btn visible" id="backBtn" onclick="window.location.href='../'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Übersicht
+      </button>
+      <div class="swiss-cross"></div>
+      <div class="header-brand">
+        <h1 id="hdr-title">Cycling Kollektion</h1>
+      </div>
+      <div class="header-sub">LeadGen · Lead Dashboard</div>
+    </div>
+    <div class="header-right">
+      <div class="header-meta">
+        <span id="hdr-stand">Stand März 2026</span><br>
+        <strong id="hdr-total">0 Leads</strong>
+      </div>
+      <button class="edit-btn" id="editBtn" onclick="openEdit()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5l2 2L4 12H2v-2L9.5 2.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Bearbeiten
+      </button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="uebersicht">ÜBERSICHT</button>
+    <button class="tab-btn" data-tab="kanal">LEADS &amp; KANAL</button>
+    <button class="tab-btn" data-tab="kampagne">META-KAMPAGNE DETAIL</button>
+    <button class="tab-btn" data-tab="learnings">LEARNINGS & NEXT STEPS</button>
+  </div>
+</header>
+
+<main>
+  <!-- ÜBERSICHT -->
+  <div class="tab-panel active" id="tab-uebersicht">
+    <div class="kpi-row" id="kpi-uebersicht"></div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Profil-Kennzahlen</div>
+        <div class="donuts-row" id="donuts-row"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gender-Verteilung</div>
+        <div style="position:relative;height:205px"><canvas id="chart-roles"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Sprach-Split DE / FR</div>
+        <div style="position:relative;height:205px"><canvas id="chart-lang"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gender-Split</div>
+        <div class="phone-bars" id="phone-bars"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADS & KANAL -->
+  <div class="tab-panel" id="tab-kanal">
+    <div class="kpi-row" id="kpi-kanal"></div>
+    <div class="grid-2">
+      <div class="card span-2">
+        <div class="card-title">Lead-Herkunft (UTM Source)</div>
+        <div class="hbar-list" id="hbar-source"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kanal-Mix</div>
+        <div style="position:relative;height:230px"><canvas id="chart-source"></canvas></div>
+      </div>
+      <div class="card span-2">
+        <div class="card-title">Ad Creative Performance (UTM Content)</div>
+        <div id="creative-grid"></div>
+        <div class="best-box" id="best-box"></div>
+      </div>
+      <div class="card span-2">
+        <div class="card-title">Paid Social Überblick</div>
+        <div class="paid-wrap">
+          <div class="paid-bars" id="paid-bars"></div>
+          <div class="paid-insights" id="paid-insights"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KAMPAGNE -->
+  <div class="tab-panel" id="tab-kampagne">
+    <div class="kpi-row" id="kpi-kampagne"></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Kampagnen-Performance (Leads)</div>
+        <div class="hbar-list" id="hbar-camp"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Kampagnen-Mix</div>
+        <div style="position:relative;height:230px"><canvas id="chart-camp"></canvas></div>
+      </div>
+      <div class="card span-2">
+        <div class="card-title">Budget & CPL pro Adset — META Ads Manager</div>
+        <div id="spend-table"></div>
+      </div>
+      <div class="card span-2">
+        <div class="card-title">Anzeigengruppen-Performance — META Ads Manager</div>
+        <div id="adset-table"></div>
+      </div>
+      <div class="card span-2">
+        <div class="card-title">DE vs. FR Verteilung</div>
+        <div class="defr-wrap" id="defr-wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARNINGS -->
+  <div class="tab-panel" id="tab-learnings"></div>
+</main>
+
+<script>
+/* =============================================
+   STATE — alle Werte zentral hier
+============================================= */
+let S = {
+  meta: { title: 'Cycling Kollektion', stand: 'Stand März 2026' },
+  total: 0,
+  male: 0, female: 0, organic: 0,
+  broad: 0, de_total: 0, fr_total: 0,
+
+  source:  [],
+  content: [],
+  camp:    [],
+  campSpend: [],
+  adsets: [],
+};
+
+const RED = '#E3001B';
+const PIE_COLS = [RED,'#FF4D63','#FF8A96','#CC001A','#AAAAAA','#CCCCCC','#DDDDDD'];
+const fmt = v => typeof v==='number' ? v.toLocaleString('de-CH') : v;
+const pct = (v,t) => t===0 ? '0.0' : ((v/t)*100).toFixed(1);
+const charts = {};
+
+/* =============================================
+   RENDER
+============================================= */
+function render() {
+  const T = S.total || 1; // avoid division by zero in display
+
+  // Header
+  document.getElementById('hdr-title').textContent = S.meta.title;
+  document.getElementById('hdr-stand').textContent = S.meta.stand;
+  document.getElementById('hdr-total').textContent = fmt(S.total) + ' Leads';
+
+  // -- ÜBERSICHT KPIs --
+  setHTML('kpi-uebersicht', [
+    kpi(fmt(S.total),      'Total Leads',       'Alle Leads gesamt', true),
+    kpi(fmt(S.female),'Weiblich', pct(S.female,T)+'% aller Leads'),
+    kpi(fmt(S.male),'Männlich', pct(S.male,T)+'% aller Leads'),
+    kpi(fmt(S.de_total),   'DE Leads',        pct(S.de_total,T)+'% aller Leads'),
+    kpi(fmt(S.fr_total),   'FR Leads',        pct(S.fr_total,T)+'% aller Leads'),
+  ].join(''));
+
+  // Donuts
+  renderDonuts();
+
+  // Charts
+  renderDonutChart('chart-roles',
+    [{l:'Weiblich',v:S.female},{l:'Männlich',v:S.male}], T);
+  renderDonutChart('chart-lang',
+    [{l:'Deutsch',v:S.de_total||Math.round(T*0.75)},{l:'Français',v:S.fr_total||Math.round(T*0.25)}], T);
+  // Gender bars
+  setHTML('phone-bars', `
+    <div class="phone-bar-row">
+      <div class="phone-bar-head">Weiblich <span>${pct(S.female,T)}%</span></div>
+      <div class="phone-track"><div class="phone-fill" style="background:var(--red)" data-w="${pct(S.female,T)}"></div></div>
+      <div class="phone-sub">${fmt(S.female)} Leads</div>
+    </div>
+    <div class="phone-bar-row">
+      <div class="phone-bar-head">Männlich <span>${pct(S.male,T)}%</span></div>
+      <div class="phone-track"><div class="phone-fill" style="background:#888" data-w="${pct(S.male,T)}"></div></div>
+      <div class="phone-sub">${fmt(S.male)} Leads</div>
+    </div>
+    <div class="outreach-box">
+      <div class="ol">Grösste Zielgruppe</div>
+      <div class="ov">${fmt(S.female)}</div>
+      <div class="os">Weibliche Leads</div>
+    </div>`);
+  animateFills(document.getElementById('phone-bars'));
+
+  // -- KANAL KPIs --
+  const metaAds = S.source.find(d=>d.l==='META Ads')?.v||S.total;
+  setHTML('kpi-kanal', [
+    kpi(fmt(metaAds), 'META Ads',       '100% aller Leads', true),
+    kpi("12'020", 'Link-Klicks',        'Total Klicks auf Anzeigen'),
+    kpi('CHF 0.36', 'CPC',              'CHF 4\'343.52 / 12\'020 Klicks'),
+  ].join(''));
+
+  buildHBars('hbar-source',  S.source,  T);
+  buildContentCards();
+  renderDonutChart('chart-source', S.source, T);
+
+  const best = [...S.content].sort((a,b)=>b.v-a.v)[0];
+  setHTML('best-box', `
+    <div class="bl">Best Performer</div>
+    <div class="bv">${best.l} -- ${fmt(best.v)} Leads</div>
+    <div class="bs">${pct(best.v,T)}% aller Leads via einem einzigen Creative</div>`);
+
+  const paid = [{l:'Paid Social (META Ads)',v:metaAds}];
+  buildPaidBars(paid);
+  setHTML('paid-insights', [
+    ins('Paid Social Anteil',   '100%'),
+    ins('DE-Anteil',            pct(S.de_total,T)+'%'),
+    ins('Best Creative Anteil', pct(best.v,T)+'%'),
+  ].join(''));
+
+  // -- KAMPAGNE KPIs --
+  const deBroad = S.camp.find(d=>d.l==='DE Broad')?.v||0;
+  const frBroad = S.camp.find(d=>d.l==='FR Broad')?.v||0;
+  const totalMetaSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
+  const totalMetaLeads = S.campSpend.reduce((s,d)=>s+d.leads,0);
+  const avgCPLAll = totalMetaLeads > 0 ? (totalMetaSpend/totalMetaLeads).toFixed(2) : '0.00';
+  setHTML('kpi-kampagne', [
+    kpi(fmt(S.broad),      'Broad',              pct(S.broad,T)+'% aller Leads', true),
+    kpi(fmt(S.de_total),   'DE Gesamt META',      'Broad DE'),
+    kpi(fmt(S.fr_total),   'FR Gesamt META',      'Broad FR'),
+    kpi('CHF '+fmt(Math.round(totalMetaSpend)),   'Total META Spend (CHF)',   fmt(totalMetaLeads)+' Leads via Ads Manager'),
+    kpi('CHF '+avgCPLAll,  'Ø CPL (CHF)',         'Durchschnittlicher Cost per Lead'),
+  ].join(''));
+  buildHBars('hbar-camp', S.camp, T);
+  renderDonutChart('chart-camp', S.camp, T);
+
+  // -- SPEND TABLE --
+  const totalSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
+  const totalLeads = S.campSpend.reduce((s,d)=>s+d.leads,0);
+  const avgCPL = totalLeads > 0 ? (totalSpend/totalLeads).toFixed(2) : '0.00';
+  function cplClass(cpl) {
+    if(cpl <= 0) return '';
+    if(cpl <= 0.45) return 'cpl-good';
+    if(cpl <= 1.15) return 'cpl-mid';
+    return 'cpl-bad';
+  }
+  setHTML('spend-table', `
+    <table class="spend-table">
+      <thead><tr>
+        <th>Adset</th>
+        <th class="num">Leads</th>
+        <th class="num"><span class="cpl-info-wrap">CPL<button class="cpl-info-btn" onclick="toggleCplInfo(event)">?</button><div class="cpl-tooltip" id="cpl-tooltip"><strong style="font-size:12px;display:block;margin-bottom:6px;">Cost per Lead (CPL)</strong><span class="cpl-dot" style="background:#16a34a;"></span>Bis CHF 0.45 = Günstig<br><span class="cpl-dot" style="background:#d97706;"></span>CHF 0.45 – 1.15 = Mittel<br><span class="cpl-dot" style="background:#dc2626;"></span>CHF 1.15 – 2.00 = Teuer</div></span></th>
+        <th class="num">Spend</th>
+        <th class="num">Anteil Budget</th>
+      </tr></thead>
+      <tbody>
+        ${S.campSpend.map(d=>`<tr>
+          <td>${d.l}</td>
+          <td class="num">${fmt(d.leads)}</td>
+          <td class="num ${cplClass(d.cpl)}">CHF ${d.cpl.toFixed(2)}</td>
+          <td class="num">CHF ${d.spend.toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+          <td class="num">${totalSpend>0?((d.spend/totalSpend)*100).toFixed(1):'0.0'}%</td>
+        </tr>`).join('')}
+        <tr class="spend-total-row">
+          <td><strong>Total META</strong></td>
+          <td class="num"><strong>${fmt(totalLeads)}</strong></td>
+          <td class="num ${cplClass(+avgCPL)}"><strong>CHF ${avgCPL}</strong></td>
+          <td class="num"><strong>CHF ${totalSpend.toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></td>
+          <td class="num"><strong>100%</strong></td>
+        </tr>
+      </tbody>
+    </table>`);
+
+  // -- ADSET TABLE --
+  if(S.adsets.length > 0) {
+    const adsetTotalImpr   = S.adsets.reduce((s,d)=>s+d.impressions,0);
+    const adsetTotalReach  = S.adsets.reduce((s,d)=>s+d.reach,0);
+    const adsetTotalClicks = S.adsets.reduce((s,d)=>s+d.clicks,0);
+    const adsetAvgFreq     = adsetTotalReach > 0 ? (adsetTotalImpr/adsetTotalReach).toFixed(2) : '0.00';
+    const adsetAvgCPM      = adsetTotalImpr > 0 ? (S.adsets.reduce((s,d)=>s+d.cpm*d.impressions,0)/adsetTotalImpr).toFixed(2) : '0.00';
+    setHTML('adset-table', `
+      <table class="spend-table">
+        <thead><tr>
+          <th>Anzeigengruppe</th>
+          <th class="num">Impressionen</th>
+          <th class="num">Reichweite</th>
+          <th class="num">Frequenz</th>
+          <th class="num">CPM</th>
+          <th class="num">Link-Klicks</th>
+          <th>Zeitplan</th>
+        </tr></thead>
+        <tbody>
+          ${S.adsets.map(d=>`<tr>
+            <td style="font-size:11px;color:var(--mid)">${d.l}</td>
+            <td class="num">${fmt(d.impressions)}</td>
+            <td class="num">${fmt(d.reach)}</td>
+            <td class="num">${d.freq.toFixed(2).replace('.',',')}</td>
+            <td class="num">${d.cpm.toFixed(2).replace('.',',')} Fr.</td>
+            <td class="num">${fmt(d.clicks)}</td>
+            <td style="font-size:11px">${d.von} -- ${d.bis}<br><span style="color:var(--grey)">${d.days} Tage</span></td>
+          </tr>`).join('')}
+          <tr class="spend-total-row">
+            <td><strong>Ergebnisse aus ${S.adsets.length} Anzeigengruppen</strong></td>
+            <td class="num"><strong>${fmt(adsetTotalImpr)}</strong></td>
+            <td class="num"><strong>${fmt(adsetTotalReach)}</strong></td>
+            <td class="num"><strong>${adsetAvgFreq.replace('.',',')}</strong></td>
+            <td class="num"><strong>${adsetAvgCPM.replace('.',',')} Fr.</strong></td>
+            <td class="num"><strong>${fmt(adsetTotalClicks)}</strong></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>`);
+  } else {
+    setHTML('adset-table', '<p style="font-size:12px;color:var(--grey);padding:12px 0;">Noch keine Anzeigengruppen-Daten vorhanden.</p>');
+  }
+
+  // DE vs FR
+  setHTML('defr-wrap', `
+    <div class="defr-col">
+      <div class="defr-lang" style="color:var(--red)">Deutsch (DE)</div>
+      <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(deBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:var(--red)" data-w="${pct(deBroad,T)}"></div></div></div>
+    </div>
+    <div class="defr-col">
+      <div class="defr-lang" style="color:var(--grey)">Français (FR)</div>
+      <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(frBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:#BBBBBB" data-w="${pct(frBroad,T)}"></div></div></div>
+    </div>
+    <div class="defr-insights">
+      ${ins('Breiteste Kampagne','DE Broad -- '+fmt(deBroad))}
+      ${ins('FR Broad Anteil',    pct(frBroad,T)+'% aller Leads')}
+      ${ins('DE-Anteil gesamt',   pct(S.de_total,T)+'%')}
+    </div>`);
+  animateFills(document.getElementById('defr-wrap'));
+
+  // -- LEARNINGS --
+  renderLearnings();
+
+  // Counters on active tab
+  document.querySelectorAll('.tab-panel.active [data-count]').forEach(el => {
+    animateCount(el, +el.dataset.count);
+  });
+}
+
+/* --- helpers --- */
+function renderLearnings() {
+  const T = S.total || 1;
+  const bestContent = [...S.content].sort((a,b)=>b.v-a.v)[0];
+  const deBroad = S.camp.find(d=>d.l==='DE Broad')?.v||0;
+  const frBroad = S.camp.find(d=>d.l==='FR Broad')?.v||0;
+
+  const learnings = [
+    {
+      icon: '📸', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
+      title: 'Noch keine Daten',
+      text: 'Learnings werden nach Kampagnenstart ergänzt.'
+    },
+  ];
+
+  const nextSteps = [
+    {
+      icon: '🎯',
+      title: 'Kampagne aufsetzen',
+      desc: 'Cycling Kollektion Kampagne in META Ads Manager konfigurieren und starten.'
+    },
+    {
+      icon: '📊',
+      title: 'Daten erfassen & Dashboard befüllen',
+      desc: 'Lead-Daten und Kampagnen-KPIs laufend ins Dashboard eintragen.'
+    },
+  ];
+
+  const panel = document.getElementById('tab-learnings');
+  panel.innerHTML = `
+    <div class="section-title">Learnings</div>
+    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne -- Cycling Kollektion</div>
+    <div class="learning-grid">
+      ${learnings.map(l => `
+        <div class="learning-card">
+          <div class="learning-icon ${l.color}">${l.icon}</div>
+          <div class="learning-body">
+            <div class="learning-title">${l.title}</div>
+            <div class="learning-text">${l.text}</div>
+            <span class="learning-badge ${l.badge}">${l.tag}</span>
+          </div>
+        </div>`).join('')}
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="section-title">Next Steps</div>
+    <div class="section-subtitle">Roadmap für die Lead-Kampagne -- Cycling Kollektion</div>
+    <div class="timeline-outer">
+      <div class="timeline-track">
+        ${nextSteps.map((s, i) => `
+        <div class="tl-item">
+          <div class="tl-card">
+            <div class="tl-icon">${s.icon}</div>
+            <div class="tl-title">${s.title}</div>
+            <div class="tl-desc">${s.desc}</div>
+          </div>
+        </div>${i < nextSteps.length - 1 ? '<div class="tl-arrow">&rarr;</div>' : ''}`).join('')}
+      </div>
+    </div>`;
+}
+
+function kpi(val, label, sub, accent=false) {
+  const numStr = typeof val === 'string' && val.replace(/[^0-9]/g,'');
+  const hasCount = !isNaN(+numStr) && numStr.length > 0 && !val.includes(':') && !/^[A-Za-z]/.test(val);
+  return `<div class="kpi${accent?' accent':''}">
+    <div class="kpi-label">${label}</div>
+    <div class="kpi-value"${hasCount?` data-count="${numStr}"`:''}>${val}</div>
+    <div class="kpi-sub">${sub}</div>
+  </div>`;
+}
+function ins(label, value) {
+  return `<div class="insight"><div class="insight-label">${label}</div><div class="insight-value">${value}</div></div>`;
+}
+function setHTML(id, html) { const el=document.getElementById(id); if(el) el.innerHTML=html; }
+
+/* --- donut svg --- */
+function renderDonuts() {
+  const T = S.total || 1;
+  const items = [
+    {id:'d-leads', pct:100, label:'Total Leads', val:S.total},
+    {id:'d-tel',   pct:+pct(S.female,T), label:'Weiblich', val:S.female},
+  ];
+  const CIRC = 2*Math.PI*44;
+  setHTML('donuts-row', items.map(it=>`
+    <div class="donut-wrap">
+      <div class="donut-svg-wrap">
+        <svg width="96" height="96" viewBox="0 0 96 96">
+          <circle class="donut-bg" cx="48" cy="48" r="40"/>
+          <circle class="donut-fg" id="${it.id}" cx="48" cy="48" r="40" data-pct="${it.pct}" style="stroke-dasharray:0 ${2*Math.PI*40}"/>
+        </svg>
+        <div class="donut-center" id="${it.id}-txt">0%</div>
+      </div>
+      <div class="donut-label">${it.label}<strong>${fmt(it.val)}</strong></div>
+    </div>`).join(''));
+
+  setTimeout(()=>{
+    items.forEach((it,i)=>{
+      const circ = 2*Math.PI*40;
+      animateDonut(it.id, it.id+'-txt', it.pct, 1100+i*150, circ);
+    });
+  }, 150);
+}
+
+/* --- chart helpers --- */
+function renderDonutChart(id, data, total) {
+  if(charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id);
+  if(!ctx) return;
+  charts[id] = new Chart(ctx, {
+    type:'doughnut',
+    data:{ labels:data.map(d=>d.l), datasets:[{data:data.map(d=>d.v), backgroundColor:PIE_COLS, borderWidth:0, hoverOffset:5}] },
+    options:{ cutout:'60%', maintainAspectRatio:false,
+      animation:{animateRotate:true,duration:1100},
+      plugins:{
+        legend:{position:'bottom',labels:{padding:11,font:{size:11,family:'Outfit'},boxWidth:11}},
+        tooltip:{callbacks:{label:c=>` ${fmt(c.raw)} (${pct(c.raw,total)}%)`}}
+      }}
+  });
+}
+function renderBarChart(id, data, total) {
+  if(charts[id]) charts[id].destroy();
+  const ctx = document.getElementById(id);
+  if(!ctx) return;
+  charts[id] = new Chart(ctx, {
+    type:'bar',
+    data:{ labels:data.map(d=>d.l), datasets:[{data:data.map(d=>d.v), backgroundColor:data.map((_,i)=>i===0?RED:`rgba(227,0,27,${Math.max(0.15,0.85-i*0.1)})`), borderRadius:4, borderSkipped:false}] },
+    options:{ maintainAspectRatio:false, animation:{duration:1000,easing:'easeOutCubic'},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.raw)}`}}},
+      scales:{
+        x:{grid:{display:false},border:{display:false},ticks:{font:{size:10,family:'Outfit'}}},
+        y:{grid:{color:'#F0F0F0'},border:{display:false},ticks:{font:{size:10,family:'Outfit'}}}
+      }}
+  });
+}
+
+
+/* -- CREATIVE IMAGES -- */
+const CREATIVE_IMGS = {};
+
+const CREATIVE_ASPECT = {};
+
+function buildContentCards() {
+  const container = document.getElementById('creative-grid');
+  if (!container) return;
+  const total = S.total || 1;
+  const data  = S.content;
+  const max   = Math.max(...data.map(d=>d.v), 1);
+  const isTop = (d) => d.v === max && d.v > 0;
+
+  container.innerHTML = '<div class="creative-grid">' + data.map(d => {
+    const img   = CREATIVE_IMGS[d.l];
+    const cls   = CREATIVE_ASPECT[d.l] || 'cc-img';
+    const imgEl = img
+      ? `<div class="cc-img-wrap" onclick="openLightbox(\`${d.l}\`)"><img src="${img}" class="${cls}" alt="${d.l}"></div>`
+      : `<div class="cc-no-img">📊</div>`;
+    const top   = isTop(d);
+    const barW  = (d.v / max * 100).toFixed(1);
+    return `<div class="creative-card${top?' top':''}">
+      ${imgEl}
+      <div class="cc-body">
+        ${top ? '<div class="cc-badge">Best Performer</div>' : ''}
+        <div class="cc-label">${d.l}</div>
+        <div class="cc-count">${fmt(d.v)}</div>
+        <div class="cc-pct">${pct(d.v,total)}% aller Leads</div>
+        <div class="cc-bar-track"><div class="cc-bar-fill" data-w="${barW}"></div></div>
+      </div>
+    </div>`;
+  }).join('') + '</div>';
+
+  setTimeout(()=>{
+    container.querySelectorAll('.cc-bar-fill').forEach(el=>el.style.width=el.dataset.w+'%');
+  }, 80);
+}
+
+function buildHBars(containerId, data, total) {
+  const c = document.getElementById(containerId); if(!c) return;
+  const max = Math.max(...data.map(d=>d.v), 1);
+  c.innerHTML = data.map((d,i)=>`
+    <div class="hbar-row">
+      <div class="hbar-meta"><span>${d.l}</span><span>${fmt(d.v)} <em>(${pct(d.v,total)}%)</em></span></div>
+      <div class="hbar-track"><div class="hbar-fill" style="background:${i===0?RED:`rgba(227,0,27,${Math.max(0.15,0.75-i*0.1)})`}" data-w="${(d.v/max*100).toFixed(1)}"></div></div>
+    </div>`).join('');
+  setTimeout(()=>c.querySelectorAll('.hbar-fill').forEach(el=>el.style.width=el.dataset.w+'%'), 80);
+}
+function buildPaidBars(data) {
+  const c = document.getElementById('paid-bars'); if(!c) return;
+  const T = S.total || 1;
+  c.innerHTML = data.map((d,i)=>`
+    <div class="paid-bar-row">
+      <div class="paid-bar-head"><span>${d.l}</span><span>${pct(d.v,T)}% -- ${fmt(d.v)}</span></div>
+      <div class="paid-track"><div class="paid-fill" style="background:${i===0?RED:`rgba(227,0,27,${Math.max(0.08,0.4-i*0.1)})`}" data-w="${pct(d.v,T)}"></div></div>
+    </div>`).join('');
+  setTimeout(()=>c.querySelectorAll('.paid-fill').forEach(el=>el.style.width=el.dataset.w+'%'), 80);
+}
+function animateFills(panel) {
+  if(!panel) return;
+  setTimeout(()=>panel.querySelectorAll('.phone-fill,.defr-fill').forEach(el=>el.style.width=el.dataset.w+'%'), 100);
+}
+
+/* --- counter & donut animations --- */
+function animateCount(el, target, dur=1100) {
+  const s=performance.now();
+  (function tick(now){
+    const t=Math.min((now-s)/dur,1), e=1-Math.pow(1-t,3);
+    el.textContent=Math.round(e*target).toLocaleString('de-CH');
+    if(t<1) requestAnimationFrame(tick);
+  })(s);
+}
+function animateDonut(id, txtId, targetPct, dur=1200, circ) {
+  const circle=document.getElementById(id), txt=document.getElementById(txtId);
+  if(!circle||!txt) return;
+  const s=performance.now();
+  (function tick(now){
+    const t=Math.min((now-s)/dur,1), e=1-Math.pow(1-t,3), cur=e*targetPct;
+    circle.style.strokeDasharray=`${(cur/100)*circ} ${circ}`;
+    txt.textContent=cur.toFixed(1)+'%';
+    if(t<1) requestAnimationFrame(tick);
+  })(s);
+}
+
+/* =============================================
+   EDIT PANEL
+============================================= */
+function openEdit() {
+  buildEditPanel();
+  document.getElementById('editPanel').classList.add('open');
+  document.getElementById('editOverlay').classList.add('open');
+  document.getElementById('editBtn').classList.add('active');
+}
+function closeEdit() {
+  document.getElementById('editPanel').classList.remove('open');
+  document.getElementById('editOverlay').classList.remove('open');
+  document.getElementById('editBtn').classList.remove('active');
+}
+
+function buildEditPanel() {
+  const body = document.getElementById('editPanelBody');
+  body.innerHTML = `
+
+  <div class="ep-section">
+    <div class="ep-section-title">Allgemein</div>
+    <div class="ep-field"><label>Titel</label><input class="text-input" data-key="meta.title" value="${S.meta.title}"></div>
+    <div class="ep-field"><label>Stand-Text</label><input class="text-input" data-key="meta.stand" value="${S.meta.stand}"></div>
+  </div>
+
+  <div class="ep-section">
+    <div class="ep-section-title">Übersicht -- Hauptzahlen</div>
+    <div class="ep-row">
+      <div class="ep-field"><label>Total Leads</label><input type="number" data-key="total" value="${S.total}"></div>
+      <div class="ep-field"><label>Weiblich</label><input type="number" data-key="female" value="${S.female}"></div>
+    </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>Männlich</label><input type="number" data-key="male" value="${S.male}"></div>
+    </div>
+  </div>
+
+  <div class="ep-section">
+    <div class="ep-section-title">Leads & Kanal -- UTM Source</div>
+    ${S.source.map((d,i)=>`<div class="ep-field"><label>${d.l}</label><input type="number" data-list="source" data-i="${i}" value="${d.v}"></div>`).join('')}
+  </div>
+
+  <div class="ep-section">
+    <div class="ep-section-title">Ad Creative (UTM Content)</div>
+    ${S.content.map((d,i)=>`<div class="ep-field"><label>${d.l}</label><input type="number" data-list="content" data-i="${i}" value="${d.v}"></div>`).join('')}
+  </div>
+
+  <div class="ep-section">
+    <div class="ep-section-title">META-Kampagne Detail</div>
+    <div class="ep-row">
+      <div class="ep-field"><label>Broad-Kampagnen</label><input type="number" data-key="broad" value="${S.broad}"></div>
+    </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>DE Gesamt</label><input type="number" data-key="de_total" value="${S.de_total}"></div>
+      <div class="ep-field"><label>FR Gesamt</label><input type="number" data-key="fr_total" value="${S.fr_total}"></div>
+    </div>
+    ${S.camp.map((d,i)=>`<div class="ep-field"><label>${d.l}</label><input type="number" data-list="camp" data-i="${i}" value="${d.v}"></div>`).join('')}
+  </div>`;
+}
+
+function applyEdit() {
+  const body = document.getElementById('editPanelBody');
+
+  // Scalar keys
+  body.querySelectorAll('[data-key]').forEach(inp => {
+    const keys = inp.dataset.key.split('.');
+    if(keys.length === 2) { S[keys[0]][keys[1]] = inp.value; }
+    else { S[keys[0]] = isNaN(inp.value) ? inp.value : +inp.value; }
+  });
+
+  // List items
+  body.querySelectorAll('[data-list]').forEach(inp => {
+    S[inp.dataset.list][+inp.dataset.i].v = +inp.value;
+  });
+
+  closeEdit();
+  render();
+  // Re-run counters on active panel
+  document.querySelectorAll('.tab-panel.active [data-count]').forEach(el => {
+    animateCount(el, +el.dataset.count);
+  });
+  showToast();
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+/* =============================================
+   TABS
+============================================= */
+Chart.defaults.font.family = "'Outfit','Helvetica Neue',sans-serif";
+Chart.defaults.color = '#888';
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('.tab-panel.active [data-count]').forEach(el => {
+      animateCount(el, +el.dataset.count);
+    });
+    animateFills(document.querySelector('.tab-panel.active'));
+  });
+});
+
+/* -- CPL INFO TOOLTIP -- */
+function toggleCplInfo(e) {
+  e.stopPropagation();
+  const tt = document.getElementById('cpl-tooltip');
+  if(tt) tt.classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const tt = document.getElementById('cpl-tooltip');
+  if(tt) tt.classList.remove('open');
+});
+
+// Initial render
+render();
+
+/* -- LIGHTBOX -- */
+function openLightbox(label) {
+  const img = CREATIVE_IMGS[label];
+  if (!img) return;
+  document.getElementById('lightbox-img').src = img;
+  document.getElementById('lightbox-caption').textContent = label;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && !e.target.closest('.lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox({target:document.getElementById('lightbox')}); });
+
+</script>
+</body>
+</html>
