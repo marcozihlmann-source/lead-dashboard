@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HANEGG-Challenge — Lead Dashboard</title>
+<title>Globe Challenge 2026 — Lead Dashboard</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
@@ -274,18 +274,6 @@ main{padding:22px 32px 52px;}
 
 
 /* CREATIVE GRID */
-/* ATHLETE GRID */
-.athlete-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:4px 0;}
-.athlete-card{display:flex;align-items:center;gap:12px;background:var(--bg);border-radius:9px;padding:14px 16px;border:1.5px solid var(--border);transition:transform 0.15s;}
-.athlete-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-.athlete-card.top{border-color:var(--red);background:var(--red-light);}
-.athlete-rank{font-size:13px;font-weight:900;color:var(--grey);min-width:22px;text-align:center;}
-.athlete-card.top .athlete-rank{color:var(--red);}
-.athlete-info{flex:1;min-width:0;}
-.athlete-name{font-size:13px;font-weight:800;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.athlete-stats{font-size:11px;color:var(--grey);margin-top:2px;}
-.athlete-bar-track{height:4px;background:var(--border);border-radius:2px;margin-top:5px;}
-.athlete-bar-fill{height:100%;background:var(--red);border-radius:2px;transition:width 0.8s ease-out;}
 .creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:14px;}
 .creative-card{background:var(--bg);border-radius:9px;overflow:hidden;border:1.5px solid var(--border);transition:transform 0.2s,box-shadow 0.2s;}
 .creative-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.10);}
@@ -319,7 +307,7 @@ main{padding:22px 32px 52px;}
 @media(max-width:900px){.grid-3{grid-template-columns:1fr 1fr;}.span-3{grid-column:span 2;}header,main{padding-left:16px;padding-right:16px;}}
 @media(max-width:600px){.grid-3,.grid-2{grid-template-columns:1fr;}.span-2,.span-3{grid-column:span 1;}.kpi-row{flex-direction:column;}.edit-panel{width:100%;}}
 
-/* ── BACK BUTTON ── */
+/* – BACK BUTTON – */
 .back-btn{display:none;align-items:center;gap:6px;background:none;border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:700;color:var(--mid);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
 .back-btn:hover{border-color:var(--red);color:var(--red);}
 .back-btn.visible{display:flex;}
@@ -389,13 +377,13 @@ main{padding:22px 32px 52px;}
       </button>
       <img src="../header/Swiss-Ski_Logo_RGB_Rot.png" alt="Swiss-Ski" class="header-logo">
       <div class="header-brand">
-        <h1 id="hdr-title">HANEGG-Challenge</h1>
+        <h1 id="hdr-title">Globe Challenge 2026</h1>
       </div>
       <div class="header-sub">Game Campaign · Lead Dashboard</div>
     </div>
     <div class="header-right">
       <div class="header-meta">
-        <span id="hdr-stand">Stand März 2026</span><br>
+        <span id="hdr-stand">Stand April 2026</span><br>
         <strong id="hdr-total">0 Leads</strong>
       </div>
       <button class="edit-btn" id="editBtn" onclick="openEdit()">
@@ -407,8 +395,9 @@ main{padding:22px 32px 52px;}
   <div class="tabs">
     <button class="tab-btn active" data-tab="uebersicht">ÜBERSICHT</button>
     <button class="tab-btn" data-tab="kanal">LEADS &amp; KANAL</button>
+    <button class="tab-btn" data-tab="creatives">CONTENT / CREATIVES</button>
     <button class="tab-btn" data-tab="kampagne">META-KAMPAGNE DETAIL</button>
-    <button class="tab-btn" data-tab="athleten">ATHLETEN</button>
+    <button class="tab-btn" data-tab="gpm">GRAND PRIX MIGROS</button>
     <button class="tab-btn" data-tab="learnings">LEARNINGS & NEXT STEPS</button>
   </div>
 </header>
@@ -430,6 +419,16 @@ main{padding:22px 32px 52px;}
         <span class="benchmark-bar-pill red">&#9679; ab CHF 7.01</span>
       </div>
     </div>
+    <!-- Tracking-Hinweis -->
+    <div style="background:#FFF8E7;border:1.5px solid #F59E0B;border-radius:10px;padding:16px 20px;margin:0 0 18px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">&#9888;</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:4px;">Meta-Tracking Hinweis</div>
+        <div style="font-size:12px;color:#78350F;line-height:1.6;">Das Meta-Tracking hat bei dieser Kampagne nicht korrekt funktioniert. Meta meldete <strong>602 Leads</strong>, effektiv wurden aber <strong>1'976 Formspark-Submits</strong> erfasst. Alle CPL-Berechnungen in diesem Report basieren auf den <strong>Formspark-Einsendungen</strong> als verlässliche Quelle.</div>
+      </div>
+    </div>
+    <!-- Third KPI row -->
+    <div class="kpi-row" id="kpi-uebersicht2"></div>
     <div class="grid-3">
       <div class="card">
         <div class="card-title">Profil-Kennzahlen</div>
@@ -440,7 +439,7 @@ main{padding:22px 32px 52px;}
         <div style="position:relative;height:205px"><canvas id="chart-roles"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Sprach-Split DE / FR</div>
+        <div class="card-title">Sprach-Split DE / FR / GPM</div>
         <div style="position:relative;height:205px"><canvas id="chart-lang"></canvas></div>
       </div>
       <div class="card">
@@ -463,12 +462,7 @@ main{padding:22px 32px 52px;}
         <div style="position:relative;height:230px"><canvas id="chart-source"></canvas></div>
       </div>
       <div class="card span-2">
-        <div class="card-title">Ad Creative Performance (UTM Content)</div>
-        <div id="creative-grid"></div>
-        <div class="best-box" id="best-box"></div>
-      </div>
-      <div class="card span-2">
-        <div class="card-title">Paid Social Überblick</div>
+        <div class="card-title">Paid vs. Organisch Überblick</div>
         <div class="paid-wrap">
           <div class="paid-bars" id="paid-bars"></div>
           <div class="paid-insights" id="paid-insights"></div>
@@ -477,10 +471,30 @@ main{padding:22px 32px 52px;}
     </div>
   </div>
 
+  <!-- CONTENT / CREATIVES -->
+  <div class="tab-panel" id="tab-creatives">
+    <div class="kpi-row" id="kpi-creatives"></div>
+    <div class="grid-2">
+      <div class="card span-2">
+        <div class="card-title">Ad Creative Performance (UTM Content)</div>
+        <div id="creative-grid"></div>
+        <div class="best-box" id="best-box"></div>
+      </div>
+      <div class="card span-2">
+        <div class="card-title">Alle Creatives — DE & FR Varianten</div>
+        <div class="creative-grid" id="all-creatives-grid"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- KAMPAGNE -->
   <div class="tab-panel" id="tab-kampagne">
     <div class="kpi-row" id="kpi-kampagne"></div>
     <div class="grid-2">
+      <div class="card span-2" style="border-left:3px solid var(--red);">
+        <div class="card-title">A/B-Test: Kampagnenziel Traffic vs. Leads</div>
+        <div id="ab-test"></div>
+      </div>
       <div class="card">
         <div class="card-title">Kampagnen-Performance (Leads)</div>
         <div class="hbar-list" id="hbar-camp"></div>
@@ -504,21 +518,28 @@ main{padding:22px 32px 52px;}
     </div>
   </div>
 
-  <!-- ATHLETEN -->
-  <div class="tab-panel" id="tab-athleten">
-    <div class="kpi-row" id="kpi-athleten"></div>
-    <div class="grid-2">
-      <div class="card span-2">
-        <div class="card-title">Athleten-Ranking</div>
-        <div id="athlete-grid"></div>
+  <!-- GRAND PRIX MIGROS -->
+  <div class="tab-panel" id="tab-gpm">
+    <div class="kpi-row" id="kpi-gpm"></div>
+    <div style="background:#FFF8E7;border:1.5px solid #F59E0B;border-radius:10px;padding:16px 20px;margin:0 0 18px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">&#128196;</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:4px;">Print-Aktivierung</div>
+        <div style="font-size:12px;color:#78350F;line-height:1.6;">Dies war eine Offline Print-Aktivierung am Grand Prix Migros Finale in Crans-Montana (März 2025). Leads wurden via QR-Code auf Plakaten und Instagram Stories generiert. <strong>Keine Ad-Spend-Daten verfügbar</strong> — die Kosten für Print-Material sind nicht im META-Budget enthalten.</div>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Kanal-Split</div>
+        <div style="position:relative;height:205px"><canvas id="chart-gpm-channel"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Athleten-Verteilung</div>
-        <div style="position:relative;height:280px"><canvas id="chart-athletes"></canvas></div>
+        <div class="card-title">Sprach-Split</div>
+        <div style="position:relative;height:205px"><canvas id="chart-gpm-lang"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Speed-Statistik</div>
-        <div id="kpi-speed"></div>
+        <div class="card-title">Telefon-Qualität</div>
+        <div class="phone-bars" id="gpm-phone-bars"></div>
       </div>
     </div>
   </div>
@@ -532,33 +553,57 @@ main{padding:22px 32px 52px;}
    STATE — alle Werte zentral hier
 ============================================= */
 let S = {
-  meta: { title: 'HANEGG-Challenge', stand: 'Stand Januar 2026' },
-  total: 3854,
-  withPhone: 2417, noPhone: 1437, organic: 0,
-  broad: 3854, de_total: 3544, fr_total: 310,
+  meta: { title: 'Globe Challenge 2026', stand: 'Stand April 2026' },
+  total: 1976,
+  withPhone: 1458, noPhone: 518, organic: 86,
+  de_total: 1379, fr_total: 496, gpm_total: 101,
 
-  source:  [{l:'META Ads',v:3854}],
-  content: [{l:'Video Ad',v:2056},{l:'Image Ad',v:1798}],
-  camp:    [{l:'DE Broad',v:3854}],
+  source: [
+    {l:'Instagram', v:1396},
+    {l:'Facebook', v:479},
+    {l:'Print / QR-Code', v:84},
+    {l:'Andere / Kein UTM', v:17},
+  ],
+  content: [
+    {l:'Image Ad 1 (25.03)', v:838},
+    {l:'Image Ad 2 (02.04)', v:539},
+    {l:'Image Ad 2 (25.03)', v:347},
+    {l:'Image Ad (Traffic)', v:65},
+    {l:'Plakat (QR)', v:84},
+    {l:'Organisch / Story', v:80},
+    {l:'Kein UTM', v:23},
+  ],
+  camp: [
+    {l:'Leads 25.03 (DE)', v:919},
+    {l:'Leads 25.03 (FR)', v:266},
+    {l:'Leads 02.04 (DE)', v:376},
+    {l:'Leads 02.04 (FR)', v:163},
+    {l:'Traffic 30.03 (DE)', v:35},
+    {l:'Traffic 30.03 (FR)', v:30},
+    {l:'Grand Prix Migros', v:101},
+    {l:'Organisch/Direkt', v:86},
+  ],
   campSpend: [
-    {l:'DE Broad', leads:3854, cpl:0.91, spend:3500},
+    {l:'Leads 25.03 (DE)', leads:919, cpl:1.51, spend:1384.65},
+    {l:'Leads 25.03 (FR)', leads:266, cpl:1.40, spend:372.80},
+    {l:'Leads 02.04 (DE)', leads:376, cpl:2.22, spend:836.48},
+    {l:'Leads 02.04 (FR)', leads:163, cpl:2.22, spend:361.47},
+    {l:'Traffic 30.03 (DE)', leads:35, cpl:9.48, spend:331.87},
+    {l:'Traffic 30.03 (FR)', leads:30, cpl:23.82, spend:714.54},
   ],
   adsets: [
-    {l:'adset1-de-broad-videoad (08.01.2025)', impressions:252632, reach:159041, freq:1.59, cpm:5.84, clicks:7613, von:'08.01.2025', bis:'17.01.2026', days:10},
-    {l:'adset1-de-broad-imagead (08.01.2025)', impressions:1162124, reach:212883, freq:5.46, cpm:1.74, clicks:6656, von:'08.01.2025', bis:'17.01.2026', days:10},
+    {l:'Leads 25.03 Adset1-DE', impressions:133426, reach:43307, freq:3.08, cpm:10.38, clicks:2747, von:'25.03.2026', bis:'30.03.2026', days:5},
+    {l:'Leads 25.03 Adset2-FR', impressions:41683, reach:14014, freq:2.97, cpm:8.95, clicks:843, von:'25.03.2026', bis:'30.03.2026', days:5},
+    {l:'Traffic 30.03 Adset1-DE', impressions:74880, reach:48577, freq:1.54, cpm:4.43, clicks:815, von:'30.03.2026', bis:'02.04.2026', days:3},
+    {l:'Traffic 30.03 Adset2-FR', impressions:155477, reach:94795, freq:1.64, cpm:4.60, clicks:1773, von:'30.03.2026', bis:'02.04.2026', days:3},
+    {l:'Leads 02.04 Adset1-DE', impressions:80976, reach:29675, freq:2.73, cpm:10.33, clicks:1286, von:'02.04.2026', bis:'08.04.2026', days:6},
+    {l:'Leads 02.04 Adset2-FR', impressions:42326, reach:15486, freq:2.73, cpm:8.54, clicks:576, von:'02.04.2026', bis:'08.04.2026', days:6},
   ],
-  athletes: [
-    {l:'Marco Odermatt', v:1842},
-    {l:'Franjo von Allmen', v:1477},
-    {l:'Alexis Monney', v:172},
-    {l:'Niels Hintermann', v:134},
-    {l:'Stefan Rogentin', v:71},
-    {l:'Justin Murisier', v:54},
-    {l:'Marco Kohler', v:53},
-    {l:'Livio Hiltbrand', v:28},
-    {l:'Lars Rüsti', v:23},
-  ],
-  speedAvg: 145.3, speedMin: 100.0, speedMax: 165.0,
+  gpm: {
+    title: 'Grand Prix Migros Finale Crans-Montana 2025',
+    total: 101, print: 84, social: 17,
+    de: 89, fr: 12, withPhone: 83, noPhone: 18,
+  },
 };
 
 const RED = '#E3001B';
@@ -567,11 +612,36 @@ const fmt = v => typeof v==='number' ? v.toLocaleString('de-CH') : v;
 const pct = (v,t) => t===0 ? '0.0' : ((v/t)*100).toFixed(1);
 const charts = {};
 
+/* – CREATIVE IMAGES – */
+const CREATIVE_IMGS = {
+  'Image Ad 1 (25.03)': 'images/fanengagement-d2c-globechallenge-25032026-adset1-de-imagead1.png',
+  'Image Ad 2 (02.04)': 'images/fanengagement-d2c-globechallenge-02042026-adset1-de-imagead2.png',
+  'Image Ad 2 (25.03)': 'images/fanengagement-d2c-globechallenge-25032026-adset1-de-imagead2.png',
+  'Image Ad (Traffic)': 'images/fanengagement-d2c-globechallenge-30032026-adset1-de-imagead.png',
+  'Plakat (QR)': 'images/Plakat_QR.png',
+  'Organisch / Story': 'images/Organisch-Story.png',
+  'Kein UTM': 'images/Kein_utm.png',
+};
+
+const ALL_CREATIVES = [
+  {label:'Image Ad 1 DE (25.03)', img:'images/fanengagement-d2c-globechallenge-25032026-adset1-de-imagead1.png'},
+  {label:'Image Ad 1 FR (25.03)', img:'images/fanengagement-d2c-globechallenge-25032026-adset2-fr-imagead1.png'},
+  {label:'Image Ad 2 DE (25.03)', img:'images/fanengagement-d2c-globechallenge-25032026-adset1-de-imagead2.png'},
+  {label:'Image Ad 2 FR (25.03)', img:'images/fanengagement-d2c-globechallenge-25032026-adset2-fr-imagead2.png'},
+  {label:'Image Ad 2 DE (02.04)', img:'images/fanengagement-d2c-globechallenge-02042026-adset1-de-imagead2.png'},
+  {label:'Image Ad 2 FR (02.04)', img:'images/fanengagement-d2c-globechallenge-02042026-adset2-fr-imagead2.png'},
+  {label:'Image Ad DE (Traffic)', img:'images/fanengagement-d2c-globechallenge-30032026-adset1-de-imagead.png'},
+  {label:'Image Ad FR (Traffic)', img:'images/fanengagement-d2c-globechallenge-30032026-adset2-fr-imagead.png'},
+  {label:'Plakat (QR)', img:'images/Plakat_QR.png'},
+  {label:'Organisch / Story', img:'images/Organisch-Story.png'},
+  {label:'Kein UTM', img:'images/Kein_utm.png'},
+];
+
 /* =============================================
    RENDER
 ============================================= */
 function render() {
-  const T = S.total || 1; // avoid division by zero in display
+  const T = S.total || 1;
 
   // Header
   document.getElementById('hdr-title').textContent = S.meta.title;
@@ -583,8 +653,14 @@ function render() {
     kpi(fmt(S.total),      'Total Leads',       'Alle Spielteilnahmen gesamt', true),
     kpi(fmt(S.withPhone),'Mit Telefonnummer', pct(S.withPhone,T)+'% – qualifiziert für Outreach'),
     kpi(fmt(S.noPhone),'Ohne Telefonnummer', pct(S.noPhone,T)+'% ohne Telefon'),
-    kpi(fmt(S.de_total),   'DE Leads',        pct(S.de_total,T)+'% aller Leads (PLZ-basiert)'),
-    kpi(fmt(S.fr_total),   'FR Leads',        pct(S.fr_total,T)+'% aller Leads (PLZ-basiert)'),
+    kpi(fmt(S.organic),'Organisch / Direkt', 'Leads ohne UTM-Tracking'),
+  ].join(''));
+
+  // Third KPI row
+  setHTML('kpi-uebersicht2', [
+    kpi(fmt(S.de_total), 'DE Leads', pct(S.de_total,T)+'% aller Leads'),
+    kpi(fmt(S.fr_total), 'FR Leads', pct(S.fr_total,T)+'% aller Leads'),
+    kpi(fmt(S.gpm_total), 'GP Migros', pct(S.gpm_total,T)+'% aller Leads'),
   ].join(''));
 
   // Donuts
@@ -594,7 +670,7 @@ function render() {
   renderDonutChart('chart-roles',
     [{l:'Mit Telefonnummer',v:S.withPhone},{l:'Ohne Telefonnummer',v:S.noPhone}], T);
   renderDonutChart('chart-lang',
-    [{l:'Deutsch',v:S.de_total||Math.round(T*0.75)},{l:'Français',v:S.fr_total||Math.round(T*0.25)}], T);
+    [{l:'Deutsch (DE)',v:S.de_total},{l:'Français (FR)',v:S.fr_total},{l:'Grand Prix Migros',v:S.gpm_total}], T);
   // Phone bars
   setHTML('phone-bars', `
     <div class="phone-bar-row">
@@ -615,46 +691,65 @@ function render() {
   animateFills(document.getElementById('phone-bars'));
 
   // – KANAL KPIs –
-  const metaAds = S.source.find(d=>d.l==='META Ads')?.v||S.total;
+  const ig = S.source.find(d=>d.l==='Instagram')?.v||0;
+  const fb = S.source.find(d=>d.l==='Facebook')?.v||0;
+  const print = S.source.find(d=>d.l==='Print / QR-Code')?.v||0;
   setHTML('kpi-kanal', [
-    kpi(fmt(metaAds), 'META Ads',  '100% via Paid Social', true),
-    kpi(fmt(14269), 'Link-Klicks', 'Total aus META Ads Manager'),
-    kpi('CHF 0.25', 'CPC',         'Kosten pro Link-Klick'),
+    kpi(fmt(ig), 'Instagram', pct(ig,T)+'% – stärkster Kanal', true),
+    kpi(fmt(fb), 'Facebook', pct(fb,T)+'% aller Leads'),
+    kpi(fmt(print), 'Print / QR-Code', 'Grand Prix Migros Plakate'),
+    kpi(fmt(S.organic),'Organisch / Direkt','Kein UTM trackbar'),
   ].join(''));
 
   buildHBars('hbar-source',  S.source,  T);
-  buildContentCards();
   renderDonutChart('chart-source', S.source, T);
 
+  // Paid vs Organic
+  const paidSocial = ig + fb;
+  const printLeads = S.source.find(d=>d.l==='Print / QR-Code')?.v||0;
+  const paid = [
+    {l:'Paid Social (IG + FB)', v:paidSocial},
+    {l:'Print / QR-Code (GPM)', v:printLeads},
+    {l:'Organisch / Direkt', v:S.organic}
+  ];
+  buildPaidBars(paid);
+  setHTML('paid-insights', [
+    ins('Paid Social Anteil',   pct(paidSocial,T)+'%'),
+    ins('IG-Anteil am Paid',    pct(ig,Math.max(paidSocial,1))+'%'),
+    ins('Print / QR Anteil',    pct(printLeads,T)+'%'),
+  ].join(''));
+
+  // – CONTENT / CREATIVES TAB –
+  buildContentCards();
   const best = [...S.content].sort((a,b)=>b.v-a.v)[0];
   setHTML('best-box', `
     <div class="bl">Best Performer</div>
     <div class="bv">${best.l} – ${fmt(best.v)} Leads</div>
     <div class="bs">${pct(best.v,T)}% aller Leads via einem einzigen Creative</div>`);
 
-  const paidTotal = S.total - S.organic;
-  const paid = [{l:'Paid Social (META Ads)',v:paidTotal}];
-  if(S.organic > 0) paid.push({l:'Organisch / Direkt',v:S.organic});
-  buildPaidBars(paid);
-  setHTML('paid-insights', [
-    ins('Paid Social Anteil',   pct(paidTotal,T)+'%'),
-    ins('Total Klicks (META)',  fmt(14269)),
-    ins('Best Creative Anteil', pct(best.v,T)+'%'),
+  setHTML('kpi-creatives', [
+    kpi(fmt(best.v), 'Best Performer', best.l+' – stärkstes Creative', true),
+    kpi('11', 'Creatives', '8 Ads + 3 Weitere (Plakat, Story, Kein UTM)'),
+    kpi('3', 'Kampagnen-Flights', '25.03 / 30.03 / 02.04'),
   ].join(''));
 
+  buildAllCreativesGrid();
+
   // – KAMPAGNE KPIs –
-  const deBroad = S.camp.find(d=>d.l==='DE Broad')?.v||0;
-  const frBroad = S.camp.find(d=>d.l==='FR Broad')?.v||0;
   const totalMetaSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
   const totalMetaLeads = S.campSpend.reduce((s,d)=>s+d.leads,0);
   const avgCPLAll = totalMetaLeads > 0 ? (totalMetaSpend/totalMetaLeads).toFixed(2) : '0.00';
   setHTML('kpi-kampagne', [
-    kpi(fmt(S.broad),      'Broad',              pct(S.broad,T)+'% aller Leads', true),
-    kpi(fmt(S.de_total),   'DE Gesamt META',      'Broad DE'),
-    kpi(fmt(S.fr_total),   'FR Gesamt META',      'Broad FR'),
-    kpi('CHF '+fmt(Math.round(totalMetaSpend)),   'Total META Spend (CHF)',   fmt(totalMetaLeads)+' Leads via Ads Manager'),
-    kpi('CHF '+avgCPLAll,  'Ø CPL (CHF)',         'Durchschnittlicher Cost per Lead'),
+    kpi(fmt(totalMetaLeads), 'Paid Leads', 'Formspark-Einsendungen via META', true),
+    kpi(fmt(S.de_total), 'DE Leads (gesamt)', 'inkl. Organic'),
+    kpi(fmt(S.fr_total), 'FR Leads (gesamt)', 'inkl. Organic'),
+    kpi('CHF '+fmt(Math.round(totalMetaSpend)), 'Total META Spend', fmt(totalMetaLeads)+' Paid Leads'),
+    kpi('CHF '+avgCPLAll, 'Ø CPL (Formspark)', 'Basierend auf Einsendungen'),
   ].join(''));
+
+  // A/B Test
+  renderABTest();
+
   buildHBars('hbar-camp', S.camp, T);
   renderDonutChart('chart-camp', S.camp, T);
 
@@ -739,24 +834,30 @@ function render() {
   }
 
   // DE vs FR
+  const deLeads = S.camp.filter(d=>d.l.includes('(DE)')).reduce((s,d)=>s+d.v,0);
+  const frLeads = S.camp.filter(d=>d.l.includes('(FR)')).reduce((s,d)=>s+d.v,0);
   setHTML('defr-wrap', `
     <div class="defr-col">
       <div class="defr-lang" style="color:var(--red)">Deutsch (DE)</div>
-      <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(deBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:var(--red)" data-w="${pct(deBroad,T)}"></div></div></div>
+      ${S.camp.filter(d=>d.l.includes('(DE)')).map(d=>`
+        <div class="defr-bar"><div class="defr-head"><span>${d.l}</span><span>${fmt(d.v)}</span></div><div class="defr-track"><div class="defr-fill" style="background:var(--red)" data-w="${pct(d.v,T)}"></div></div></div>
+      `).join('')}
     </div>
     <div class="defr-col">
       <div class="defr-lang" style="color:var(--grey)">Français (FR)</div>
-      <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(frBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:#BBBBBB" data-w="${pct(frBroad,T)}"></div></div></div>
+      ${S.camp.filter(d=>d.l.includes('(FR)')).map(d=>`
+        <div class="defr-bar"><div class="defr-head"><span>${d.l}</span><span>${fmt(d.v)}</span></div><div class="defr-track"><div class="defr-fill" style="background:#BBBBBB" data-w="${pct(d.v,T)}"></div></div></div>
+      `).join('')}
     </div>
     <div class="defr-insights">
-      ${ins('Breiteste Kampagne','DE Broad – '+fmt(deBroad))}
-      ${ins('FR Broad Anteil',    pct(frBroad,T)+'% aller Leads')}
-      ${ins('DE-Anteil gesamt',   pct(S.de_total,T)+'%')}
+      ${ins('DE Leads gesamt', fmt(deLeads)+' ('+pct(deLeads,T)+'%)')}
+      ${ins('FR Leads gesamt', fmt(frLeads)+' ('+pct(frLeads,T)+'%)')}
+      ${ins('DE-Anteil gesamt', pct(S.de_total,T)+'%')}
     </div>`);
   animateFills(document.getElementById('defr-wrap'));
 
-  // – ATHLETEN –
-  renderAthleten();
+  // – GPM –
+  renderGPM();
 
   // – LEARNINGS –
   renderLearnings();
@@ -767,123 +868,133 @@ function render() {
   });
 }
 
-/* --- ATHLETEN TAB --- */
-function renderAthleten() {
-  const T = S.total || 1;
-  const ath = S.athletes || [];
-  const top = ath[0] || {l:'-',v:0};
+/* --- A/B Test --- */
+function renderABTest() {
+  const leadsTotal = 919+266+376+163;
+  const leadsSpend = 1384.65+372.80+836.48+361.47;
+  const leadsCPL = (leadsSpend/leadsTotal).toFixed(2);
+  const trafficTotal = 35+30;
+  const trafficSpend = 331.87+714.54;
+  const trafficCPL = (trafficSpend/trafficTotal).toFixed(2);
+  const factor = (trafficCPL/leadsCPL).toFixed(1);
 
-  // KPIs
-  setHTML('kpi-athleten', [
-    kpi(String(ath.length), 'Athleten', 'zur Auswahl im Game', true),
-    kpi(top.l, 'Beliebtester', fmt(top.v)+' Stimmen ('+pct(top.v,T)+'%)'),
-    kpi('Ø '+S.speedAvg?.toFixed(1)+' km/h', 'Speed', 'Geschätzte Geschwindigkeit'),
-    kpi(S.speedMin?.toFixed(0)+' – '+S.speedMax?.toFixed(0)+' km/h', 'Speed Range', 'Min – Max'),
-  ].join(''));
-
-  // Athlete card grid
-  const max = Math.max(...ath.map(d=>d.v),1);
-  setHTML('athlete-grid', '<div class="athlete-grid">' + ath.map((d,i) => {
-    const w = (d.v/max*100).toFixed(1);
-    const isTop = i === 0;
-    return `<div class="athlete-card${isTop?' top':''}">
-      <div class="athlete-rank">#${i+1}</div>
-      <div class="athlete-info">
-        <div class="athlete-name">${d.l}</div>
-        <div class="athlete-stats">${fmt(d.v)} Stimmen · ${pct(d.v,T)}%</div>
-        <div class="athlete-bar-track"><div class="athlete-bar-fill" data-w="${w}"></div></div>
+  setHTML('ab-test', `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+      <div style="background:#f0faf3;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#15803d;margin-bottom:6px;">Leads-Ziel (Empfohlen)</div>
+        <div style="font-size:28px;font-weight:900;color:#15803d;">CHF ${leadsCPL}</div>
+        <div style="font-size:11px;color:#555;margin-top:4px;">${fmt(leadsTotal)} Leads aus CHF ${leadsSpend.toLocaleString('de-CH',{minimumFractionDigits:2})} Spend</div>
+        <div style="font-size:10px;color:#888;margin-top:2px;">Kampagnen 25.03 + 02.04</div>
       </div>
-    </div>`;
-  }).join('') + '</div>');
-  setTimeout(()=>{
-    document.querySelectorAll('.athlete-bar-fill').forEach(el=>el.style.width=el.dataset.w+'%');
-  }, 80);
-
-  // Pie chart
-  renderDonutChart('chart-athletes', ath, T);
-
-  // Speed stats
-  setHTML('kpi-speed', `
-    <div style="padding:16px;">
-      <div style="margin-bottom:16px;">
-        <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Durchschnitt</div>
-        <div style="font-size:32px;font-weight:900;color:var(--red);">${S.speedAvg?.toFixed(1)} km/h</div>
-      </div>
-      <div style="display:flex;gap:24px;">
-        <div>
-          <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Minimum</div>
-          <div style="font-size:20px;font-weight:800;">${S.speedMin?.toFixed(1)} km/h</div>
-        </div>
-        <div>
-          <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Maximum</div>
-          <div style="font-size:20px;font-weight:800;">${S.speedMax?.toFixed(1)} km/h</div>
-        </div>
+      <div style="background:#fdf0f1;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#dc2626;margin-bottom:6px;">Traffic-Ziel</div>
+        <div style="font-size:28px;font-weight:900;color:#dc2626;">CHF ${trafficCPL}</div>
+        <div style="font-size:11px;color:#555;margin-top:4px;">${fmt(trafficTotal)} Leads aus CHF ${trafficSpend.toLocaleString('de-CH',{minimumFractionDigits:2})} Spend</div>
+        <div style="font-size:10px;color:#888;margin-top:2px;">Kampagne 30.03</div>
       </div>
     </div>
+    <div style="background:var(--red-light);border-radius:8px;padding:12px 14px;border-left:3px solid var(--red);">
+      <div style="font-size:12px;font-weight:700;color:var(--black);">Ergebnis: Das Leads-Ziel ist <span style="color:var(--red);font-size:14px;font-weight:900;">${factor}x</span> kosteneffizienter als das Traffic-Ziel</div>
+      <div style="font-size:11px;color:#555;margin-top:4px;">Das Traffic-Ziel generierte zwar hohe Reichweite (230'357 Impressionen), aber deutlich weniger qualifizierte Leads pro CHF.</div>
+    </div>
   `);
+}
+
+/* --- GPM --- */
+function renderGPM() {
+  const g = S.gpm;
+  setHTML('kpi-gpm', [
+    kpi(fmt(g.total), 'Total Leads', 'Grand Prix Migros Finale', true),
+    kpi(fmt(g.print), 'Print / QR-Code', pct(g.print,g.total)+'% — Plakat-Aktivierung'),
+    kpi(fmt(g.social), 'Social / Instagram', pct(g.social,g.total)+'% — Story-Posts'),
+    kpi(fmt(g.withPhone), 'Mit Telefonnummer', pct(g.withPhone,g.total)+'% qualifiziert'),
+  ].join(''));
+
+  renderDonutChart('chart-gpm-channel', [{l:'Print / QR-Code',v:g.print},{l:'Instagram Story',v:g.social}], g.total);
+  renderDonutChart('chart-gpm-lang', [{l:'Deutsch (DE)',v:g.de},{l:'Français (FR)',v:g.fr}], g.total);
+
+  setHTML('gpm-phone-bars', `
+    <div class="phone-bar-row">
+      <div class="phone-bar-head">Mit Telefonnummer <span>${pct(g.withPhone,g.total)}%</span></div>
+      <div class="phone-track"><div class="phone-fill" style="background:var(--red)" data-w="${pct(g.withPhone,g.total)}"></div></div>
+      <div class="phone-sub">${fmt(g.withPhone)} Leads</div>
+    </div>
+    <div class="phone-bar-row">
+      <div class="phone-bar-head">Ohne Telefonnummer <span>${pct(g.noPhone,g.total)}%</span></div>
+      <div class="phone-track"><div class="phone-fill" style="background:#E2E2E2" data-w="${pct(g.noPhone,g.total)}"></div></div>
+      <div class="phone-sub">${fmt(g.noPhone)} Leads</div>
+    </div>
+    <div class="outreach-box">
+      <div class="ol">Qualifiziert für Outreach</div>
+      <div class="ov">${fmt(g.withPhone)}</div>
+      <div class="os">Leads mit Telefonnummer</div>
+    </div>`);
+  animateFills(document.getElementById('gpm-phone-bars'));
+}
+
+/* --- All Creatives Grid --- */
+function buildAllCreativesGrid() {
+  const container = document.getElementById('all-creatives-grid');
+  if (!container) return;
+  container.innerHTML = ALL_CREATIVES.map(c => `
+    <div class="creative-card">
+      <div class="cc-img-wrap" onclick="openLightbox('${c.label}')">
+        <img src="${c.img}" class="cc-img" alt="${c.label}">
+      </div>
+      <div class="cc-body">
+        <div class="cc-label">${c.label}</div>
+      </div>
+    </div>`).join('');
 }
 
 /* --- helpers --- */
 function renderLearnings() {
   const T = S.total || 1;
-  const bestContent = [...S.content].sort((a,b)=>b.v-a.v)[0];
-  const topAthlete = S.athletes?.[0] || {l:'-',v:0};
 
   const learnings = [
     {
-      icon: '📸', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
-      title: 'Video Ad als stärkstes Format',
-      text: `${bestContent ? bestContent.l : 'Bestes Creative'} generierte die meisten Klicks (${fmt(bestContent?.v||0)} Leads). Video-Content performt bei Game-Kampagnen besonders stark.`
+      icon: '&#9888;&#65039;', color: 'yellow', badge: 'badge-yellow', tag: 'Tracking',
+      title: 'Meta-Tracking war bei dieser Kampagne nicht zuverlässig',
+      text: 'Meta meldete 602 Leads, Formspark erfasste 1\'976. Für zukünftige Kampagnen: Conversion-Tracking vor Kampagnenstart testen und Formspark als Backup-Quelle immer mitführen.'
     },
     {
-      icon: '🏔️', color: 'blue', badge: 'badge-blue', tag: 'Athleten-Engagement',
-      title: 'Marco Odermatt als klarer Publikumsliebling',
-      text: `${topAthlete.l} wurde von ${fmt(topAthlete.v)} Teilnehmern gewählt (${pct(topAthlete.v,T)}%). Die Athleten-Auswahl ist ein starker Engagement-Treiber.`
+      icon: '&#127919;', color: 'red', badge: 'badge-red', tag: 'Kampagnenziel',
+      title: 'Leads-Ziel ist 9.4x effizienter als Traffic-Ziel',
+      text: 'Das Leads-Ziel erzielte einen CPL von CHF 1.71 vs. CHF 16.10 beim Traffic-Ziel. Für Lead-Kampagnen immer das Leads-Optimierungsziel verwenden.'
     },
     {
-      icon: '💰', color: 'teal', badge: 'badge-teal', tag: 'Cost Efficiency',
-      title: 'CPL von CHF 0.91 im Zielbereich',
-      text: `Bei CHF 3'500 Ad Spend wurden ${fmt(S.total)} Leads generiert. Der CPL liegt im orangen Bereich – Optimierungspotenzial bei Creative-Rotation.`
+      icon: '&#128200;', color: 'green', badge: 'badge-green', tag: 'CPL Performance',
+      title: 'Gesamter Paid CPL von CHF 2.24 liegt im grünen Bereich',
+      text: 'Bei einem erweiterten Lead (8 Felder inkl. Adresse) ist ein CPL unter CHF 4.00 sehr gut. Besonders die FR-Kampagne 25.03 erzielte mit CHF 1.40 einen ausgezeichneten CPL.'
     },
     {
-      icon: '📞', color: 'green', badge: 'badge-green', tag: 'Datenqualität',
-      title: 'Hohe Telefonnummer-Rate von 62.7%',
-      text: `${fmt(S.withPhone)} von ${fmt(S.total)} Leads (${pct(S.withPhone,T)}%) hinterliessen ihre Nummer – ein starker Indikator für echtes Interesse und Kaufbereitschaft.`
+      icon: '&#127758;', color: 'teal', badge: 'badge-teal', tag: 'Sprachregionen',
+      title: 'DE vs. FR Performance unterschiedlich je nach Kampagne',
+      text: 'DE erzielte 1\'379 Leads, FR 496. Beim Leads-Ziel war FR sogar günstiger (CHF 1.40 vs. 1.51 bei 25.03). Beim Traffic-Ziel war FR mit CHF 23.82 deutlich teurer.'
     },
     {
-      icon: '🎿', color: 'purple', badge: 'badge-purple', tag: 'Game Mechanik',
-      title: 'Speed-Schätzung als Engagement-Element',
-      text: `Durchschnittlich geschätzte Geschwindigkeit: ${S.speedAvg?.toFixed(1)} km/h. Die Spanne von ${S.speedMin?.toFixed(0)}–${S.speedMax?.toFixed(0)} km/h zeigt hohes User-Engagement.`
+      icon: '&#128206;', color: 'blue', badge: 'badge-blue', tag: 'Print-Aktivierung',
+      title: 'Grand Prix Migros brachte 101 zusätzliche Leads ohne Ad Spend',
+      text: '84 Leads via QR-Code auf Plakaten, 17 via Instagram Stories. Print-Aktivierungen als kosteneffiziente Ergänzung zu Digital-Kampagnen einsetzen.'
+    },
+    {
+      icon: '&#128247;', color: 'red', badge: 'badge-red', tag: 'Creative Performance',
+      title: 'Image Ad 1 (25.03) war der stärkste Performer mit 838 Leads',
+      text: 'Image Ad 1 aus der Kampagne 25.03 erzielte die meisten Leads. Image Ad 2 wurde in zwei Kampagnen eingesetzt — als eigenständige Creatives (347 bzw. 539 Leads). Für zukünftige Kampagnen: einzigartige utm_content-Parameter pro Creative verwenden.'
     },
   ];
 
   const nextSteps = [
-    {
-      icon: '📸',
-      title: 'Mehr Creative-Varianten testen',
-      desc: 'Video Ad hat stärker performt als Image Ad. Weitere Video-Varianten produzieren und A/B-testen.'
-    },
-    {
-      icon: '🌍',
-      title: 'FR-Markt erschliessen',
-      desc: 'Kampagne lief nur auf DE. Für zukünftige Game-Kampagnen auch FR-Zielgruppen testen.'
-    },
-    {
-      icon: '📞',
-      title: 'Lead-Qualifizierung starten',
-      desc: 'Die 2\'417 Leads mit Telefonnummer für Outreach-Kampagnen und Sales-Aktivierung nutzen.'
-    },
-    {
-      icon: '📊',
-      title: 'Athleten-Insights vertiefen',
-      desc: 'Die Athleten-Präferenz-Daten für zukünftige Kampagnen und Content-Strategie nutzen.'
-    },
+    {icon: '&#128270;', title: 'Tracking prüfen', desc: 'Conversion-Tracking auf Meta vor der nächsten Kampagne verifizieren. Events und Parameter sauber aufsetzen.'},
+    {icon: '&#127919;', title: 'Leads-Ziel verwenden', desc: 'Immer das Leads-Optimierungsziel statt Traffic wählen — 9.4x effizienter bei Lead-Generierung.'},
+    {icon: '&#128247;', title: 'Mehr Creatives testen', desc: 'Mindestens 3 Creative-Varianten pro Kampagne. A/B-Tests mit verschiedenen Bildsprachen und Formaten.'},
+    {icon: '&#127760;', title: 'FR-Potenzial nutzen', desc: 'Die FR-Zielgruppe hat bei richtiger Kampagne gute CPL-Werte. Budget-Split DE/FR laufend optimieren.'},
   ];
 
   const panel = document.getElementById('tab-learnings');
   panel.innerHTML = `
     <div class="section-title">Learnings</div>
-    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne – HANEGG-Challenge</div>
+    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne – Globe Challenge 2026</div>
     <div class="learning-grid">
       ${learnings.map(l => `
         <div class="learning-card">
@@ -899,7 +1010,7 @@ function renderLearnings() {
     <hr class="section-divider">
 
     <div class="section-title">Next Steps</div>
-    <div class="section-subtitle">Roadmap für die Lead-Kampagne – HANEGG-Challenge</div>
+    <div class="section-subtitle">Roadmap für die Lead-Kampagne – Globe Challenge 2026</div>
     <div class="timeline-outer">
       <div class="timeline-track">
         ${nextSteps.map((s, i) => `
@@ -989,14 +1100,6 @@ function renderBarChart(id, data, total) {
 }
 
 
-/* – CREATIVE IMAGES – */
-const CREATIVE_IMGS = {
-  'Video Ad': 'images/videoad.mp4',
-  'Image Ad': 'images/imagead.jpg',
-};
-
-const CREATIVE_ASPECT = {};
-
 function buildContentCards() {
   const container = document.getElementById('creative-grid');
   if (!container) return;
@@ -1007,13 +1110,10 @@ function buildContentCards() {
 
   container.innerHTML = '<div class="creative-grid">' + data.map(d => {
     const img   = CREATIVE_IMGS[d.l];
-    const cls   = CREATIVE_ASPECT[d.l] || 'cc-img';
-    const isVideo = img && img.match(/\.(mp4|webm|mov)$/i);
+    const cls   = 'cc-img';
     const imgEl = img
-      ? (isVideo
-        ? `<div class="cc-img-wrap"><video src="${img}" class="${cls}" muted loop playsinline onmouseenter="this.play()" onmouseleave="this.pause()"></video><div style="position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.6);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;">VIDEO</div></div>`
-        : `<div class="cc-img-wrap" onclick="openLightbox(\`${d.l}\`)"><img src="${img}" class="${cls}" alt="${d.l}"></div>`)
-      : `<div class="cc-no-img">📊</div>`;
+      ? `<div class="cc-img-wrap" onclick="openLightbox(\`${d.l}\`)"><img src="${img}" class="${cls}" alt="${d.l}"></div>`
+      : `<div class="cc-no-img">&#128202;</div>`;
     const top   = isTop(d);
     const barW  = (d.v / max * 100).toFixed(1);
     return `<div class="creative-card${top?' top':''}">
@@ -1114,6 +1214,13 @@ function buildEditPanel() {
       <div class="ep-field"><label>Ohne Telefonnummer</label><input type="number" data-key="noPhone" value="${S.noPhone}"></div>
       <div class="ep-field"><label>Organisch / Direkt</label><input type="number" data-key="organic" value="${S.organic}"></div>
     </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>DE Gesamt</label><input type="number" data-key="de_total" value="${S.de_total}"></div>
+      <div class="ep-field"><label>FR Gesamt</label><input type="number" data-key="fr_total" value="${S.fr_total}"></div>
+    </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>GP Migros Total</label><input type="number" data-key="gpm_total" value="${S.gpm_total}"></div>
+    </div>
   </div>
 
   <div class="ep-section">
@@ -1128,14 +1235,26 @@ function buildEditPanel() {
 
   <div class="ep-section">
     <div class="ep-section-title">META-Kampagne Detail</div>
-    <div class="ep-row">
-      <div class="ep-field"><label>Broad-Kampagnen</label><input type="number" data-key="broad" value="${S.broad}"></div>
-    </div>
-    <div class="ep-row">
-      <div class="ep-field"><label>DE Gesamt</label><input type="number" data-key="de_total" value="${S.de_total}"></div>
-      <div class="ep-field"><label>FR Gesamt</label><input type="number" data-key="fr_total" value="${S.fr_total}"></div>
-    </div>
     ${S.camp.map((d,i)=>`<div class="ep-field"><label>${d.l}</label><input type="number" data-list="camp" data-i="${i}" value="${d.v}"></div>`).join('')}
+  </div>
+
+  <div class="ep-section">
+    <div class="ep-section-title">Grand Prix Migros</div>
+    <div class="ep-row">
+      <div class="ep-field"><label>GPM Total</label><input type="number" data-key="gpm.total" value="${S.gpm.total}"></div>
+      <div class="ep-field"><label>GPM Print</label><input type="number" data-key="gpm.print" value="${S.gpm.print}"></div>
+    </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>GPM Social</label><input type="number" data-key="gpm.social" value="${S.gpm.social}"></div>
+      <div class="ep-field"><label>GPM DE</label><input type="number" data-key="gpm.de" value="${S.gpm.de}"></div>
+    </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>GPM FR</label><input type="number" data-key="gpm.fr" value="${S.gpm.fr}"></div>
+      <div class="ep-field"><label>GPM Mit Telefon</label><input type="number" data-key="gpm.withPhone" value="${S.gpm.withPhone}"></div>
+    </div>
+    <div class="ep-row">
+      <div class="ep-field"><label>GPM Ohne Telefon</label><input type="number" data-key="gpm.noPhone" value="${S.gpm.noPhone}"></div>
+    </div>
   </div>`;
 }
 
@@ -1145,7 +1264,10 @@ function applyEdit() {
   // Scalar keys
   body.querySelectorAll('[data-key]').forEach(inp => {
     const keys = inp.dataset.key.split('.');
-    if(keys.length === 2) { S[keys[0]][keys[1]] = inp.value; }
+    if(keys.length === 2) {
+      if(!S[keys[0]]) S[keys[0]] = {};
+      S[keys[0]][keys[1]] = isNaN(inp.value) ? inp.value : +inp.value;
+    }
     else { S[keys[0]] = isNaN(inp.value) ? inp.value : +inp.value; }
   });
 
@@ -1204,7 +1326,12 @@ render();
 
 /* – LIGHTBOX – */
 function openLightbox(label) {
-  const img = CREATIVE_IMGS[label];
+  // Check CREATIVE_IMGS first, then ALL_CREATIVES
+  let img = CREATIVE_IMGS[label];
+  if (!img) {
+    const found = ALL_CREATIVES.find(c => c.label === label);
+    if (found) img = found.img;
+  }
   if (!img) return;
   document.getElementById('lightbox-img').src = img;
   document.getElementById('lightbox-caption').textContent = label;

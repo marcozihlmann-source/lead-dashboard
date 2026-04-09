@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lead-Kampagnen Übersicht</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -89,6 +90,7 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
 .lead-type-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:#f5f5f5;color:var(--grey);margin-top:3px;}
 
 /* RESPONSIVE */
+@media(max-width:900px){.chart-grid{grid-template-columns:1fr !important;}}
 @media(max-width:700px){.home-body{padding:16px;}.home-kpi-row{gap:8px;}.cmp-table{font-size:12px;}}
 </style>
 </head>
@@ -101,7 +103,7 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
       <img src="header/Swiss-Ski_Logo_RGB_Rot.png" alt="Swiss-Ski" class="header-logo">
       <div>
         <div class="home-title">Lead-Kampagnen Übersicht</div>
-        <div class="home-subtitle">Alle Kampagnen auf einen Blick · Stand März 2026</div>
+        <div class="home-subtitle">Alle Kampagnen auf einen Blick · Stand April 2026</div>
       </div>
     </div>
   </div>
@@ -110,47 +112,84 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
 <div class="home-body">
 
   <!-- GESAMT-KPIs -->
-  <div class="home-section-label" style="margin-top:4px;">Gesamtübersicht <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb;font-size:11px;">— alle 7 Kampagnen</span></div>
+  <div class="home-section-label" style="margin-top:4px;">Gesamtübersicht <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#bbb;font-size:11px;">— alle 8 Kampagnen</span></div>
   <div class="home-kpi-row" style="flex-wrap:wrap;">
     <div class="home-kpi accent" style="min-width:110px;">
       <div class="home-kpi-label">Leads</div>
-      <div class="home-kpi-value">31'076</div>
+      <div class="home-kpi-value">33'052</div>
       <div class="home-kpi-sub">Total bisher</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">Kampagnen</div>
-      <div class="home-kpi-value" style="color:var(--black)">7 <span style="font-size:14px;font-weight:500;color:var(--grey)">/ 7</span></div>
+      <div class="home-kpi-value" style="color:var(--black)">8 <span style="font-size:14px;font-weight:500;color:var(--grey)">/ 8</span></div>
       <div class="home-kpi-sub">abgeschlossen</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">Ø CPL</div>
-      <div class="home-kpi-value">CHF 0.68</div>
+      <div class="home-kpi-value">CHF 0.76</div>
       <div class="home-kpi-sub">META-Kampagne</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">Reach</div>
-      <div class="home-kpi-value">1'340'205</div>
+      <div class="home-kpi-value">1'535'742</div>
       <div class="home-kpi-sub">Personen erreicht</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">Impressions</div>
-      <div class="home-kpi-value">4'084'654</div>
+      <div class="home-kpi-value">4'613'422</div>
       <div class="home-kpi-sub">Total Ausspielungen</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">Ad Spend</div>
-      <div class="home-kpi-value">CHF 21'242</div>
+      <div class="home-kpi-value">CHF 25'244</div>
       <div class="home-kpi-sub">META-Kampagne</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">CTR</div>
-      <div class="home-kpi-value">1.78%</div>
+      <div class="home-kpi-value">1.75%</div>
       <div class="home-kpi-sub">Link-Klickrate</div>
     </div>
     <div class="home-kpi" style="min-width:110px;">
       <div class="home-kpi-label">Tel. Nr.</div>
-      <div class="home-kpi-value">10'937</div>
-      <div class="home-kpi-sub">aus 4 Kampagnen</div>
+      <div class="home-kpi-value">12'395</div>
+      <div class="home-kpi-sub">aus 5 Kampagnen</div>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE CHARTS -->
+  <div class="home-section-label" style="margin-top:8px;">Performance Overview</div>
+  <div class="chart-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+    <div class="card" style="padding:20px;">
+      <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;font-weight:700;">Leads & CPL pro Kampagne</div>
+      <div style="position:relative;height:300px;"><canvas id="chart-combo"></canvas></div>
+      <div style="margin-top:14px;font-size:11px;color:var(--mid);line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
+        <strong style="color:var(--black);">Lesehinweis:</strong> Balken = Leads pro Kampagne, Linie = CPL-Verlauf. Farbe zeigt CPL-Benchmark: <span style="color:#16a34a;font-weight:700;">&#9679; grün</span> = günstig, <span style="color:#d97706;font-weight:700;">&#9679; orange</span> = mittel, <span style="color:#dc2626;font-weight:700;">&#9679; rot</span> = teuer. Benchmark unterscheidet zwischen Standard- und erweiterten Leads (Details unten).
+      </div>
+    </div>
+    <div class="card" style="padding:20px;">
+      <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;font-weight:700;">Kumulatives Lead-Wachstum</div>
+      <div style="position:relative;height:300px;"><canvas id="chart-growth"></canvas></div>
+      <div style="margin-top:14px;font-size:11px;color:var(--mid);line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
+        <strong style="color:var(--black);">Lesehinweis:</strong> Rote Fläche = kumulierte Leads über alle Kampagnen. Gestrichelte Linie = kumulierter Ad Spend. Die Schere zwischen Leads und Spend zeigt die steigende Gesamteffizienz des LeadGen-Programms.
+      </div>
+    </div>
+  </div>
+  <!-- KEY INSIGHTS -->
+  <div class="chart-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px;">
+    <div style="background:#f0faf3;border:1px solid #bbf7d0;border-radius:10px;padding:16px 18px;">
+      <div style="font-size:18px;margin-bottom:6px;">&#128200;</div>
+      <div style="font-size:13px;font-weight:800;color:#15803d;margin-bottom:4px;">33'052 Leads in 12 Monaten</div>
+      <div style="font-size:11px;color:#166534;line-height:1.6;">Über 8 Kampagnen hinweg wurden 33'052 qualifizierte Leads generiert – mit einem durchschnittlichen CPL von CHF 0.76.</div>
+    </div>
+    <div style="background:var(--red-light);border:1px solid rgba(227,0,27,0.15);border-radius:10px;padding:16px 18px;">
+      <div style="font-size:18px;margin-bottom:6px;">&#127919;</div>
+      <div style="font-size:13px;font-weight:800;color:var(--red);margin-bottom:4px;">Top 3 lieferten 66% aller Leads</div>
+      <div style="font-size:11px;color:#7f1d1d;line-height:1.6;">X-Mas Bundle (7'840), Fünfer-Challenge (7'509) und Engadin Skimarathon (6'185) generierten zusammen 21'534 Leads bei einem Ø CPL von CHF 0.58.</div>
+    </div>
+    <div style="background:#f0f4ff;border:1px solid #bfdbfe;border-radius:10px;padding:16px 18px;">
+      <div style="font-size:18px;margin-bottom:6px;">&#128176;</div>
+      <div style="font-size:13px;font-weight:800;color:#1d4ed8;margin-bottom:4px;">CHF 25'244 Ad Spend – CHF 0.76/Lead</div>
+      <div style="font-size:11px;color:#1e3a5f;line-height:1.6;">6 von 8 Kampagnen liegen im grünen CPL-Bereich. Game Campaigns (Challenges) erzielen konstant die beste Lead-Qualität zum tiefsten Preis.</div>
     </div>
   </div>
 
@@ -172,13 +211,25 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
       <tbody>
         <tr>
           <td>
+            <div class="cmp-name-cell">Globe Challenge 2026</div>
+            <div class="cmp-name-sub">Game Campaign · LeadGen</div>
+          </td>
+          <td><span class="cmp-badge done">Abgeschlossen</span></td>
+          <td><span class="cmp-val red">1'976</span></td>
+          <td><span class="cmp-val cpl-good">CHF 2.24</span></td>
+          <td><span class="cmp-val" style="font-size:12px;font-weight:600;">Meta + Print</span></td>
+          <td><span class="cmp-val" style="font-size:12px;font-weight:500;">Mär – Apr 2026</span></td>
+          <td><button class="cmp-report-btn" onclick="window.location.href='globe-challenge/'">Report ansehen →</button></td>
+        </tr>
+        <tr>
+          <td>
             <div class="cmp-name-cell">Engadin Skimarathon 2026</div>
             <div class="cmp-name-sub">Game Campaign · LeadGen</div>
           </td>
           <td><span class="cmp-badge done">Abgeschlossen</span></td>
           <td><span class="cmp-val red">6'185</span></td>
           <td><span class="cmp-val cpl-good">CHF 1.14</span></td>
-          <td><span class="cmp-val" style="font-size:12px;font-weight:600;">Meta</span></td>
+          <td><span class="cmp-val" style="font-size:12px;font-weight:600;">Meta + Print</span></td>
           <td><span class="cmp-val" style="font-size:12px;font-weight:500;">Feb – Mär 2026</span></td>
           <td><button class="cmp-report-btn" onclick="window.location.href='engadin-skimarathon-2026/'">Report ansehen →</button></td>
         </tr>
@@ -291,5 +342,233 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
 
 </div>
 
+<script>
+Chart.defaults.font.family = "'Outfit','Helvetica Neue',sans-serif";
+Chart.defaults.color = '#888';
+
+/* === Campaign Data (chronological) === */
+const campaigns = [
+  {name:'Cycling',  short:'Cycling\nKollektion',  leads:1745,  cpl:0.55, spend:960,   type:'standard', period:'Mai–Jun 25'},
+  {name:'Summer',   short:'Summer\nKollektion',   leads:2152,  cpl:0.35, spend:753,   type:'standard', period:'Jun–Jul 25'},
+  {name:'Levada',   short:'Levada\nKids',         leads:1791,  cpl:2.04, spend:3654,  type:'extended', period:'Aug–Nov 25'},
+  {name:'X-Mas',    short:'X-Mas\nBundle',        leads:7840,  cpl:0.55, spend:4312,  type:'standard', period:'Nov–Dez 25'},
+  {name:'HANEGG',   short:'HANEGG\nChallenge',    leads:3854,  cpl:0.91, spend:3507,  type:'extended', period:'Jan 26'},
+  {name:'Fünfer',   short:'Fünfer\nChallenge',    leads:7509,  cpl:0.41, spend:3000,  type:'extended', period:'Jan–Feb 26'},
+  {name:'Engadin',  short:'Engadin\nSkimarathon', leads:6185,  cpl:1.14, spend:7051,  type:'extended', period:'Feb–Mär 26'},
+  {name:'Globe',    short:'Globe\nChallenge',     leads:1976,  cpl:2.24, spend:4002,  type:'extended', period:'Mär–Apr 26'},
+];
+
+function cplColor(cpl, type) {
+  if (type === 'standard') {
+    if (cpl <= 1.00) return '#16a34a';
+    if (cpl <= 2.50) return '#d97706';
+    return '#dc2626';
+  }
+  if (cpl <= 4.00) return '#16a34a';
+  if (cpl <= 7.00) return '#d97706';
+  return '#dc2626';
+}
+
+/* === 1) COMBO CHART: Leads (bars) + CPL (line) === */
+const ctxCombo = document.getElementById('chart-combo');
+new Chart(ctxCombo, {
+  type: 'bar',
+  data: {
+    labels: campaigns.map(c => c.short),
+    datasets: [
+      {
+        label: 'Leads',
+        data: campaigns.map(c => c.leads),
+        backgroundColor: campaigns.map(c => {
+          const col = cplColor(c.cpl, c.type);
+          return col + '22';
+        }),
+        borderColor: campaigns.map(c => cplColor(c.cpl, c.type)),
+        borderWidth: 2,
+        borderRadius: 6,
+        borderSkipped: false,
+        yAxisID: 'y',
+        order: 2,
+      },
+      {
+        label: 'CPL (CHF)',
+        data: campaigns.map(c => c.cpl),
+        type: 'line',
+        borderColor: '#E3001B',
+        backgroundColor: 'rgba(227,0,27,0.08)',
+        pointBackgroundColor: campaigns.map(c => cplColor(c.cpl, c.type)),
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 6,
+        pointHoverRadius: 8,
+        borderWidth: 2.5,
+        tension: 0.3,
+        fill: false,
+        yAxisID: 'y1',
+        order: 1,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    animation: { duration: 1200, easing: 'easeOutCubic' },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { padding: 16, font: { size: 11 }, boxWidth: 12, usePointStyle: true }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            if (ctx.dataset.label === 'Leads') return ' ' + ctx.raw.toLocaleString('de-CH') + ' Leads';
+            return ' CPL CHF ' + ctx.raw.toFixed(2);
+          },
+          afterBody: function(items) {
+            const i = items[0].dataIndex;
+            const c = campaigns[i];
+            return ['', c.type === 'standard' ? '  Standard Lead' : '  Erweiterter Lead', '  ' + c.period];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: { font: { size: 10, weight: 600 }, maxRotation: 0 }
+      },
+      y: {
+        position: 'left',
+        grid: { color: '#F0F0F0' },
+        border: { display: false },
+        ticks: {
+          font: { size: 10 },
+          callback: v => v >= 1000 ? (v/1000).toFixed(0) + 'k' : v
+        },
+        title: { display: true, text: 'Leads', font: { size: 10, weight: 600 }, color: '#888' }
+      },
+      y1: {
+        position: 'right',
+        grid: { display: false },
+        border: { display: false },
+        ticks: {
+          font: { size: 10 },
+          callback: v => 'CHF ' + v.toFixed(2)
+        },
+        title: { display: true, text: 'CPL (CHF)', font: { size: 10, weight: 600 }, color: '#E3001B' },
+        min: 0,
+      }
+    }
+  }
+});
+
+/* === 2) CUMULATIVE GROWTH CHART === */
+const cumLeads = [];
+const cumSpend = [];
+let runLeads = 0, runSpend = 0;
+campaigns.forEach(c => {
+  runLeads += c.leads;
+  runSpend += c.spend;
+  cumLeads.push(runLeads);
+  cumSpend.push(runSpend);
+});
+
+const ctxGrowth = document.getElementById('chart-growth');
+new Chart(ctxGrowth, {
+  type: 'line',
+  data: {
+    labels: campaigns.map(c => c.name),
+    datasets: [
+      {
+        label: 'Kumulierte Leads',
+        data: cumLeads,
+        borderColor: '#E3001B',
+        backgroundColor: 'rgba(227,0,27,0.06)',
+        pointBackgroundColor: '#E3001B',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        borderWidth: 3,
+        tension: 0.35,
+        fill: true,
+        yAxisID: 'y',
+      },
+      {
+        label: 'Kumulierter Ad Spend (CHF)',
+        data: cumSpend,
+        borderColor: '#888',
+        backgroundColor: 'rgba(136,136,136,0.04)',
+        pointBackgroundColor: '#888',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        borderWidth: 2,
+        borderDash: [6, 3],
+        tension: 0.35,
+        fill: true,
+        yAxisID: 'y1',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    animation: { duration: 1400, easing: 'easeOutCubic' },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { padding: 16, font: { size: 11 }, boxWidth: 12, usePointStyle: true }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(ctx) {
+            if (ctx.dataset.label.includes('Leads')) {
+              return ' ' + ctx.raw.toLocaleString('de-CH') + ' Leads total';
+            }
+            return ' CHF ' + ctx.raw.toLocaleString('de-CH') + ' Ad Spend total';
+          },
+          afterBody: function(items) {
+            const i = items[0].dataIndex;
+            const c = campaigns[i];
+            return ['', '  +' + c.leads.toLocaleString('de-CH') + ' Leads in dieser Kampagne', '  ' + c.period];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: { font: { size: 10, weight: 600 } }
+      },
+      y: {
+        position: 'left',
+        grid: { color: '#F0F0F0' },
+        border: { display: false },
+        ticks: {
+          font: { size: 10 },
+          callback: v => v >= 1000 ? (v/1000).toFixed(0) + 'k' : v
+        },
+        title: { display: true, text: 'Leads (kumuliert)', font: { size: 10, weight: 600 }, color: '#E3001B' }
+      },
+      y1: {
+        position: 'right',
+        grid: { display: false },
+        border: { display: false },
+        ticks: {
+          font: { size: 10 },
+          callback: v => v >= 1000 ? 'CHF ' + (v/1000).toFixed(0) + 'k' : 'CHF ' + v
+        },
+        title: { display: true, text: 'Ad Spend (CHF)', font: { size: 10, weight: 600 }, color: '#888' }
+      }
+    }
+  }
+});
+</script>
 </body>
 </html>

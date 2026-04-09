@@ -345,7 +345,7 @@ main{padding:22px 32px 52px;}
   <div class="edit-panel-header">
     <div>
       <h2>Dashboard bearbeiten</h2>
-      <p>Werte anpassen -- Aenderungen werden sofort uebernommen</p>
+      <p>Werte anpassen – Änderungen werden sofort übernommen</p>
     </div>
     <button class="ep-close" onclick="closeEdit()">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -578,7 +578,7 @@ function render() {
   document.querySelector('.header-sub').textContent = S.meta.subtitle;
   document.querySelector('#hdr-stand').parentNode.innerHTML = `<span id="hdr-stand">${S.meta.stand}</span> · ${S.meta.period}<br><strong id="hdr-total">${fmt(S.total)} Leads</strong>`;
 
-  // -- ÜBERSICHT KPIs --
+  // – ÜBERSICHT KPIs –
   const overviewKpis = [
     kpi(fmt(S.total), 'Total Leads', 'Alle Leads gesamt', true),
   ];
@@ -655,7 +655,7 @@ function render() {
   }
   animateFills(document.getElementById('phone-bars'));
 
-  // -- KANAL KPIs --
+  // – KANAL KPIs –
   if (S.source.length > 1) {
     const paidSocial = (S.source.find(d=>d.l==='Paid Instagram')?.v||0) + (S.source.find(d=>d.l==='Paid Facebook')?.v||0);
     const emailCh = S.source.find(d=>d.l==='Email / Newsletter')?.v||0;
@@ -684,7 +684,7 @@ function render() {
   const best = [...S.content].sort((a,b)=>b.v-a.v)[0];
   setHTML('best-box', `
     <div class="bl">Best Performer</div>
-    <div class="bv">${best.l} -- ${fmt(best.v)} Leads</div>
+    <div class="bv">${best.l} – ${fmt(best.v)} Leads</div>
     <div class="bs">${pct(best.v,T)}% aller Leads via einem einzigen Creative</div>`);
 
   if (S.source.length > 1) {
@@ -708,7 +708,7 @@ function render() {
     ].join(''));
   }
 
-  // -- KAMPAGNE KPIs --
+  // – KAMPAGNE KPIs –
   const deBroad = S.camp.find(d=>d.l==='DE Broad (Paid)')?.v || S.camp.find(d=>d.l==='DE Broad')?.v || 0;
   const frBroad = S.camp.find(d=>d.l==='FR Broad (Paid)')?.v || S.camp.find(d=>d.l==='FR Broad')?.v || 0;
   const totalMetaSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
@@ -724,7 +724,7 @@ function render() {
   buildHBars('hbar-camp', S.camp, T);
   renderDonutChart('chart-camp', S.camp, T);
 
-  // -- SPEND TABLE --
+  // – SPEND TABLE –
   if(S.campSpend.length > 0) {
     const totalSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
     const totalLeads = S.campSpend.reduce((s,d)=>s+d.leads,0);
@@ -765,7 +765,7 @@ function render() {
     setHTML('spend-table', '<p style="font-size:12px;color:var(--grey);padding:12px 0;">META Ads Manager Daten ausstehend</p>');
   }
 
-  // -- ADSET TABLE --
+  // – ADSET TABLE –
   if(S.adsets.length > 0) {
     const adsetTotalImpr   = S.adsets.reduce((s,d)=>s+d.impressions,0);
     const adsetTotalReach  = S.adsets.reduce((s,d)=>s+d.reach,0);
@@ -791,7 +791,7 @@ function render() {
             <td class="num">${d.freq.toFixed(2).replace('.',',')}</td>
             <td class="num">${d.cpm.toFixed(2).replace('.',',')} Fr.</td>
             <td class="num">${fmt(d.clicks)}</td>
-            <td style="font-size:11px">${d.von} -- ${d.bis}<br><span style="color:var(--grey)">${d.days} Tage</span></td>
+            <td style="font-size:11px">${d.von} – ${d.bis}<br><span style="color:var(--grey)">${d.days} Tage</span></td>
           </tr>`).join('')}
           <tr class="spend-total-row">
             <td><strong>Ergebnisse aus ${S.adsets.length} Anzeigengruppen</strong></td>
@@ -819,13 +819,13 @@ function render() {
       <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(frBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:#BBBBBB" data-w="${pct(frBroad,T)}"></div></div></div>
     </div>
     <div class="defr-insights">
-      ${ins('Breiteste Kampagne','DE Broad -- '+fmt(deBroad))}
+      ${ins('Breiteste Kampagne','DE Broad – '+fmt(deBroad))}
       ${ins('FR Broad Anteil',    pct(frBroad,T)+'% aller Leads')}
       ${ins('DE-Anteil gesamt',   pct(S.de_total,T)+'%')}
     </div>`);
   animateFills(document.getElementById('defr-wrap'));
 
-  // -- LEARNINGS --
+  // – LEARNINGS –
   renderLearnings();
 
   // Counters on active tab
@@ -852,8 +852,8 @@ function renderLearnings() {
       },
       {
         icon: '📞', color: 'green', badge: 'badge-green', tag: 'Datenqualität',
-        title: 'Telefonnummer-Qualität bei 98.4% -- herausragend',
-        text: `${fmt(S.withPhone)} von ${fmt(S.total)} Leads haben eine Telefonnummer hinterlassen (${pct(S.withPhone,T)}%). Nur ${fmt(S.noPhone)} Leads ohne Telefon -- ideale Basis für telefonisches Recruiting.`
+        title: 'Telefonnummer-Qualität bei 98.4% – herausragend',
+        text: `${fmt(S.withPhone)} von ${fmt(S.total)} Leads haben eine Telefonnummer hinterlassen (${pct(S.withPhone,T)}%). Nur ${fmt(S.noPhone)} Leads ohne Telefon – ideale Basis für telefonisches Recruiting.`
       },
       {
         icon: '🌍', color: 'teal', badge: 'badge-teal', tag: 'Sprachregionen',
@@ -863,17 +863,17 @@ function renderLearnings() {
       {
         icon: '🌱', color: 'blue', badge: 'badge-blue', tag: 'Organic Bonus',
         title: 'Organic als kostenloser Bonus-Kanal',
-        text: `${fmt(S.organic)} organische Leads (${pct(S.organic,T)}%) kamen ohne Werbebudget dazu -- über Instagram, Facebook und Direct. Ein willkommener Gratiseffekt neben den bezahlten Kanälen.`
+        text: `${fmt(S.organic)} organische Leads (${pct(S.organic,T)}%) kamen ohne Werbebudget dazu – über Instagram, Facebook und Direct. Ein willkommener Gratiseffekt neben den bezahlten Kanälen.`
       },
       {
         icon: '📬', color: 'purple', badge: 'badge-purple', tag: 'Owned Channel',
         title: 'Email als starker Owned Channel: 244 Leads (29.7%)',
-        text: `Der Newsletter-Kanal lieferte fast ein Drittel aller Leads -- ohne zusätzliche Werbekosten. Die bestehende E-Mail-Liste ist ein wertvolles Asset für zukünftige Kampagnen.`
+        text: `Der Newsletter-Kanal lieferte fast ein Drittel aller Leads – ohne zusätzliche Werbekosten. Die bestehende E-Mail-Liste ist ein wertvolles Asset für zukünftige Kampagnen.`
       },
       {
         icon: '⚡', color: 'orange', badge: 'badge-orange', tag: 'Effizienz',
-        title: 'Nur 7 Tage Laufzeit -- extrem effizient',
-        text: `822 Leads in nur einer Woche (20.--27. Aug 2025). Das entspricht durchschnittlich 117 Leads pro Tag -- eine sehr hohe Recruiting-Geschwindigkeit.`
+        title: 'Nur 7 Tage Laufzeit – extrem effizient',
+        text: `822 Leads in nur einer Woche (20.--27. Aug 2025). Das entspricht durchschnittlich 117 Leads pro Tag – eine sehr hohe Recruiting-Geschwindigkeit.`
       },
     ];
 
@@ -881,7 +881,7 @@ function renderLearnings() {
       {
         icon: '📞',
         title: 'Qualifizierte Leads kontaktieren',
-        desc: '809 Leads mit Telefonnummer für persönliches Recruiting-Gespräch kontaktieren -- DE und FR getrennt priorisieren.'
+        desc: '809 Leads mit Telefonnummer für persönliches Recruiting-Gespräch kontaktieren – DE und FR getrennt priorisieren.'
       },
       {
         icon: '📸',
@@ -923,7 +923,7 @@ function renderLearnings() {
       },
       {
         icon: '📊', color: 'blue', badge: 'badge-blue', tag: 'META Performance',
-        title: 'Tiefe Frequenz unter 2.0 -- kein Ad Fatigue',
+        title: 'Tiefe Frequenz unter 2.0 – kein Ad Fatigue',
         text: `Beide Adsets mit Frequenz unter 1.85 über 26 Tage Laufzeit. Kein Risiko von Übersättigung bei der Zielgruppe.`
       },
       {
@@ -942,7 +942,7 @@ function renderLearnings() {
       {
         icon: '📬',
         title: 'E-Mail Follow-up starten',
-        desc: 'Personalisierte E-Mail-Sequenzen an die 969 Leads versenden -- DE und FR getrennt, mit Gender-spezifischem Content.'
+        desc: 'Personalisierte E-Mail-Sequenzen an die 969 Leads versenden – DE und FR getrennt, mit Gender-spezifischem Content.'
       },
       {
         icon: '📸',
@@ -960,7 +960,7 @@ function renderLearnings() {
   const panel = document.getElementById('tab-learnings');
   panel.innerHTML = `
     <div class="section-title">Learnings</div>
-    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne -- Levada Kids Kollektion</div>
+    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne – Levada Kids Kollektion</div>
     <div class="learning-grid">
       ${learnings.map(l => `
         <div class="learning-card">
@@ -976,7 +976,7 @@ function renderLearnings() {
     <hr class="section-divider">
 
     <div class="section-title">Next Steps</div>
-    <div class="section-subtitle">Roadmap für die Lead-Kampagne -- Levada Kids Kollektion</div>
+    <div class="section-subtitle">Roadmap für die Lead-Kampagne – Levada Kids Kollektion</div>
     <div class="timeline-outer">
       <div class="timeline-track">
         ${nextSteps.map((s, i) => `
@@ -1070,7 +1070,7 @@ function renderBarChart(id, data, total) {
 }
 
 
-/* -- CREATIVE IMAGES -- */
+/* – CREATIVE IMAGES – */
 const CREATIVE_IMGS_MAP = {
   recruiting: {
     'Image Ad DE (20.08)': 'images/2008_levada_recrute_image_de.png',
@@ -1133,7 +1133,7 @@ function buildPaidBars(data) {
   const T = S.total || 1;
   c.innerHTML = data.map((d,i)=>`
     <div class="paid-bar-row">
-      <div class="paid-bar-head"><span>${d.l}</span><span>${pct(d.v,T)}% -- ${fmt(d.v)}</span></div>
+      <div class="paid-bar-head"><span>${d.l}</span><span>${pct(d.v,T)}% – ${fmt(d.v)}</span></div>
       <div class="paid-track"><div class="paid-fill" style="background:${i===0?RED:`rgba(227,0,27,${Math.max(0.08,0.4-i*0.1)})`}" data-w="${pct(d.v,T)}"></div></div>
     </div>`).join('');
   setTimeout(()=>c.querySelectorAll('.paid-fill').forEach(el=>el.style.width=el.dataset.w+'%'), 80);
@@ -1190,7 +1190,7 @@ function buildEditPanel() {
   </div>
 
   <div class="ep-section">
-    <div class="ep-section-title">Übersicht -- Hauptzahlen</div>
+    <div class="ep-section-title">Übersicht – Hauptzahlen</div>
     <div class="ep-row">
       <div class="ep-field"><label>Total Leads</label><input type="number" data-key="total" value="${S.total}"></div>
       ${S.dataType === 'phone' ? `
@@ -1208,7 +1208,7 @@ function buildEditPanel() {
   </div>
 
   <div class="ep-section">
-    <div class="ep-section-title">Leads & Kanal -- UTM Source</div>
+    <div class="ep-section-title">Leads & Kanal – UTM Source</div>
     ${S.source.map((d,i)=>`<div class="ep-field"><label>${d.l}</label><input type="number" data-list="source" data-i="${i}" value="${d.v}"></div>`).join('')}
   </div>
 
@@ -1311,7 +1311,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-/* -- CPL INFO TOOLTIP -- */
+/* – CPL INFO TOOLTIP – */
 function toggleCplInfo(e) {
   e.stopPropagation();
   const tt = document.getElementById('cpl-tooltip');
@@ -1325,7 +1325,7 @@ document.addEventListener('click', () => {
 // Initial render
 render();
 
-/* -- LIGHTBOX -- */
+/* – LIGHTBOX – */
 function openLightbox(label) {
   const img = CREATIVE_IMGS[label];
   if (!img) return;

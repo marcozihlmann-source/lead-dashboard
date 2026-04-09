@@ -338,7 +338,7 @@ main{padding:22px 32px 52px;}
   <div class="edit-panel-header">
     <div>
       <h2>Dashboard bearbeiten</h2>
-      <p>Werte anpassen -- Aenderungen werden sofort uebernommen</p>
+      <p>Werte anpassen – Änderungen werden sofort übernommen</p>
     </div>
     <button class="ep-close" onclick="closeEdit()">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -557,7 +557,7 @@ function render() {
   document.getElementById('hdr-stand').textContent = S.meta.stand;
   document.getElementById('hdr-total').textContent = fmt(S.total) + ' Leads';
 
-  // -- ÜBERSICHT KPIs --
+  // – ÜBERSICHT KPIs --
   setHTML('kpi-uebersicht', [
     kpi(fmt(S.total), 'Total Leads', 'Alle Leads gesamt', true),
     kpi(fmt(S.de_total), 'DE Leads', pct(S.de_total,T)+'% aller Leads'),
@@ -593,7 +593,7 @@ function render() {
     </div>`);
   animateFills(document.getElementById('phone-bars'));
 
-  // -- KANAL KPIs --
+  // – KANAL KPIs --
   const totalClicks = S.adsets.reduce((s,d)=>s+d.clicks,0);
   const totalSpendKanal = S.campSpend.reduce((s,d)=>s+d.spend,0);
   const cpc = totalClicks > 0 ? (totalSpendKanal/totalClicks).toFixed(2) : '0.00';
@@ -610,7 +610,7 @@ function render() {
   const best = [...S.content].sort((a,b)=>b.v-a.v)[0];
   setHTML('best-box', `
     <div class="bl">Best Performer</div>
-    <div class="bv">${best.l} -- ${fmt(best.v)} Leads</div>
+    <div class="bv">${best.l} – ${fmt(best.v)} Leads</div>
     <div class="bs">${pct(best.v,T)}% aller Leads via einem einzigen Creative</div>`);
 
   const paid = [{l:'Paid Social (META Ads)',v:S.total}];
@@ -621,7 +621,7 @@ function render() {
     ins('Best Creative Anteil', pct(best.v,T)+'%'),
   ].join(''));
 
-  // -- KAMPAGNE KPIs --
+  // – KAMPAGNE KPIs --
   const deBroad = S.camp.find(d=>d.l.startsWith('DE'))?.v||0;
   const frBroad = S.camp.find(d=>d.l.startsWith('FR'))?.v||0;
   const totalMetaSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
@@ -637,7 +637,7 @@ function render() {
   buildHBars('hbar-camp', S.camp, T);
   renderDonutChart('chart-camp', S.camp, T);
 
-  // -- SPEND TABLE --
+  // – SPEND TABLE --
   const totalSpend = S.campSpend.reduce((s,d)=>s+d.spend,0);
   const totalLeads = S.campSpend.reduce((s,d)=>s+d.leads,0);
   const avgCPL = totalLeads > 0 ? (totalSpend/totalLeads).toFixed(2) : '0.00';
@@ -674,7 +674,7 @@ function render() {
       </tbody>
     </table>`);
 
-  // -- ADSET TABLE --
+  // – ADSET TABLE --
   if(S.adsets.length > 0) {
     const adsetTotalImpr   = S.adsets.reduce((s,d)=>s+d.impressions,0);
     const adsetTotalReach  = S.adsets.reduce((s,d)=>s+d.reach,0);
@@ -700,7 +700,7 @@ function render() {
             <td class="num">${d.freq.toFixed(2).replace('.',',')}</td>
             <td class="num">${d.cpm.toFixed(2).replace('.',',')} Fr.</td>
             <td class="num">${fmt(d.clicks)}</td>
-            <td style="font-size:11px">${d.von} -- ${d.bis}<br><span style="color:var(--grey)">${d.days} Tage</span></td>
+            <td style="font-size:11px">${d.von} – ${d.bis}<br><span style="color:var(--grey)">${d.days} Tage</span></td>
           </tr>`).join('')}
           <tr class="spend-total-row">
             <td><strong>Ergebnisse aus ${S.adsets.length} Anzeigengruppen</strong></td>
@@ -728,13 +728,13 @@ function render() {
       <div class="defr-bar"><div class="defr-head"><span>Broad</span><span>${fmt(frBroad)}</span></div><div class="defr-track"><div class="defr-fill" style="background:#BBBBBB" data-w="${pct(frBroad,T)}"></div></div></div>
     </div>
     <div class="defr-insights">
-      ${ins('Stärkste Region','DE Broad + Retargeting -- '+fmt(deBroad))}
+      ${ins('Stärkste Region','DE Broad + Retargeting – '+fmt(deBroad))}
       ${ins('FR Anteil',          pct(frBroad,T)+'% aller Leads')}
       ${ins('DE-Anteil gesamt',   pct(S.de_total,T)+'%')}
     </div>`);
   animateFills(document.getElementById('defr-wrap'));
 
-  // -- LEARNINGS --
+  // – LEARNINGS --
   renderLearnings();
 
   // Counters on active tab
@@ -761,13 +761,13 @@ function renderLearnings() {
     },
     {
       icon: '🇫🇷', color: 'red', badge: 'badge-red', tag: 'Markt-Insight',
-      title: 'FR Video überraschend stark -- Best Performer',
+      title: 'FR Video überraschend stark – Best Performer',
       text: 'FR Broad Video (28.05) erzielte 356 Leads bei einem CPL von CHF 0.29 und ist damit der beste Performer der gesamten Kampagne.'
     },
     {
       icon: '📉', color: 'green', badge: 'badge-green', tag: 'Budget-Effizienz',
       title: 'Sehr tiefer CPL von CHF 0.55 bei nur CHF 968 Spend',
-      text: 'Mit einem Gesamtbudget von unter CHF 1\'000 wurden 1\'745 Leads generiert -- herausragende Kosteneffizienz.'
+      text: 'Mit einem Gesamtbudget von unter CHF 1\'000 wurden 1\'745 Leads generiert – herausragende Kosteneffizienz.'
     },
     {
       icon: '🎨', color: 'red', badge: 'badge-red', tag: 'Creative Diversity',
@@ -807,7 +807,7 @@ function renderLearnings() {
   const panel = document.getElementById('tab-learnings');
   panel.innerHTML = `
     <div class="section-title">Learnings</div>
-    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne -- Cycling Kollektion</div>
+    <div class="section-subtitle">${learnings.length} Erkenntnisse aus der Lead-Kampagne – Cycling Kollektion</div>
     <div class="learning-grid">
       ${learnings.map(l => `
         <div class="learning-card">
@@ -823,7 +823,7 @@ function renderLearnings() {
     <hr class="section-divider">
 
     <div class="section-title">Next Steps</div>
-    <div class="section-subtitle">Roadmap für die Lead-Kampagne -- Cycling Kollektion</div>
+    <div class="section-subtitle">Roadmap für die Lead-Kampagne – Cycling Kollektion</div>
     <div class="timeline-outer">
       <div class="timeline-track">
         ${nextSteps.map((s, i) => `
@@ -913,7 +913,7 @@ function renderBarChart(id, data, total) {
 }
 
 
-/* -- CREATIVE IMAGES -- */
+/* – CREATIVE IMAGES – */
 const CREATIVE_IMGS = {
   'DE Broad Video (28.05)': 'images/28052025-de-broad-videoad.png',
   'FR Broad Video (28.05)': 'images/28052025-adset2-fr-broad-videoad.png',
@@ -978,7 +978,7 @@ function buildPaidBars(data) {
   const T = S.total || 1;
   c.innerHTML = data.map((d,i)=>`
     <div class="paid-bar-row">
-      <div class="paid-bar-head"><span>${d.l}</span><span>${pct(d.v,T)}% -- ${fmt(d.v)}</span></div>
+      <div class="paid-bar-head"><span>${d.l}</span><span>${pct(d.v,T)}% – ${fmt(d.v)}</span></div>
       <div class="paid-track"><div class="paid-fill" style="background:${i===0?RED:`rgba(227,0,27,${Math.max(0.08,0.4-i*0.1)})`}" data-w="${pct(d.v,T)}"></div></div>
     </div>`).join('');
   setTimeout(()=>c.querySelectorAll('.paid-fill').forEach(el=>el.style.width=el.dataset.w+'%'), 80);
@@ -1035,7 +1035,7 @@ function buildEditPanel() {
   </div>
 
   <div class="ep-section">
-    <div class="ep-section-title">Übersicht -- Hauptzahlen</div>
+    <div class="ep-section-title">Übersicht – Hauptzahlen</div>
     <div class="ep-row">
       <div class="ep-field"><label>Total Leads</label><input type="number" data-key="total" value="${S.total}"></div>
     </div>
@@ -1046,7 +1046,7 @@ function buildEditPanel() {
   </div>
 
   <div class="ep-section">
-    <div class="ep-section-title">Leads & Kanal -- UTM Source</div>
+    <div class="ep-section-title">Leads & Kanal – UTM Source</div>
     ${S.source.map((d,i)=>`<div class="ep-field"><label>${d.l}</label><input type="number" data-list="source" data-i="${i}" value="${d.v}"></div>`).join('')}
   </div>
 
@@ -1117,7 +1117,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-/* -- CPL INFO TOOLTIP -- */
+/* – CPL INFO TOOLTIP – */
 function toggleCplInfo(e) {
   e.stopPropagation();
   const tt = document.getElementById('cpl-tooltip');
@@ -1131,7 +1131,7 @@ document.addEventListener('click', () => {
 // Initial render
 render();
 
-/* -- LIGHTBOX -- */
+/* – LIGHTBOX – */
 function openLightbox(label) {
   const img = CREATIVE_IMGS[label];
   if (!img) return;
