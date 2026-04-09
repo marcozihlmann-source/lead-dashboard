@@ -89,9 +89,93 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
 .benchmark-pill.red{background:rgba(227,0,27,0.08);color:var(--red);}
 .lead-type-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:#f5f5f5;color:var(--grey);margin-top:3px;}
 
+/* MAIN TABS */
+.main-tabs{display:flex;gap:0;background:var(--card);padding:0 32px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:90;}
+.main-tab-btn{background:none;border:none;cursor:pointer;padding:12px 24px;font-size:12px;font-weight:800;letter-spacing:0.1em;font-family:inherit;color:var(--grey);border-bottom:3px solid transparent;transition:color 0.15s,border-color 0.15s;}
+.main-tab-btn:hover{color:var(--black);}
+.main-tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+.main-tab-panel{display:none;}
+.main-tab-panel.active{display:block;}
+
+/* CONVERSION INNER TABS */
+.conv-tab-btn{background:none;border:1.5px solid var(--border);cursor:pointer;padding:8px 18px;font-size:11px;font-weight:700;letter-spacing:0.06em;font-family:inherit;color:var(--grey);border-radius:8px;transition:all 0.15s;margin-right:6px;}
+.conv-tab-btn:hover{border-color:var(--red);color:var(--red);}
+.conv-tab-btn.active{background:var(--red);border-color:var(--red);color:#fff;}
+.conv-tab-panel{display:none;}
+.conv-tab-panel.active{display:block;}
+
+/* KPI (conversion) */
+.kpi-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;flex:1;min-width:120px;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.kpi.accent{background:var(--red);border-color:var(--red);box-shadow:0 4px 20px rgba(227,0,27,0.22);}
+.kpi-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;font-weight:600;}
+.kpi.accent .kpi-label{color:rgba(255,255,255,0.7);}
+.kpi-value{font-size:23px;font-weight:900;color:var(--red);line-height:1;}
+.kpi.accent .kpi-value{color:#fff;}
+.kpi-sub{font-size:11px;color:var(--grey);margin-top:6px;}
+.kpi.accent .kpi-sub{color:rgba(255,255,255,0.65);}
+
+/* GRID */
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.span-2{grid-column:span 2;}.span-3{grid-column:span 3;}
+
+/* CARD TITLE */
+.card-title{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:16px;font-weight:700;}
+
+/* SPEND TABLE */
+.spend-table{width:100%;border-collapse:collapse;font-size:12px;}
+.spend-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--grey);border-bottom:2px solid var(--border);}
+.spend-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--black);}
+.spend-table tr:last-child td{border-bottom:none;font-weight:800;background:#fafafa;}
+.spend-table .num{text-align:right;font-variant-numeric:tabular-nums;}
+
+/* FUNNEL */
+.funnel-step{margin-bottom:12px;}
+.funnel-header{display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:4px;}
+.funnel-track{background:var(--bg);border-radius:4px;height:32px;overflow:hidden;}
+.funnel-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:12px;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+.funnel-fill span{color:#fff;font-size:11px;font-weight:700;}
+
+/* STATUS CARDS */
+.status-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px;}
+.status-card{border-radius:10px;padding:16px 18px;}
+.status-card .sc-icon{font-size:20px;margin-bottom:8px;}
+.status-card .sc-title{font-size:13px;font-weight:800;margin-bottom:4px;}
+.status-card .sc-value{font-size:20px;font-weight:900;margin-bottom:2px;}
+.status-card .sc-pct{font-size:12px;font-weight:600;margin-bottom:6px;}
+.status-card .sc-desc{font-size:11px;line-height:1.6;}
+
+/* ROI BOX */
+.roi-summary{background:var(--card);border:2px solid var(--red);border-radius:12px;padding:28px 32px;margin-bottom:18px;box-shadow:0 4px 20px rgba(227,0,27,0.10);}
+.roi-summary .roi-flow{font-size:16px;font-weight:800;color:var(--black);margin-bottom:8px;}
+.roi-summary .roi-detail{font-size:13px;color:var(--mid);line-height:1.7;}
+.roi-summary .roi-roas{font-size:28px;font-weight:900;color:var(--red);margin-top:8px;}
+
+/* CPA GRID */
+.cpa-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px;}
+.cpa-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.cpa-card .cpa-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--grey);font-weight:600;margin-bottom:8px;}
+.cpa-card .cpa-value{font-size:22px;font-weight:900;color:var(--black);line-height:1;}
+.cpa-card .cpa-calc{font-size:11px;color:var(--grey);margin-top:6px;}
+
+/* SECTION LABEL */
+.section-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);font-weight:700;margin-bottom:14px;}
+
 /* RESPONSIVE */
-@media(max-width:900px){.chart-grid{grid-template-columns:1fr !important;}}
+@media(max-width:900px){
+  .chart-grid{grid-template-columns:1fr !important;}
+  .grid-3{grid-template-columns:1fr 1fr;}.span-3{grid-column:span 2;}
+  .status-grid{grid-template-columns:1fr 1fr;}
+  .cpa-grid{grid-template-columns:1fr 1fr;}
+}
 @media(max-width:700px){.home-body{padding:16px;}.home-kpi-row{gap:8px;}.cmp-table{font-size:12px;}}
+@media(max-width:600px){
+  .grid-3,.grid-2{grid-template-columns:1fr;}.span-2,.span-3{grid-column:span 1;}
+  .kpi-row{flex-direction:column;}
+  .status-grid{grid-template-columns:1fr;}
+  .cpa-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -109,6 +193,12 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
   </div>
 </div>
 
+<div class="main-tabs">
+  <button class="main-tab-btn active" data-maintab="kampagnen">KAMPAGNEN</button>
+  <button class="main-tab-btn" data-maintab="conversion">LEAD-CONVERSION</button>
+</div>
+
+<div class="main-tab-panel active" id="maintab-kampagnen">
 <div class="home-body">
 
   <!-- GESAMT-KPIs -->
@@ -356,6 +446,134 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
   </div>
 
 </div>
+</div><!-- /maintab-kampagnen -->
+
+<div class="main-tab-panel" id="maintab-conversion">
+<div class="home-body">
+
+  <!-- CONVERSION INNER TABS -->
+  <div style="display:flex;gap:0;margin-bottom:18px;">
+    <button class="conv-tab-btn active" data-convtab="conv-uebersicht">ÜBERSICHT</button>
+    <button class="conv-tab-btn" data-convtab="conv-kampagnen">KAMPAGNEN-DETAIL</button>
+    <button class="conv-tab-btn" data-convtab="conv-roi">ROI-ANALYSE</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CONV TAB 1: ÜBERSICHT
+  ═══════════════════════════════════════════ -->
+  <div class="conv-tab-panel active" id="conv-uebersicht">
+    <div class="kpi-row" id="conv-kpi-uebersicht"></div>
+
+    <!-- EXAMPLE DATA BANNER -->
+    <div style="background:#FFF8E7;border:1.5px solid #F59E0B;border-radius:10px;padding:16px 20px;margin:0 0 18px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">&#9888;</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:4px;">Beispieldaten</div>
+        <div style="font-size:12px;color:#78350F;line-height:1.6;">Dieses Dashboard verwendet <strong>Beispieldaten</strong> zur Veranschaulichung. Die echten Daten müssen aus dem Swiss-Ski CRM exportiert und hier eingepflegt werden. Alle Zahlen in den Kategorien «Neu im Ökosystem», «Produkt gekauft» und «Mitgliedschaft» sind fiktiv.</div>
+      </div>
+    </div>
+
+    <!-- FUNNEL -->
+    <div class="section-label">Conversion-Funnel</div>
+    <div class="card" style="margin-bottom:18px;">
+      <div id="conv-funnel-container"></div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="section-label" style="margin-top:4px;">Verteilung</div>
+    <div class="grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <div class="card-title">Lead-Status</div>
+        <div style="position:relative;height:260px;"><canvas id="chart-conv-status"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Conversion</div>
+        <div style="position:relative;height:260px;"><canvas id="chart-conv-conversion"></canvas></div>
+      </div>
+    </div>
+
+    <!-- STATUS CARDS -->
+    <div class="section-label">Kennzahlen im Detail</div>
+    <div class="status-grid" id="conv-status-cards"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CONV TAB 2: KAMPAGNEN-DETAIL
+  ═══════════════════════════════════════════ -->
+  <div class="conv-tab-panel" id="conv-kampagnen">
+    <div class="section-label" style="margin-top:4px;">Conversion pro Kampagne</div>
+
+    <!-- EXAMPLE DATA BANNER -->
+    <div style="background:#FFF8E7;border:1.5px solid #F59E0B;border-radius:10px;padding:16px 20px;margin:0 0 18px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">&#9888;</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:4px;">Beispieldaten</div>
+        <div style="font-size:12px;color:#78350F;line-height:1.6;">Dieses Dashboard verwendet <strong>Beispieldaten</strong> zur Veranschaulichung. Die echten Daten müssen aus dem Swiss-Ski CRM exportiert und hier eingepflegt werden. Alle Zahlen in den Kategorien «Neu im Ökosystem», «Produkt gekauft» und «Mitgliedschaft» sind fiktiv.</div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:22px;">
+      <table class="spend-table" id="conv-campaign-table">
+        <thead>
+          <tr>
+            <th>Kampagne</th>
+            <th class="num">Leads</th>
+            <th class="num">Neu im Ökosystem</th>
+            <th class="num">Produkt gekauft</th>
+            <th class="num">Mitgliedschaft</th>
+            <th class="num">Bereits Mitglied</th>
+          </tr>
+        </thead>
+        <tbody id="conv-campaign-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- BAR CHART -->
+    <div class="section-label">Conversion-Rate pro Kampagne</div>
+    <div class="card">
+      <div class="card-title">Produkt- &amp; Mitgliedschafts-Conversion (%)</div>
+      <div style="position:relative;height:320px;"><canvas id="chart-conv-campaign-bars"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       CONV TAB 3: ROI-ANALYSE
+  ═══════════════════════════════════════════ -->
+  <div class="conv-tab-panel" id="conv-roi">
+    <div class="kpi-row" id="conv-kpi-roi"></div>
+
+    <!-- EXAMPLE DATA BANNER -->
+    <div style="background:#FFF8E7;border:1.5px solid #F59E0B;border-radius:10px;padding:16px 20px;margin:0 0 18px;display:flex;gap:12px;align-items:flex-start;">
+      <span style="font-size:20px;flex-shrink:0;">&#9888;</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:#92400E;margin-bottom:4px;">Beispieldaten</div>
+        <div style="font-size:12px;color:#78350F;line-height:1.6;">Dieses Dashboard verwendet <strong>Beispieldaten</strong> zur Veranschaulichung. Die echten Daten müssen aus dem Swiss-Ski CRM exportiert und hier eingepflegt werden. Alle Zahlen in den Kategorien «Neu im Ökosystem», «Produkt gekauft» und «Mitgliedschaft» sind fiktiv.</div>
+      </div>
+    </div>
+
+    <!-- ROI SUMMARY -->
+    <div class="roi-summary" id="conv-roi-summary"></div>
+
+    <!-- REVENUE BREAKDOWN -->
+    <div class="section-label">Umsatz-Aufschlüsselung</div>
+    <div class="grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <div class="card-title">Umsatzverteilung</div>
+        <div style="position:relative;height:260px;"><canvas id="chart-conv-revenue"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Umsatz-Balken</div>
+        <div id="conv-revenue-bars" style="padding-top:8px;"></div>
+      </div>
+    </div>
+
+    <!-- COST PER ACQUISITION -->
+    <div class="section-label">Kosten pro Akquisition</div>
+    <div class="cpa-grid" id="conv-cpa-grid"></div>
+  </div>
+
+</div>
+</div><!-- /maintab-conversion -->
 
 <script>
 Chart.defaults.font.family = "'Outfit','Helvetica Neue',sans-serif";
@@ -580,6 +798,479 @@ new Chart(ctxGrowth, {
       }
     }
   }
+});
+
+/* =============================================
+   LEAD-CONVERSION DATA (EXAMPLE)
+============================================= */
+const CONV_DATA = {
+  totalLeads: 33052,
+
+  // Conversion Categories
+  newToEcosystem: 19831,
+  alreadyKnown: 13221,
+
+  productBuyers: 1653,
+  membershipBuyers: 661,
+  alreadyMembers: 2644,
+  newsletterOnly: 9923,
+  noAction: 18171,
+
+  // Revenue attribution (example)
+  productRevenue: 82650,
+  membershipRevenue: 39660,
+  totalAdSpend: 25243,
+
+  // Per Campaign breakdown
+  campaigns: [
+    {name:'Cycling Kollektion',    leads:1745,  newPct:65, productBuyers:105, memberBuyers:28,  alreadyMember:87},
+    {name:'Summer Kollektion',     leads:2152,  newPct:62, productBuyers:129, memberBuyers:43,  alreadyMember:108},
+    {name:'Levada Kids',           leads:1791,  newPct:55, productBuyers:54,  memberBuyers:18,  alreadyMember:179},
+    {name:'X-Mas Bundle',          leads:7840,  newPct:58, productBuyers:470, memberBuyers:196, alreadyMember:627},
+    {name:'HANEGG-Challenge',      leads:3854,  newPct:63, productBuyers:193, memberBuyers:77,  alreadyMember:308},
+    {name:'Fünfer-Challenge',      leads:7509,  newPct:61, productBuyers:375, memberBuyers:150, alreadyMember:601},
+    {name:'Engadin Skimarathon',   leads:6185,  newPct:57, productBuyers:216, memberBuyers:99,  alreadyMember:557},
+    {name:'Globe Challenge',       leads:1976,  newPct:59, productBuyers:111, memberBuyers:50,  alreadyMember:177},
+  ],
+};
+
+/* =============================================
+   CONVERSION HELPERS
+============================================= */
+const convRED = '#E3001B';
+const convFmt = v => typeof v === 'number' ? v.toLocaleString('de-CH') : v;
+const convFmtCHF = v => 'CHF ' + v.toLocaleString('de-CH', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+const convFmtCHF2 = v => 'CHF ' + v.toLocaleString('de-CH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const convPct = (v, t) => t === 0 ? '0.0' : ((v / t) * 100).toFixed(1);
+const convCharts = {};
+
+/* =============================================
+   CONVERSION RENDER
+============================================= */
+function renderConversion() {
+  const D = CONV_DATA;
+  const T = D.totalLeads || 1;
+  const totalRevenue = D.productRevenue + D.membershipRevenue;
+  const roas = (totalRevenue / D.totalAdSpend).toFixed(2);
+
+  // -- TAB 1: ÜBERSICHT KPIs --
+  document.getElementById('conv-kpi-uebersicht').innerHTML = `
+    <div class="kpi accent">
+      <div class="kpi-label">Total Leads</div>
+      <div class="kpi-value">${convFmt(D.totalLeads)}</div>
+      <div class="kpi-sub">Alle Kampagnen</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Neu im Ökosystem</div>
+      <div class="kpi-value">${convFmt(D.newToEcosystem)}</div>
+      <div class="kpi-sub">${convPct(D.newToEcosystem, T)}% aller Leads</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Bereits bekannt</div>
+      <div class="kpi-value" style="color:var(--black)">${convFmt(D.alreadyKnown)}</div>
+      <div class="kpi-sub">${convPct(D.alreadyKnown, T)}% aller Leads</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Produkt gekauft</div>
+      <div class="kpi-value" style="color:#d97706">${convFmt(D.productBuyers)}</div>
+      <div class="kpi-sub">${convPct(D.productBuyers, T)}% aller Leads</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Mitgliedschaft</div>
+      <div class="kpi-value" style="color:#16a34a">${convFmt(D.membershipBuyers)}</div>
+      <div class="kpi-sub">${convPct(D.membershipBuyers, T)}% aller Leads</div>
+    </div>
+  `;
+
+  // -- FUNNEL --
+  convRenderFunnel();
+
+  // -- CHARTS --
+  convRenderStatusDonut();
+  convRenderConversionDonut();
+
+  // -- STATUS CARDS --
+  document.getElementById('conv-status-cards').innerHTML = `
+    <div class="status-card" style="background:#f0faf3;border:1px solid #bbf7d0;">
+      <div class="sc-icon">&#128994;</div>
+      <div class="sc-title" style="color:#15803d;">Neu im Ökosystem</div>
+      <div class="sc-value" style="color:#15803d;">${convFmt(D.newToEcosystem)} Leads</div>
+      <div class="sc-pct" style="color:#166534;">${convPct(D.newToEcosystem, T)}% aller Leads</div>
+      <div class="sc-desc" style="color:#166534;">Neukontakte, die erstmals durch eine Kampagne mit Swiss-Ski in Berührung kamen</div>
+    </div>
+    <div class="status-card" style="background:#FFF8E7;border:1px solid #FCD34D;">
+      <div class="sc-icon">&#128722;</div>
+      <div class="sc-title" style="color:#92400E;">Produkt-Käufer</div>
+      <div class="sc-value" style="color:#92400E;">${convFmt(D.productBuyers)} Leads</div>
+      <div class="sc-pct" style="color:#78350F;">${convPct(D.productBuyers, T)}% aller Leads</div>
+      <div class="sc-desc" style="color:#78350F;">Leads, die nach der Kampagne ein Produkt im Swiss-Ski Shop gekauft haben</div>
+    </div>
+    <div class="status-card" style="background:#f0faf3;border:1px solid #bbf7d0;">
+      <div class="sc-icon">&#127941;</div>
+      <div class="sc-title" style="color:#15803d;">Neue Mitglieder</div>
+      <div class="sc-value" style="color:#15803d;">${convFmt(D.membershipBuyers)} Leads</div>
+      <div class="sc-pct" style="color:#166534;">${convPct(D.membershipBuyers, T)}% aller Leads</div>
+      <div class="sc-desc" style="color:#166534;">Leads, die nach der Kampagne eine Swiss-Ski Mitgliedschaft abgeschlossen haben</div>
+    </div>
+  `;
+
+  // -- TAB 2: KAMPAGNEN-DETAIL --
+  convRenderCampaignTable();
+  convRenderCampaignBarChart();
+
+  // -- TAB 3: ROI --
+  convRenderROI(totalRevenue, roas);
+}
+
+/* =============================================
+   CONVERSION FUNNEL
+============================================= */
+function convRenderFunnel() {
+  const D = CONV_DATA;
+  const T = D.totalLeads || 1;
+  const steps = [
+    {label: 'Total Leads',          value: D.totalLeads,       pct: 100,                              color: 'var(--red)'},
+    {label: 'Neu im Ökosystem',     value: D.newToEcosystem,   pct: (D.newToEcosystem / T) * 100,    color: '#E3001B'},
+    {label: 'Produkt gekauft',      value: D.productBuyers,    pct: (D.productBuyers / T) * 100,     color: '#d97706'},
+    {label: 'Mitgliedschaft',       value: D.membershipBuyers, pct: (D.membershipBuyers / T) * 100,  color: '#16a34a'},
+  ];
+
+  let html = '';
+  steps.forEach(s => {
+    const widthPct = Math.max(s.pct, 2.5);
+    html += `
+      <div class="funnel-step">
+        <div class="funnel-header">
+          <span>${s.label}</span>
+          <span style="color:${s.color};font-weight:800;">${convFmt(s.value)}</span>
+        </div>
+        <div class="funnel-track">
+          <div class="funnel-fill" style="width:0;background:${s.color};" data-width="${widthPct}%">
+            <span>${s.pct.toFixed(1)}%</span>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById('conv-funnel-container').innerHTML = html;
+
+  // Animate widths
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#conv-funnel-container .funnel-fill[data-width]').forEach(el => {
+      el.style.width = el.dataset.width;
+    });
+  });
+}
+
+/* =============================================
+   CONVERSION DONUTS
+============================================= */
+function convRenderStatusDonut() {
+  const D = CONV_DATA;
+  if (convCharts['status']) convCharts['status'].destroy();
+  const ctx = document.getElementById('chart-conv-status');
+  if (!ctx) return;
+  convCharts['status'] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Neu im Ökosystem', 'Bereits bekannt', 'Bereits Mitglied'],
+      datasets: [{
+        data: [D.newToEcosystem, D.alreadyKnown - D.alreadyMembers, D.alreadyMembers],
+        backgroundColor: [convRED, '#FF8A96', '#888'],
+        borderWidth: 2, borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {position: 'bottom', labels: {padding: 14, usePointStyle: true, pointStyle: 'circle', font: {size: 11, weight: 600}}}
+      }
+    }
+  });
+}
+
+function convRenderConversionDonut() {
+  const D = CONV_DATA;
+  if (convCharts['conversion']) convCharts['conversion'].destroy();
+  const ctx = document.getElementById('chart-conv-conversion');
+  if (!ctx) return;
+  convCharts['conversion'] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Produkt gekauft', 'Mitgliedschaft', 'Newsletter only', 'Kein weiterer Touchpoint'],
+      datasets: [{
+        data: [D.productBuyers, D.membershipBuyers, D.newsletterOnly, D.noAction],
+        backgroundColor: ['#d97706', '#16a34a', '#3b82f6', '#d1d5db'],
+        borderWidth: 2, borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {position: 'bottom', labels: {padding: 14, usePointStyle: true, pointStyle: 'circle', font: {size: 11, weight: 600}}}
+      }
+    }
+  });
+}
+
+/* =============================================
+   CONVERSION CAMPAIGN TABLE
+============================================= */
+function convRenderCampaignTable() {
+  const D = CONV_DATA;
+  let totLeads = 0, totNew = 0, totProd = 0, totMember = 0, totAlready = 0;
+
+  let rows = D.campaigns.map(c => {
+    const newCount = Math.round(c.leads * c.newPct / 100);
+    totLeads += c.leads;
+    totNew += newCount;
+    totProd += c.productBuyers;
+    totMember += c.memberBuyers;
+    totAlready += c.alreadyMember;
+
+    return `<tr>
+      <td style="font-weight:700;">${c.name}</td>
+      <td class="num">${convFmt(c.leads)}</td>
+      <td class="num">${convFmt(newCount)} <span style="color:var(--grey);font-size:11px;">(${c.newPct}%)</span></td>
+      <td class="num">${convFmt(c.productBuyers)} <span style="color:var(--grey);font-size:11px;">(${convPct(c.productBuyers, c.leads)}%)</span></td>
+      <td class="num">${convFmt(c.memberBuyers)} <span style="color:var(--grey);font-size:11px;">(${convPct(c.memberBuyers, c.leads)}%)</span></td>
+      <td class="num">${convFmt(c.alreadyMember)} <span style="color:var(--grey);font-size:11px;">(${convPct(c.alreadyMember, c.leads)}%)</span></td>
+    </tr>`;
+  }).join('');
+
+  // Total row
+  rows += `<tr>
+    <td><strong>Total</strong></td>
+    <td class="num"><strong>${convFmt(totLeads)}</strong></td>
+    <td class="num"><strong>${convFmt(totNew)}</strong> <span style="color:var(--grey);font-size:11px;">(${convPct(totNew, totLeads)}%)</span></td>
+    <td class="num"><strong>${convFmt(totProd)}</strong> <span style="color:var(--grey);font-size:11px;">(${convPct(totProd, totLeads)}%)</span></td>
+    <td class="num"><strong>${convFmt(totMember)}</strong> <span style="color:var(--grey);font-size:11px;">(${convPct(totMember, totLeads)}%)</span></td>
+    <td class="num"><strong>${convFmt(totAlready)}</strong> <span style="color:var(--grey);font-size:11px;">(${convPct(totAlready, totLeads)}%)</span></td>
+  </tr>`;
+
+  document.getElementById('conv-campaign-tbody').innerHTML = rows;
+}
+
+/* =============================================
+   CONVERSION CAMPAIGN BAR CHART
+============================================= */
+function convRenderCampaignBarChart() {
+  const D = CONV_DATA;
+  if (convCharts['campaignBars']) convCharts['campaignBars'].destroy();
+  const ctx = document.getElementById('chart-conv-campaign-bars');
+  if (!ctx) return;
+
+  const labels = D.campaigns.map(c => c.name);
+  const productRates = D.campaigns.map(c => +((c.productBuyers / c.leads) * 100).toFixed(2));
+  const memberRates = D.campaigns.map(c => +((c.memberBuyers / c.leads) * 100).toFixed(2));
+
+  convCharts['campaignBars'] = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Produkt-Conversion (%)',
+          data: productRates,
+          backgroundColor: '#d97706',
+          borderRadius: 4,
+          barPercentage: 0.7,
+          categoryPercentage: 0.7,
+        },
+        {
+          label: 'Mitgliedschafts-Conversion (%)',
+          data: memberRates,
+          backgroundColor: '#16a34a',
+          borderRadius: 4,
+          barPercentage: 0.7,
+          categoryPercentage: 0.7,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: {position: 'bottom', labels: {padding: 14, usePointStyle: true, pointStyle: 'circle', font: {size: 11, weight: 600}}},
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}%`
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {callback: v => v + '%', font: {size: 11}},
+          grid: {color: '#f0f0f0'}
+        },
+        x: {
+          ticks: {font: {size: 10}, maxRotation: 45, minRotation: 30},
+          grid: {display: false}
+        }
+      }
+    }
+  });
+}
+
+/* =============================================
+   CONVERSION ROI TAB
+============================================= */
+function convRenderROI(totalRevenue, roas) {
+  const D = CONV_DATA;
+  const cpaProduct = D.totalAdSpend / D.productBuyers;
+  const cpaMember = D.totalAdSpend / D.membershipBuyers;
+  const cpaNewContact = D.totalAdSpend / D.newToEcosystem;
+  const productPct = ((D.productRevenue / totalRevenue) * 100).toFixed(1);
+  const memberPct = ((D.membershipRevenue / totalRevenue) * 100).toFixed(1);
+
+  // KPIs
+  document.getElementById('conv-kpi-roi').innerHTML = `
+    <div class="kpi">
+      <div class="kpi-label">Total Ad Spend</div>
+      <div class="kpi-value" style="color:var(--black)">${convFmtCHF(D.totalAdSpend)}</div>
+      <div class="kpi-sub">META-Kampagnen</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Produkt-Umsatz</div>
+      <div class="kpi-value" style="color:#d97706">${convFmtCHF(D.productRevenue)}</div>
+      <div class="kpi-sub">${productPct}% des Umsatzes</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Mitgliedschafts-Umsatz</div>
+      <div class="kpi-value" style="color:#16a34a">${convFmtCHF(D.membershipRevenue)}</div>
+      <div class="kpi-sub">${memberPct}% des Umsatzes</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Gesamt-Umsatz</div>
+      <div class="kpi-value">${convFmtCHF(totalRevenue)}</div>
+      <div class="kpi-sub">Produkte + Mitgliedschaften</div>
+    </div>
+    <div class="kpi accent">
+      <div class="kpi-label">ROAS</div>
+      <div class="kpi-value">${roas}x</div>
+      <div class="kpi-sub">Return on Ad Spend</div>
+    </div>
+  `;
+
+  // ROI Summary
+  document.getElementById('conv-roi-summary').innerHTML = `
+    <div class="roi-flow">${convFmtCHF(D.totalAdSpend)} investiert &rarr; ${convFmtCHF(totalRevenue)} Umsatz generiert</div>
+    <div class="roi-roas">ROAS: ${roas}x</div>
+    <div class="roi-detail">Für jeden investierten Franken wurden CHF ${roas} Umsatz generiert.</div>
+  `;
+
+  // Revenue donut
+  convRenderRevenueDonut(totalRevenue);
+
+  // Revenue bars
+  document.getElementById('conv-revenue-bars').innerHTML = `
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
+        <span style="font-weight:600;color:var(--dark);">Produkt-Umsatz</span>
+        <span style="color:#d97706;font-weight:800;">${convFmtCHF(D.productRevenue)} <span style="font-weight:500;color:var(--grey);">(${productPct}%)</span></span>
+      </div>
+      <div style="background:var(--bg);border-radius:4px;height:24px;overflow:hidden;">
+        <div style="height:100%;width:${productPct}%;background:#d97706;border-radius:4px;transition:width 1s ease;"></div>
+      </div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;">
+        <span style="font-weight:600;color:var(--dark);">Mitgliedschafts-Umsatz</span>
+        <span style="color:#16a34a;font-weight:800;">${convFmtCHF(D.membershipRevenue)} <span style="font-weight:500;color:var(--grey);">(${memberPct}%)</span></span>
+      </div>
+      <div style="background:var(--bg);border-radius:4px;height:24px;overflow:hidden;">
+        <div style="height:100%;width:${memberPct}%;background:#16a34a;border-radius:4px;transition:width 1s ease;"></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:14px 16px;background:var(--bg);border-radius:8px;border-left:3px solid var(--red);">
+      <div style="font-size:12px;font-weight:700;color:var(--black);margin-bottom:4px;">Gesamt: ${convFmtCHF(totalRevenue)}</div>
+      <div style="font-size:11px;color:var(--mid);line-height:1.6;">Der geschätzte Gesamtumsatz setzt sich aus Produktverkäufen im Swiss-Ski Shop und abgeschlossenen Mitgliedschaften zusammen.</div>
+    </div>
+  `;
+
+  // CPA cards
+  document.getElementById('conv-cpa-grid').innerHTML = `
+    <div class="cpa-card">
+      <div class="cpa-label">Cost per Product Buyer</div>
+      <div class="cpa-value" style="color:#d97706;">${convFmtCHF2(cpaProduct)}</div>
+      <div class="cpa-calc">${convFmtCHF(D.totalAdSpend)} / ${convFmt(D.productBuyers)} Käufer</div>
+    </div>
+    <div class="cpa-card">
+      <div class="cpa-label">Cost per New Member</div>
+      <div class="cpa-value" style="color:#16a34a;">${convFmtCHF2(cpaMember)}</div>
+      <div class="cpa-calc">${convFmtCHF(D.totalAdSpend)} / ${convFmt(D.membershipBuyers)} Mitglieder</div>
+    </div>
+    <div class="cpa-card">
+      <div class="cpa-label">Cost per New Contact</div>
+      <div class="cpa-value" style="color:var(--red);">${convFmtCHF2(cpaNewContact)}</div>
+      <div class="cpa-calc">${convFmtCHF(D.totalAdSpend)} / ${convFmt(D.newToEcosystem)} Neukontakte</div>
+    </div>
+  `;
+}
+
+function convRenderRevenueDonut(totalRevenue) {
+  const D = CONV_DATA;
+  if (convCharts['revenue']) convCharts['revenue'].destroy();
+  const ctx = document.getElementById('chart-conv-revenue');
+  if (!ctx) return;
+  convCharts['revenue'] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Produkt-Umsatz', 'Mitgliedschafts-Umsatz'],
+      datasets: [{
+        data: [D.productRevenue, D.membershipRevenue],
+        backgroundColor: ['#d97706', '#16a34a'],
+        borderWidth: 2, borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: {position: 'bottom', labels: {padding: 14, usePointStyle: true, pointStyle: 'circle', font: {size: 11, weight: 600}}},
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const val = ctx.parsed;
+              const p = ((val / totalRevenue) * 100).toFixed(1);
+              return `${ctx.label}: CHF ${val.toLocaleString('de-CH')} (${p}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+/* =============================================
+   MAIN TAB SWITCHING
+============================================= */
+document.querySelectorAll('.main-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.main-tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('maintab-' + btn.dataset.maintab).classList.add('active');
+    // Render conversion charts on first visit
+    if (btn.dataset.maintab === 'conversion' && !window._convRendered) {
+      renderConversion();
+      window._convRendered = true;
+    }
+  });
+});
+
+/* =============================================
+   CONVERSION INNER TAB SWITCHING
+============================================= */
+document.querySelectorAll('.conv-tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.conv-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.conv-tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.convtab).classList.add('active');
+  });
 });
 </script>
 </body>
