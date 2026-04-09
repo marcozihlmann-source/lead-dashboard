@@ -162,8 +162,23 @@ body{font-family:'Outfit','Helvetica Neue',Arial,sans-serif;background:var(--bg)
     <div class="card" style="padding:20px;">
       <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;font-weight:700;">Leads & CPL pro Kampagne</div>
       <div style="position:relative;height:300px;"><canvas id="chart-combo"></canvas></div>
-      <div style="margin-top:14px;font-size:11px;color:var(--mid);line-height:1.7;border-top:1px solid var(--border);padding-top:12px;">
-        <strong style="color:var(--black);">Lesehinweis:</strong> Balken = Leads pro Kampagne, Linie = CPL-Verlauf. Farbe zeigt CPL-Benchmark: <span style="color:#16a34a;font-weight:700;">&#9679; grün</span> = günstig, <span style="color:#d97706;font-weight:700;">&#9679; orange</span> = mittel, <span style="color:#dc2626;font-weight:700;">&#9679; rot</span> = teuer. Benchmark unterscheidet zwischen Standard- und erweiterten Leads (Details unten).
+      <!-- Custom Legend -->
+      <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--dark);">
+          <span style="display:inline-block;width:14px;height:10px;border-radius:2px;background:rgba(22,163,74,0.13);border:2px solid #16a34a;"></span>
+          Leads pro Kampagne
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--red);">
+          <span style="display:inline-block;width:16px;height:3px;background:var(--red);border-radius:2px;"></span>
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-left:-4px;"></span>
+          CPL-Verlauf (CHF)
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--grey);margin-left:auto;">
+          <span style="font-weight:700;">Balkenfarbe = CPL:</span>
+          <span style="color:#16a34a;font-weight:700;">&#9679; günstig</span>
+          <span style="color:#d97706;font-weight:700;">&#9679; mittel</span>
+          <span style="color:#dc2626;font-weight:700;">&#9679; teuer</span>
+        </div>
       </div>
     </div>
     <div class="card" style="padding:20px;">
@@ -415,10 +430,7 @@ new Chart(ctxCombo, {
     interaction: { mode: 'index', intersect: false },
     animation: { duration: 1200, easing: 'easeOutCubic' },
     plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { padding: 16, font: { size: 11 }, boxWidth: 12, usePointStyle: true }
-      },
+      legend: { display: false },
       tooltip: {
         callbacks: {
           label: function(ctx) {
