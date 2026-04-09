@@ -348,14 +348,14 @@ Chart.defaults.color = '#888';
 
 /* === Campaign Data (chronological) === */
 const campaigns = [
-  {name:'Cycling',  short:'Cycling\nKollektion',  leads:1745,  cpl:0.55, spend:960,   type:'standard', period:'Mai–Jun 25'},
-  {name:'Summer',   short:'Summer\nKollektion',   leads:2152,  cpl:0.35, spend:753,   type:'standard', period:'Jun–Jul 25'},
-  {name:'Levada',   short:'Levada\nKids',         leads:1791,  cpl:2.04, spend:3654,  type:'extended', period:'Aug–Nov 25'},
-  {name:'X-Mas',    short:'X-Mas\nBundle',        leads:7840,  cpl:0.55, spend:4312,  type:'standard', period:'Nov–Dez 25'},
-  {name:'HANEGG',   short:'HANEGG\nChallenge',    leads:3854,  cpl:0.91, spend:3507,  type:'extended', period:'Jan 26'},
-  {name:'Fünfer',   short:'Fünfer\nChallenge',    leads:7509,  cpl:0.41, spend:3000,  type:'extended', period:'Jan–Feb 26'},
-  {name:'Engadin',  short:'Engadin\nSkimarathon', leads:6185,  cpl:1.14, spend:7051,  type:'extended', period:'Feb–Mär 26'},
-  {name:'Globe',    short:'Globe\nChallenge',     leads:1976,  cpl:2.24, spend:4002,  type:'extended', period:'Mär–Apr 26'},
+  {name:'Cycling',  short:'Cycling\nKollektion',  leads:1745,  cpl:0.55, spend:960,   type:'standard', period:'Mai–Jun 25', month:'Jun 2025'},
+  {name:'Summer',   short:'Summer\nKollektion',   leads:2152,  cpl:0.35, spend:753,   type:'standard', period:'Jun–Jul 25', month:'Jul 2025'},
+  {name:'Levada',   short:'Levada\nKids',         leads:1791,  cpl:2.04, spend:3654,  type:'extended', period:'Aug–Nov 25', month:'Nov 2025'},
+  {name:'X-Mas',    short:'X-Mas\nBundle',        leads:7840,  cpl:0.55, spend:4312,  type:'standard', period:'Nov–Dez 25', month:'Dez 2025'},
+  {name:'HANEGG',   short:'HANEGG\nChallenge',    leads:3854,  cpl:0.91, spend:3507,  type:'extended', period:'Jan 26',     month:'Jan 2026'},
+  {name:'Fünfer',   short:'Fünfer\nChallenge',    leads:7509,  cpl:0.41, spend:3000,  type:'extended', period:'Jan–Feb 26', month:'Feb 2026'},
+  {name:'Engadin',  short:'Engadin\nSkimarathon', leads:6185,  cpl:1.14, spend:7051,  type:'extended', period:'Feb–Mär 26', month:'Mär 2026'},
+  {name:'Globe',    short:'Globe\nChallenge',     leads:1976,  cpl:2.24, spend:4002,  type:'extended', period:'Mär–Apr 26', month:'Apr 2026'},
 ];
 
 function cplColor(cpl, type) {
@@ -479,7 +479,7 @@ const ctxGrowth = document.getElementById('chart-growth');
 new Chart(ctxGrowth, {
   type: 'line',
   data: {
-    labels: campaigns.map(c => c.name),
+    labels: campaigns.map(c => [c.month, c.name]),
     datasets: [
       {
         label: 'Kumulierte Leads',
